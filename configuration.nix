@@ -1,7 +1,10 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports =
+    [ ./hardware-configuration.nix
+      inputs.helium-flake.nixosModules.default
+    ];
 
   # Bootloader
   boot.loader.grub.enable = true;
@@ -50,6 +53,12 @@
         GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i /root/.ssh/nixos_backup_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" ${pkgs.git}/bin/git push origin main || true
       fi
     '';
+  };
+  nixpkgs.overlays = [ inputs.helium-flake.overlays.default ];
+
+  programs.helium = {
+    enable = true;
+    flags = [ "--ozone-platform-hint=auto" ]; # good default for Wayland/niri
   };
   
   programs.niri.enable = true;
