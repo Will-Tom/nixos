@@ -1,0 +1,334 @@
+input {
+    keyboard {
+        xkb {
+	    layout "us"
+            options "caps:super"
+           
+        }
+
+    }
+
+    warp-mouse-to-focus
+    focus-follows-mouse max-scroll-amount="0%"
+}
+
+output "DP-2" {
+    mode "3840x2160@240.000"
+    scale 1.5
+    transform "normal"
+}
+
+gestures {
+    hot-corners {
+        off
+    }
+}
+
+layout {
+
+    background-color "Black"
+        
+    gaps 0
+
+    center-focused-column "never"
+
+    preset-column-widths {
+        proportion 0.33333
+        proportion 0.5
+        
+    }
+
+    default-column-width {}
+
+    focus-ring {
+        off
+    }
+
+}
+
+spawn-at-startup "qs" "-c" "noctalia-shell"
+
+hotkey-overlay {
+     skip-at-startup
+}
+
+screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+animations {
+
+    window-open {
+        duration-ms 750
+        curve "linear"
+
+        custom-shader r"
+                       float hash(vec2 p) {
+                return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+            }
+
+            float noise(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                f = f * f * (3.0 - 2.0 * f);
+                float a = hash(i);
+                float b = hash(i + vec2(1.0, 0.0));
+                float c = hash(i + vec2(0.0, 1.0));
+                float d = hash(i + vec2(1.0, 1.0));
+                return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+            }
+
+            float fbm(vec2 p) {
+                float v = 0.0;
+                float amp = 0.5;
+                for (int i = 0; i < 6; i++) {
+                    v += amp * noise(p);
+                    p *= 2.0;
+                    amp *= 0.5;
+                }
+                return v;
+            }
+
+            float warpedFbm(vec2 p, float t) {
+                vec2 q = vec2(fbm(p + vec2(0.0, 0.0)),
+                              fbm(p + vec2(5.2, 1.3)));
+
+                vec2 r = vec2(fbm(p + 6.0 * q + vec2(1.7, 9.2) + 0.25 * t),
+                              fbm(p + 6.0 * q + vec2(8.3, 2.8) + 0.22 * t));
+
+                vec2 s = vec2(fbm(p + 5.0 * r + vec2(3.1, 7.4) + 0.18 * t),
+                              fbm(p + 5.0 * r + vec2(6.7, 0.9) + 0.2 * t));
+
+                return fbm(p + 6.0 * s);
+            }
+
+            vec4 open_color(vec3 coords_geo, vec3 size_geo) {
+                float p = niri_clamped_progress;
+                vec2 uv = coords_geo.xy;
+                float seed = niri_random_seed * 100.0;
+
+                float t = p * 12.0 + seed;
+
+                float fluid = warpedFbm(uv * 2.0 + seed, t);
+
+                vec2 center = uv - 0.5;
+                float dist = length(center * vec2(1.0, 0.7));
+
+                float appear = (1.0 - dist * 1.2) + (1.0 - fluid) * 0.7;
+                float reveal = smoothstep(appear + 0.5, appear - 0.5, (1.0 - p) * 1.8);
+
+                float distort_strength = (1.0 - p) * (1.0 - p) * 0.35;
+                vec2 wq = vec2(fbm(uv * 2.0 + vec2(0.0, t * 0.2)),
+                               fbm(uv * 2.0 + vec2(5.2, t * 0.2)));
+                vec2 wr = vec2(fbm(uv * 2.0 + 4.0 * wq + vec2(1.7, 9.2)),
+                               fbm(uv * 2.0 + 4.0 * wq + vec2(8.3, 2.8)));
+                vec2 warped_uv = uv + (wr - 0.5) * distort_strength;
+
+                vec3 tex_coords = niri_geo_to_tex * vec3(warped_uv, 1.0);
+                vec4 color = texture2D(niri_tex, tex_coords.st);
+
+                return color * reveal;
+            }
+
+            "
+    }
+
+    window-close {
+        duration-ms 750
+        curve "linear"
+
+        custom-shader r"
+             float hash(vec2 p) {
+                return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+            }
+
+            float noise(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                f = f * f * (3.0 - 2.0 * f);
+                float a = hash(i);
+                float b = hash(i + vec2(1.0, 0.0));
+                float c = hash(i + vec2(0.0, 1.0));
+                float d = hash(i + vec2(1.0, 1.0));
+                return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+            }
+
+            float fbm(vec2 p) {
+                float v = 0.0;
+                float amp = 0.5;
+                for (int i = 0; i < 6; i++) {
+                    v += amp * noise(p);
+                    p *= 2.0;
+                    amp *= 0.5;
+                }
+                return v;
+            }
+
+            float warpedFbm(vec2 p, float t) {
+                vec2 q = vec2(fbm(p + vec2(0.0, 0.0)),
+                              fbm(p + vec2(5.2, 1.3)));
+
+                vec2 r = vec2(fbm(p + 6.0 * q + vec2(1.7, 9.2) + 0.25 * t),
+                              fbm(p + 6.0 * q + vec2(8.3, 2.8) + 0.22 * t));
+
+                vec2 s = vec2(fbm(p + 5.0 * r + vec2(3.1, 7.4) + 0.18 * t),
+                              fbm(p + 5.0 * r + vec2(6.7, 0.9) + 0.2 * t));
+
+                return fbm(p + 6.0 * s);
+            }
+
+            vec4 close_color(vec3 coords_geo, vec3 size_geo) {
+                float p = niri_clamped_progress;
+                vec2 uv = coords_geo.xy;
+                float seed = niri_random_seed * 100.0;
+
+                float t = p * 12.0 + seed;
+
+                float fluid = warpedFbm(uv * 2.0 + seed, t);
+
+                vec2 center = uv - 0.5;
+                float dist = length(center * vec2(1.0, 0.7));
+
+                float dissolve = (1.0 - dist) * 1.2 + fluid * 0.7;
+                float remain = smoothstep(dissolve + 0.5, dissolve - 0.5, p * 1.8);
+
+                float distort_strength = p * p * 0.4;
+                vec2 wq = vec2(fbm(uv * 2.0 + vec2(0.0, t * 0.2)),
+                               fbm(uv * 2.0 + vec2(5.2, t * 0.2)));
+                vec2 wr = vec2(fbm(uv * 2.0 + 4.0 * wq + vec2(1.7, 9.2)),
+                               fbm(uv * 2.0 + 4.0 * wq + vec2(8.3, 2.8)));
+                vec2 warped_uv = uv + (wr - 0.5) * distort_strength;
+
+                vec3 tex_coords = niri_geo_to_tex * vec3(warped_uv, 1.0);
+                vec4 color = texture2D(niri_tex, tex_coords.st);
+
+                float tail = smoothstep(1.0, 0.8, p);
+                return color * remain * tail;
+            }
+
+            "
+    }
+    
+    
+}
+
+binds {
+    
+    Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
+    Mod+Space hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
+
+    
+    XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
+    XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
+    XF86AudioMute        allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"; }
+    XF86AudioMicMute     allow-when-locked=true { spawn-sh "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"; }
+
+    XF86AudioPlay        allow-when-locked=true { spawn-sh "playerctl play-pause"; }
+    XF86AudioStop        allow-when-locked=true { spawn-sh "playerctl stop"; }
+    XF86AudioPrev        allow-when-locked=true { spawn-sh "playerctl previous"; }
+    XF86AudioNext        allow-when-locked=true { spawn-sh "playerctl next"; }
+
+    XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
+    XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
+
+    Mod+O repeat=false { toggle-overview; }
+
+    Mod+Q repeat=false { close-window; }
+
+    Mod+Left  { focus-column-left; }
+    Mod+Down  { focus-window-down; }
+    Mod+Up    { focus-window-up; }
+    Mod+Right { focus-column-right; }
+    Mod+H     { focus-column-left; }
+    Mod+J     { focus-window-down; }
+    Mod+K     { focus-window-up; }
+    Mod+L     { focus-column-right; }
+
+    Mod+Shift+Left  { move-column-left; }
+    Mod+Shift+Down  { move-window-down; }
+    Mod+Shift+Up    { move-window-up; }
+    Mod+Shift+Right { move-column-right; }
+    Mod+Shift+H     { move-column-left; }
+    Mod+Shift+J     { move-window-down; }
+    Mod+Shift+K     { move-window-up; }
+    Mod+Shift+L     { move-column-right; }
+
+    Mod+G { focus-column-first; }
+    Mod+semicolon { focus-column-last; }
+    Mod+Shift+G { move-column-to-first; }
+    Mod+Shift+Semicolon  { move-column-to-last; }
+
+
+    Mod+D              { focus-workspace-down; }
+    Mod+U              { focus-workspace-up; }
+    Mod+Shift+D         { move-column-to-workspace-down; }
+    Mod+Shift+U         { move-column-to-workspace-up; }
+
+
+    Mod+Page_Down { move-workspace-down; }
+    Mod+Page_Up   { move-workspace-up; }
+
+
+    Mod+1 { focus-workspace 1; }
+    Mod+2 { focus-workspace 2; }
+    Mod+3 { focus-workspace 3; }
+    Mod+4 { focus-workspace 4; }
+    Mod+5 { focus-workspace 5; }
+    Mod+6 { focus-workspace 6; }
+    Mod+7 { focus-workspace 7; }
+    Mod+8 { focus-workspace 8; }
+    Mod+9 { focus-workspace 9; }
+    Mod+Shift+1 { move-column-to-workspace 1; }
+    Mod+Shift+2 { move-column-to-workspace 2; }
+    Mod+Shift+3 { move-column-to-workspace 3; }
+    Mod+Shift+4 { move-column-to-workspace 4; }
+    Mod+Shift+5 { move-column-to-workspace 5; }
+    Mod+Shift+6 { move-column-to-workspace 6; }
+    Mod+Shift+7 { move-column-to-workspace 7; }
+    Mod+Shift+8 { move-column-to-workspace 8; }
+    Mod+Shift+9 { move-column-to-workspace 9; }
+
+    Mod+BracketLeft  { consume-or-expel-window-left; }
+    Mod+BracketRight { consume-or-expel-window-right; }
+
+
+    Mod+R { switch-preset-column-width; }
+    Mod+F { maximize-column; }
+    Mod+Shift+F { fullscreen-window; }
+
+    Mod+C { center-column; }
+
+    Mod+Ctrl+C { center-visible-columns; }
+
+    Mod+Minus { set-column-width "-10%"; }
+    Mod+Equal { set-column-width "+10%"; }
+
+    Mod+Shift+Minus { set-window-height "-10%"; }
+    Mod+Shift+Equal { set-window-height "+10%"; }
+
+    Mod+V       { toggle-window-floating; }
+    Mod+Shift+V { switch-focus-between-floating-and-tiling; }
+
+    Mod+P { screenshot; }
+
+    Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
+
+    Ctrl+Alt+Delete { quit; }
+
+    Mod+TAB { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "bar" "toggle"; }
+ 
+     
+}
+overview {
+    backdrop-color "#000000"
+}
+
+workspace "1"
+workspace "2"
+workspace "3"
+workspace "4"
+workspace "5"
+workspace "6"
+workspace "7"
+workspace "8"
+workspace "9"
+include "./noctalia.kdl"
+    

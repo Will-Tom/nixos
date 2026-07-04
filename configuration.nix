@@ -1,0 +1,70 @@
+{ config, pkgs, ... }:
+
+{
+  imports = [ ./hardware-configuration.nix ];
+
+  # Bootloader
+  boot.loader.grub.enable = true;
+  boot.loader.grub.device = "/dev/vda";
+
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  networking.hostName = "nixos";
+  networking.networkmanager.enable = true;
+
+  services.openssh = {
+    enable = true;
+    settings.PasswordAuthentication = true;
+  };
+
+  time.timeZone = "Australia/Melbourne";
+
+  i18n.defaultLocale = "en_AU.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_AU.UTF-8";
+    LC_IDENTIFICATION = "en_AU.UTF-8";
+    LC_MEASUREMENT = "en_AU.UTF-8";
+    LC_MONETARY = "en_AU.UTF-8";
+    LC_NAME = "en_AU.UTF-8";
+    LC_NUMERIC = "en_AU.UTF-8";
+    LC_PAPER = "en_AU.UTF-8";
+    LC_TELEPHONE = "en_AU.UTF-8";
+    LC_TIME = "en_AU.UTF-8";
+  };
+
+  services.xserver.enable = true;
+  services.xserver.xkb = {
+    layout = "us";
+    variant = "";
+  };
+
+  programs.niri.enable = true;
+
+  # A display manager is still needed to log in and launch the niri session
+  services.displayManager.ly.enable = true;
+
+  security.rtkit.enable = true;
+  services.pipewire = {
+    enable = true;
+    alsa.enable = true;
+    alsa.support32Bit = true;
+    pulse.enable = true;
+  };
+
+  programs.fish.enable = true;
+
+  users.users."willisk" = {
+    isNormalUser = true;
+    description = "Will Thompson";
+    extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
+  };
+
+  nixpkgs.config.allowUnfree = true;
+
+  environment.systemPackages = with pkgs; [ git ];
+
+  system.stateVersion = "26.05";
+}
