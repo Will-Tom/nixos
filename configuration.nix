@@ -39,7 +39,19 @@
     layout = "us";
     variant = "";
   };
-
+  
+  system.activationScripts.gitBackup = {
+    text = ''
+      export HOME=/root
+      cd /etc/nixos
+      ${pkgs.git}/bin/git add -A
+      if ! ${pkgs.git}/bin/git diff --cached --quiet; then
+        ${pkgs.git}/bin/git commit -m "Auto-backup: $(date '+%Y-%m-%d %H:%M:%S')"
+        GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i /root/.ssh/nixos_backup_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" ${pkgs.git}/bin/git push origin main || true
+      fi
+    '';
+  };
+  
   programs.niri.enable = true;
 
   # A display manager is still needed to log in and launch the niri session
