@@ -53,7 +53,7 @@
 
       if [ ! -d .git ]; then
         ${pkgs.git}/bin/git init
-        ${pkgs.git}/bin/git config user.email "you@example.com"
+        ${pkgs.git}/bin/git config user.email "willthompson696@gmail.com"
         ${pkgs.git}/bin/git config user.name "Will Thompson"
         ${pkgs.git}/bin/git branch -M main
         ${pkgs.git}/bin/git remote add origin git@github.com:Will-Tom/nixos.git
