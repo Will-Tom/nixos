@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
   imports =
     [ ./hardware-configuration.nix
@@ -66,6 +66,29 @@
       fi
     '';
   };
+
+  system.autoUpgrade = {
+    enable = true;
+    flake = "path:/etc/nixos";
+    flags = [
+      "--update-input" "nixpkgs"
+      "--no-write-lock-file"
+      "-L"
+    ];
+    allowReboot = false;
+  };
+
+  systemd.timers.nixos-upgrade.timerConfig = {
+    OnCalendar = lib.mkForce "";
+    OnBootSec = "2min";
+    Persistent = lib.mkForce false;
+  };
+
+  systemd.timers.nix-gc.timerConfig = {
+    OnCalendar = lib.mkForce "";
+    OnBootSec = "10min";
+    Persistent = lib.mkForce false;
+  };
   
   nixpkgs.overlays = [ inputs.helium-flake.overlays.default ];
   programs.helium = {
@@ -105,3 +128,4 @@
   environment.systemPackages = with pkgs; [ git ];
   system.stateVersion = "26.05";
 }
+
