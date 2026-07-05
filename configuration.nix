@@ -84,11 +84,13 @@
     Persistent = lib.mkForce false;
   };
 
-  systemd.timers.nix-gc.timerConfig = {
-    OnCalendar = lib.mkForce "";
-    OnBootSec = "10min";
-    Persistent = lib.mkForce false;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
   };
+
+  nix.settings.auto-optimise-store = true;
   
   nixpkgs.overlays = [ inputs.helium-flake.overlays.default ];
   programs.helium = {
