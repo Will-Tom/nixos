@@ -49,14 +49,6 @@
   programs.helium = {
     enable = true;
     flags = [ "--ozone-platform-hint=auto" ];
-    policies = {
-      ExtensionSettings = {
-        "hfjbmagddngcpeloejdejnfgbamkjaeg" = {
-          installation_mode = "force_installed";
-          update_url = "https://clients2.google.com/service/update2/crx";
-        };
-      };
-    };
   };
 
   programs.niri.enable = true;
