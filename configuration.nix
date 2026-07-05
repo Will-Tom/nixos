@@ -5,6 +5,15 @@ let
     url = "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=120.0&x=id%3Dhfjbmagddngcpeloejdejnfgbamkjaeg%26uc";
     sha256 = "1kiLH+QIjOIheJXFNE/BKJ7tWZLvwHpr6ec1cLIlBCM=";
   };
+
+  vimiumCUpdateXml = pkgs.writeText "vimium-c-update.xml" ''
+    <?xml version='1.0' encoding='UTF-8'?>
+    <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
+      <app appid='hfjbmagddngcpeloejdejnfgbamkjaeg'>
+        <updatecheck codebase='file://${vimiumCCrx}' version='2.1.5' />
+      </app>
+    </gupdate>
+  '';
 in
 {
   imports =
@@ -56,18 +65,19 @@ in
 
   nixpkgs.overlays = [ inputs.helium-flake.overlays.default ];
 
-  programs.helium = {
+ programs.helium = {
     enable = true;
     flags = [ "--ozone-platform-hint=auto" ];
     policies = {
       ExtensionSettings = {
         "hfjbmagddngcpeloejdejnfgbamkjaeg" = {
           installation_mode = "force_installed";
-          update_url = "file://${vimiumCCrx}";
+          update_url = "file://${vimiumCUpdateXml}";
         };
       };
     };
   };
+   
 
   programs.niri.enable = true;
   services.displayManager.ly.enable = true;
