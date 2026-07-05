@@ -51,6 +51,18 @@
     flags = [ "--ozone-platform-hint=auto" ];
   };
 
+  programs.helium.policies = {
+    HomepageLocation = "http://localhost:8080/";
+    HomepageIsNewTabPage = false;
+    NewTabPageLocation = "http://localhost:8080/";
+  };
+  services.nginx = {
+    enable = true;
+    virtualHosts."startpage" = {
+      listen = [ { addr = "127.0.0.1"; port = 8080; } ];
+      root = ./startpage;
+    };
+  };
   programs.niri.enable = true;
   services.displayManager.ly.enable = true;
   security.rtkit.enable = true;
