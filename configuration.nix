@@ -10,7 +10,7 @@ let
     <?xml version='1.0' encoding='UTF-8'?>
     <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
       <app appid='hfjbmagddngcpeloejdejnfgbamkjaeg'>
-        <updatecheck codebase='file://${vimiumCCrx}' version='2.1.5' />
+        <updatecheck codebase='file://${vimiumCCrx}' version='2.12.2' />
       </app>
     </gupdate>
   '';
