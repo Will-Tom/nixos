@@ -1,20 +1,4 @@
 { config, pkgs, inputs, ... }:
-
-let
-  vimiumCCrx = pkgs.fetchurl {
-    url = "https://clients2.google.com/service/update2/crx?response=redirect&acceptformat=crx2,crx3&prodversion=120.0&x=id%3Dhfjbmagddngcpeloejdejnfgbamkjaeg%26uc";
-    sha256 = "1kiLH+QIjOIheJXFNE/BKJ7tWZLvwHpr6ec1cLIlBCM=";
-  };
-
-  vimiumCUpdateXml = pkgs.writeText "vimium-c-update.xml" ''
-    <?xml version='1.0' encoding='UTF-8'?>
-    <gupdate xmlns='http://www.google.com/update2/response' protocol='2.0'>
-      <app appid='hfjbmagddngcpeloejdejnfgbamkjaeg'>
-        <updatecheck codebase='file://${vimiumCCrx}' version='2.12.2' />
-      </app>
-    </gupdate>
-  '';
-in
 {
   imports =
     [ ./hardware-configuration.nix
@@ -50,7 +34,6 @@ in
     layout = "us";
     variant = "";
   };
-
   system.activationScripts.gitBackup = {
     text = ''
       export HOME=/root
@@ -62,22 +45,19 @@ in
       fi
     '';
   };
-
   nixpkgs.overlays = [ inputs.helium-flake.overlays.default ];
-
- programs.helium = {
+  programs.helium = {
     enable = true;
     flags = [ "--ozone-platform-hint=auto" ];
     policies = {
       ExtensionSettings = {
         "hfjbmagddngcpeloejdejnfgbamkjaeg" = {
           installation_mode = "force_installed";
-          update_url = "file://${vimiumCUpdateXml}";
+          update_url = "https://clients2.google.com/service/update2/crx";
         };
       };
     };
   };
-   
 
   programs.niri.enable = true;
   services.displayManager.ly.enable = true;
@@ -89,14 +69,12 @@ in
     pulse.enable = true;
   };
   programs.fish.enable = true;
-
   users.users."willisk" = {
     isNormalUser = true;
     description = "Will Thompson";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
   };
-
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [ git ];
   system.stateVersion = "26.05";
