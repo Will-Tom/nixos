@@ -58,7 +58,12 @@
 
   programs.helium = {
     enable = true;
-    flags = [ "--ozone-platform-hint=auto" ]; # good default for Wayland/niri
+    flags = [ "--ozone-platform-hint=auto" ];
+    policies = {
+      ExtensionInstallForcelist = [
+        "hfjbmagddngcpeloejdejnfgbamkjaeg;https://clients2.google.com/service/update2/crx"
+      ];
+    };
   };
   
   programs.niri.enable = true;
