@@ -34,10 +34,31 @@
     layout = "us";
     variant = "";
   };
+  
   system.activationScripts.gitBackup = {
     text = ''
       export HOME=/root
+
+      if [ ! -f /root/.ssh/nixos_backup_key ]; then
+        mkdir -p /root/.ssh
+        ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -f /root/.ssh/nixos_backup_key -N ""
+        echo "=================================================="
+        echo "New deploy key generated. Add this to GitHub"
+        echo "(repo Settings -> Deploy keys -> Add, allow write):"
+        cat /root/.ssh/nixos_backup_key.pub
+        echo "=================================================="
+      fi
+
       cd /etc/nixos
+
+      if [ ! -d .git ]; then
+        ${pkgs.git}/bin/git init
+        ${pkgs.git}/bin/git config user.email "you@example.com"
+        ${pkgs.git}/bin/git config user.name "Will Thompson"
+        ${pkgs.git}/bin/git branch -M main
+        ${pkgs.git}/bin/git remote add origin git@github.com:Will-Tom/nixos.git
+      fi
+
       ${pkgs.git}/bin/git add -A
       if ! ${pkgs.git}/bin/git diff --cached --quiet; then
         ${pkgs.git}/bin/git commit -m "Auto-backup: $(date '+%Y-%m-%d %H:%M:%S')"
@@ -45,6 +66,7 @@
       fi
     '';
   };
+  
   nixpkgs.overlays = [ inputs.helium-flake.overlays.default ];
   programs.helium = {
     enable = true;
