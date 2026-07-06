@@ -98,6 +98,16 @@
     flags = [ "--ozone-platform-hint=auto" ];
   };
 
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
+      settings.main = {
+        capslock = "f13";
+      };
+    };
+  };
+
   programs.helium.policies = {
     HomepageLocation = "http://localhost:8080/";
     HomepageIsNewTabPage = false;

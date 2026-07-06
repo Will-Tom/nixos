@@ -25,6 +25,7 @@
   };
 
   home.packages = with pkgs; [
+    wlr-which-key
     fuzzel
     playerctl
     brightnessctl
