@@ -103,7 +103,7 @@
     keyboards.default = {
       ids = [ "*" ];
       settings.main = {
-        capslock = "f13";
+        capslock = "M-12";
       };
     };
   };
