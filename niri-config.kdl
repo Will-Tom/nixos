@@ -210,7 +210,7 @@ animations {
 
 binds {
     
-    F13 { spawn "wlr-which-key" "/home/willisk/.config/wlr-which-key/modal.yaml";
+    F13 { spawn "wlr-which-key" "/home/willisk/.config/wlr-which-key/modal.yaml"; }
 
     
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
@@ -225,9 +225,8 @@ binds {
 
     XF86MonBrightnessUp allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "+10%"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn "brightnessctl" "--class=backlight" "set" "10%-"; }
-    
+}    
      
-}
 overview {
     backdrop-color "#000000"
 }
