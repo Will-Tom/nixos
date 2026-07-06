@@ -209,8 +209,8 @@ animations {
 }
 
 binds {
-    Caps_Lock { spawn "wlr-which-key" "/home/willisk/.config/wlr-which-key/modal.yaml"; }
-    // Mod+Grave { spawn "wlr-which-key" "/home/willisk/.config/wlr-which-key/modal.yaml"; }
+    // Caps_Lock { spawn "wlr-which-key" "/home/willisk/.config/wlr-which-key/modal.yaml"; }
+    Mod+Grave { spawn "wlr-which-key" "/home/willisk/.config/wlr-which-key/modal.yaml"; }
     // F13 { spawn "wlr-which-key" "/home/willisk/.config/wlr-which-key/modal.yaml"; }
 
     
