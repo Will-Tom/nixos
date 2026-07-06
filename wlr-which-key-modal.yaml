@@ -27,15 +27,20 @@ menu:
   - { key: "d", desc: Workspace down, cmd: "niri msg action focus-workspace-down",          keep_open: true }
   - { key: "D", desc: Move ws down,   cmd: "niri msg action move-column-to-workspace-down", keep_open: true }
 
-  # Monitor — arrows focus, Shift+arrows move
+  # Monitor focus — arrows
   - { key: "Left",  desc: Monitor left,  cmd: "niri msg action focus-monitor-left",  keep_open: true }
   - { key: "Right", desc: Monitor right, cmd: "niri msg action focus-monitor-right", keep_open: true }
   - { key: "Up",    desc: Monitor up,    cmd: "niri msg action focus-monitor-up",    keep_open: true }
   - { key: "Down",  desc: Monitor down,  cmd: "niri msg action focus-monitor-down",  keep_open: true }
-  - { key: "Shift+Left",  desc: Move to monitor left,  cmd: "niri msg action move-column-to-monitor-left",  keep_open: true }
-  - { key: "Shift+Right", desc: Move to monitor right, cmd: "niri msg action move-column-to-monitor-right", keep_open: true }
-  - { key: "Shift+Up",    desc: Move to monitor up,    cmd: "niri msg action move-column-to-monitor-up",    keep_open: true }
-  - { key: "Shift+Down",  desc: Move to monitor down,  cmd: "niri msg action move-column-to-monitor-down",  keep_open: true }
+
+  # Move to monitor — submenu instead of Shift+arrows
+  - key: "m"
+    desc: Move to monitor
+    submenu:
+      - { key: "Left",  desc: Left,  cmd: "niri msg action move-column-to-monitor-left" }
+      - { key: "Right", desc: Right, cmd: "niri msg action move-column-to-monitor-right" }
+      - { key: "Up",    desc: Up,    cmd: "niri msg action move-column-to-monitor-up" }
+      - { key: "Down",  desc: Down,  cmd: "niri msg action move-column-to-monitor-down" }
 
   # Go to — jump to a specific numbered workspace, or overview
   - key: "w"
