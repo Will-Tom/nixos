@@ -59,7 +59,7 @@ menu:
   - key: "F10"
     desc: Monitor
     submenu:
-      - { key: "'", desc: Main menu,   cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "'", desc: Main menu,   cmd: "wlr-which-key-return" }
       - { key: "h", desc: Focus left,  cmd: "niri msg action focus-monitor-left",           keep_open: true }
       - { key: "j", desc: Focus down,  cmd: "niri msg action focus-monitor-down",           keep_open: true }
       - { key: "k", desc: Focus up,    cmd: "niri msg action focus-monitor-up",             keep_open: true }
@@ -73,11 +73,11 @@ menu:
   - key: "r"
     desc: Resize
     submenu:
-      - { key: "'", desc: Main menu,   cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
-      - { key: "1", desc: Full width,  cmd: "/home/willisk/bin/wlr-which-key-home.sh niri msg action maximize-column" }
-      - { key: "2", desc: Half width,  cmd: "/home/willisk/bin/wlr-which-key-home.sh niri msg action set-column-width 50%" }
-      - { key: "3", desc: Third width, cmd: "/home/willisk/bin/wlr-which-key-home.sh niri msg action set-column-width 33%" }
-      - { key: "f", desc: Fullscreen,  cmd: "/home/willisk/bin/wlr-which-key-home.sh niri msg action fullscreen-window" }
+      - { key: "'", desc: Main menu,   cmd: "wlr-which-key-return" }
+      - { key: "1", desc: Full width,  cmd: "wlr-which-key-return niri msg action maximize-column" }
+      - { key: "2", desc: Half width,  cmd: "wlr-which-key-return niri msg action set-column-width 50%" }
+      - { key: "3", desc: Third width, cmd: "wlr-which-key-return niri msg action set-column-width 33%" }
+      - { key: "f", desc: Fullscreen,  cmd: "wlr-which-key-return niri msg action fullscreen-window" }
       - { key: "h", desc: Width -10%,  cmd: "niri msg action set-column-width -10%",  keep_open: true }
       - { key: "l", desc: Width +10%,  cmd: "niri msg action set-column-width +10%",  keep_open: true }
       - { key: "j", desc: Height -10%, cmd: "niri msg action set-window-height -10%", keep_open: true }
@@ -87,17 +87,17 @@ menu:
   - key: "M"
     desc: Set mark
     submenu:
-      - { key: "'", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
-      - { key: "a", desc: Mark a, cmd: "/home/willisk/bin/wlr-which-key-home.sh niri-mark-set.sh a" }
-      - { key: "b", desc: Mark b, cmd: "/home/willisk/bin/wlr-which-key-home.sh niri-mark-set.sh b" }
+      - { key: "'", desc: Main menu, cmd: "wlr-which-key-return" }
+      - { key: "a", desc: Mark a, cmd: "wlr-which-key-return niri-mark-set.sh a" }
+      - { key: "b", desc: Mark b, cmd: "wlr-which-key-return niri-mark-set.sh b" }
 
   # Jump to mark
   - key: "m"
     desc: Jump to mark
     submenu:
-      - { key: "'", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
-      - { key: "a", desc: Jump a, cmd: "/home/willisk/bin/wlr-which-key-home.sh niri-mark-jump.sh a" }
-      - { key: "b", desc: Jump b, cmd: "/home/willisk/bin/wlr-which-key-home.sh niri-mark-jump.sh b" }
+      - { key: "'", desc: Main menu, cmd: "wlr-which-key-return" }
+      - { key: "a", desc: Jump a, cmd: "wlr-which-key-return niri-mark-jump.sh a" }
+      - { key: "b", desc: Jump b, cmd: "wlr-which-key-return niri-mark-jump.sh b" }
 
   # Misc
   - { key: "t",   desc: Terminal,        cmd: "kitty",                                    keep_open: true }
