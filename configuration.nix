@@ -97,7 +97,7 @@
     enable = true;
     flags = [ "--ozone-platform-hint=auto" ];
   };
-
+  systemd.services.keyd.serviceConfig.ProtectHome = lib.mkForce false;
   services.keyd = {
     enable = true;
     keyboards.default = {
