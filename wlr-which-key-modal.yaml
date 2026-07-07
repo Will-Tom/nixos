@@ -59,6 +59,7 @@ menu:
   - key: "F10"
     desc: Monitor
     submenu:
+      - { key: "'", desc: Main menu,   cmd: "nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
       - { key: "h", desc: Focus left,  cmd: "niri msg action focus-monitor-left",           keep_open: true }
       - { key: "j", desc: Focus down,  cmd: "niri msg action focus-monitor-down",           keep_open: true }
       - { key: "k", desc: Focus up,    cmd: "niri msg action focus-monitor-up",             keep_open: true }
@@ -72,10 +73,11 @@ menu:
   - key: "r"
     desc: Resize
     submenu:
-      - { key: "1", desc: Full width,  cmd: "niri msg action maximize-column" }
-      - { key: "2", desc: Half width,  cmd: "niri msg action set-column-width '50%'" }
-      - { key: "3", desc: Third width, cmd: "niri msg action set-column-width '33%'" }
-      - { key: "f", desc: Fullscreen,  cmd: "niri msg action fullscreen-window" }
+      - { key: "'", desc: Main menu,   cmd: "nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
+      - { key: "1", desc: Full width,  cmd: "niri msg action maximize-column; nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
+      - { key: "2", desc: Half width,  cmd: "niri msg action set-column-width '50%'; nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
+      - { key: "3", desc: Third width, cmd: "niri msg action set-column-width '33%'; nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
+      - { key: "f", desc: Fullscreen,  cmd: "niri msg action fullscreen-window; nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
       - { key: "h", desc: Width -10%,  cmd: "niri msg action set-column-width '-10%'",  keep_open: true }
       - { key: "l", desc: Width +10%,  cmd: "niri msg action set-column-width '+10%'",  keep_open: true }
       - { key: "j", desc: Height -10%, cmd: "niri msg action set-window-height '-10%'", keep_open: true }
@@ -85,15 +87,17 @@ menu:
   - key: "M"
     desc: Set mark
     submenu:
-      - { key: "a", desc: Mark a, cmd: "niri-mark-set.sh a" }
-      - { key: "b", desc: Mark b, cmd: "niri-mark-set.sh b" }
+      - { key: "'", desc: Main menu, cmd: "nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
+      - { key: "a", desc: Mark a, cmd: "niri-mark-set.sh a; nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
+      - { key: "b", desc: Mark b, cmd: "niri-mark-set.sh b; nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
 
   # Jump to mark
   - key: "m"
     desc: Jump to mark
     submenu:
-      - { key: "a", desc: Jump a, cmd: "niri-mark-jump.sh a" }
-      - { key: "b", desc: Jump b, cmd: "niri-mark-jump.sh b" }
+      - { key: "'", desc: Main menu, cmd: "nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
+      - { key: "a", desc: Jump a, cmd: "niri-mark-jump.sh a; nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
+      - { key: "b", desc: Jump b, cmd: "niri-mark-jump.sh b; nohup wlr-which-key /home/willisk/.config/wlr-which-key/modal.yaml >/dev/null 2>&1 & disown" }
 
   # Misc
   - { key: "t",   desc: Terminal,        cmd: "kitty",                                    keep_open: true }
