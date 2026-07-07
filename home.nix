@@ -1,10 +1,4 @@
 { pkgs, inputs, ... }:
-let
-  wlrReturn = pkgs.writeShellScriptBin "wlr-which-key-return" ''
-    "$@"
-    exec ${pkgs.wlr-which-key}/bin/wlr-which-key "$HOME/.config/wlr-which-key/modal.yaml"
-  '';
-in
 {
   home.stateVersion = "26.05";
   home.username = "willisk";
@@ -58,7 +52,6 @@ in
     brightnessctl
     wireplumber
     jq
-    wlrReturn
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
