@@ -91,7 +91,8 @@ menu:
       - { key: "b", desc: Jump b, cmd: "niri-mark-jump.sh b" }
 
   # Misc
-  - { key: "t", desc: Toggle floating, cmd: "niri msg action toggle-window-floating" }
+  - { key: "t",   desc: Terminal,        cmd: "kitty" }
+  - { key: "F11", desc: Toggle floating, cmd: "niri msg action toggle-window-floating" }
   - { key: "b", desc: Back,            cmd: "niri msg action focus-window-previous", keep_open: true }
   - { key: "o", desc: Overview,        cmd: "niri msg action toggle-overview" }
   - { key: "q", desc: Close,           cmd: "niri msg action close-window" }
