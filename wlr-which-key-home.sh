@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 trap '' TERM
 pkill -x wlr-which-key 2>/dev/null
-sleep 0.3
+sleep 0.6
 systemd-run --user --no-block \
   -E WAYLAND_DISPLAY="$WAYLAND_DISPLAY" \
   -E XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" \
