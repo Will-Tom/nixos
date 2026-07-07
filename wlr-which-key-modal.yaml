@@ -8,6 +8,7 @@ border: "#00000000"
 border_width: 0
 corner_r: 0
 padding: 0
+inhibit_compositor_keyboard_shortcuts: true
 
 anchor: bottom-right
 margin_right: 20
