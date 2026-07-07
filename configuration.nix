@@ -98,75 +98,14 @@
     flags = [ "--ozone-platform-hint=auto" ];
   };
 
-  
-    services.keyd = {
+  services.keyd = {
     enable = true;
     keyboards.default = {
       ids = [ "*" ];
-      settings = {
-        main.capslock = "overload(leader, esc)";
-
-        leader = {
-          space = "command(fuzzel)";
-          h = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-column-left)";
-          j = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-window-down)";
-          k = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-window-up)";
-          l = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-column-right)";
-          g = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-column-first)";
-          semicolon = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-column-last)";
-          u = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace-up)";
-          d = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace-down)";
-          left = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-monitor-left)";
-          right = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-monitor-right)";
-          up = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-monitor-up)";
-          down = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-monitor-down)";
-          t = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd toggle-window-floating)";
-          b = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-window-previous)";
-          o = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd toggle-overview)";
-          q = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd close-window)";
-          w = "layer(leader-w)";
-          r = "layer(leader-r)";
-          m = "layer(leader-m)";
-        };
-
-        "leader+shift" = {
-          h = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-left)";
-          j = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-window-down)";
-          k = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-window-up)";
-          l = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-right)";
-          g = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-first)";
-          semicolon = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-last)";
-          u = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-workspace-up)";
-          d = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-workspace-down)";
-        };
-
-        "leader-w" = {
-          "1" = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace 1)";
-          "2" = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace 2)";
-          "3" = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace 3)";
-          o = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd toggle-overview)";
-        };
-
-        "leader-r" = {
-          "1" = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd maximize-column)";
-          "2" = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-column-width 50%)";
-          "3" = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-column-width 33%)";
-          f = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd fullscreen-window)";
-          h = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-column-width -10%)";
-          l = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-column-width +10%)";
-          j = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-window-height -10%)";
-          k = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-window-height +10%)";
-        };
-
-        "leader-m" = {
-          left = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-monitor-left)";
-          right = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-monitor-right)";
-          up = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-monitor-up)";
-          down = "command(systemd-run --uid=1000 --gid=100 -q -P --setenv=XDG_RUNTIME_DIR=/run/user/1000 /nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-monitor-down)";
-        };
-      };
+      settings.main.capslock = "M-f12";
     };
   };
+    
 
   programs.helium.policies = {
     HomepageLocation = "http://localhost:8080/";
@@ -200,4 +139,5 @@
   environment.systemPackages = with pkgs; [ git ];
   system.stateVersion = "26.05";
 }
+
 
