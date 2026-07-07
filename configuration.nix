@@ -108,14 +108,6 @@
     };
   };
 
-  environment.etc."libinput/local-overrides.quirks".text = ''
-    [Serial Keyboards]
-    MatchUdevType=keyboard
-    MatchName=keyd virtual keyboard
-    AttrKeyboardIntegration=internal
-  '';
-
-
   programs.helium.policies = {
     HomepageLocation = "http://localhost:8080/";
     HomepageIsNewTabPage = false;
