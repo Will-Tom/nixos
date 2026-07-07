@@ -97,13 +97,21 @@
     enable = true;
     flags = [ "--ozone-platform-hint=auto" ];
   };
+
   systemd.services.keyd.serviceConfig = {
     ProtectHome = lib.mkForce false;
     ProtectSystem = lib.mkForce false;
     PrivateNetwork = lib.mkForce false;
     RestrictAddressFamilies = lib.mkForce [ "AF_UNIX" "AF_INET" "AF_INET6" "AF_NETLINK" ];
+    CapabilityBoundingSet = lib.mkForce [
+      "CAP_SETGID"
+      "CAP_SYS_NICE"
+      "CAP_DAC_OVERRIDE"
+      "CAP_DAC_READ_SEARCH"
+    ];
   };
-  services.keyd = {
+
+    services.keyd = {
     enable = true;
     keyboards.default = {
       ids = [ "*" ];
