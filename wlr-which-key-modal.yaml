@@ -12,10 +12,10 @@ padding: 0
 anchor: bottom-right
 margin_right: 20
 margin_bottom: 20
+inhibit_compositor_keyboard_shortcuts: true
 
 menu:
-  - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
-  - { key: "'",         desc: Main menu, cmd: "true", keep_open: true }
+  - { key: "'", desc: Main menu, cmd: "true", keep_open: true }
 
   # Launcher (exits modal)
   - { key: "space", desc: Launcher, cmd: "fuzzel" }
