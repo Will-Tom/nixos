@@ -12,11 +12,10 @@ padding: 0
 anchor: bottom-right
 margin_right: 20
 margin_bottom: 20
-inhibit_compositor_keyboard_shortcuts: true
 
 menu:
-  - { key: "F12", desc: Exit,      cmd: "true" }
-  - { key: "'",   desc: Main menu, cmd: "true", keep_open: true }
+  - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
+  - { key: "'",         desc: Main menu, cmd: "true", keep_open: true }
 
   # Launcher (exits modal)
   - { key: "space", desc: Launcher, cmd: "fuzzel" }
@@ -61,8 +60,7 @@ menu:
   - key: "F10"
     desc: Monitor
     submenu:
-      - { key: "F12", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-      - { key: "'",   desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "'", desc: Main menu,   cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "h", desc: Focus left,  cmd: "niri msg action focus-monitor-left",           keep_open: true }
       - { key: "j", desc: Focus down,  cmd: "niri msg action focus-monitor-down",           keep_open: true }
       - { key: "k", desc: Focus up,    cmd: "niri msg action focus-monitor-up",             keep_open: true }
@@ -76,8 +74,7 @@ menu:
   - key: "r"
     desc: Resize
     submenu:
-      - { key: "F12", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-      - { key: "'",   desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "'", desc: Main menu,   cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "1", desc: Full width,  cmd: "niri msg action maximize-column; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "2", desc: Half width,  cmd: "niri msg action set-column-width '50%'; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "3", desc: Third width, cmd: "niri msg action set-column-width '33%'; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
@@ -91,8 +88,7 @@ menu:
   - key: "M"
     desc: Set mark
     submenu:
-      - { key: "F12", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-      - { key: "'",   desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "'", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "a", desc: Mark a, cmd: "niri-mark-set.sh a; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "b", desc: Mark b, cmd: "niri-mark-set.sh b; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
@@ -100,8 +96,7 @@ menu:
   - key: "m"
     desc: Jump to mark
     submenu:
-      - { key: "F12", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-      - { key: "'",   desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "'", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "a", desc: Jump a, cmd: "niri-mark-jump.sh a; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "b", desc: Jump b, cmd: "niri-mark-jump.sh b; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
