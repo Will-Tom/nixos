@@ -15,7 +15,7 @@ margin_bottom: 20
 
 menu:
   # Exit — CapsLock only
-  - { key: "Caps_Lock", desc: Exit,     cmd: "true" }
+  - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
   - { key: "'",         desc: Main menu, cmd: "true", keep_open: true }
 
   # Launcher (exits modal)
@@ -45,24 +45,23 @@ menu:
   - { key: "d", desc: Workspace down, cmd: "niri msg action focus-workspace-down",          keep_open: true }
   - { key: "D", desc: Move ws down,   cmd: "niri msg action move-column-to-workspace-down", keep_open: true }
 
-  # Go to workspace — direct
-  - { key: "0", desc: Workspace 0, cmd: "niri msg action focus-workspace 0" }
-  - { key: "1", desc: Workspace 1, cmd: "niri msg action focus-workspace 1" }
-  - { key: "2", desc: Workspace 2, cmd: "niri msg action focus-workspace 2" }
-  - { key: "3", desc: Workspace 3, cmd: "niri msg action focus-workspace 3" }
-  - { key: "4", desc: Workspace 4, cmd: "niri msg action focus-workspace 4" }
-  - { key: "5", desc: Workspace 5, cmd: "niri msg action focus-workspace 5" }
-  - { key: "6", desc: Workspace 6, cmd: "niri msg action focus-workspace 6" }
-  - { key: "7", desc: Workspace 7, cmd: "niri msg action focus-workspace 7" }
-  - { key: "8", desc: Workspace 8, cmd: "niri msg action focus-workspace 8" }
-  - { key: "9", desc: Workspace 9, cmd: "niri msg action focus-workspace 9" }
+  # Go to workspace — returns to main menu after switching
+  - { key: "0", desc: Workspace 0, cmd: "niri msg action focus-workspace 0; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "1", desc: Workspace 1, cmd: "niri msg action focus-workspace 1; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "2", desc: Workspace 2, cmd: "niri msg action focus-workspace 2; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "3", desc: Workspace 3, cmd: "niri msg action focus-workspace 3; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "4", desc: Workspace 4, cmd: "niri msg action focus-workspace 4; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "5", desc: Workspace 5, cmd: "niri msg action focus-workspace 5; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "6", desc: Workspace 6, cmd: "niri msg action focus-workspace 6; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "7", desc: Workspace 7, cmd: "niri msg action focus-workspace 7; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "8", desc: Workspace 8, cmd: "niri msg action focus-workspace 8; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "9", desc: Workspace 9, cmd: "niri msg action focus-workspace 9; /home/willisk/bin/wlr-which-key-home.sh" }
 
   # Monitor — F10 submenu (hjkl=focus, HJKL=move)
   - key: "F10"
     desc: Monitor
     submenu:
-      - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
-      - { key: "'",         desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "'", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
       - { key: "h", desc: Focus left,  cmd: "niri msg action focus-monitor-left",           keep_open: true }
       - { key: "j", desc: Focus down,  cmd: "niri msg action focus-monitor-down",           keep_open: true }
       - { key: "k", desc: Focus up,    cmd: "niri msg action focus-monitor-up",             keep_open: true }
@@ -76,8 +75,7 @@ menu:
   - key: "r"
     desc: Resize
     submenu:
-      - { key: "Caps_Lock", desc: Exit,       cmd: "true" }
-      - { key: "'",         desc: Main menu,  cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "'", desc: Main menu,   cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
       - { key: "1", desc: Full width,  cmd: "niri msg action maximize-column; /home/willisk/bin/wlr-which-key-home.sh" }
       - { key: "2", desc: Half width,  cmd: "niri msg action set-column-width '50%'; /home/willisk/bin/wlr-which-key-home.sh" }
       - { key: "3", desc: Third width, cmd: "niri msg action set-column-width '33%'; /home/willisk/bin/wlr-which-key-home.sh" }
@@ -91,23 +89,21 @@ menu:
   - key: "M"
     desc: Set mark
     submenu:
-      - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
-      - { key: "'",         desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
-      - { key: "a", desc: Mark a, cmd: "niri-mark-set.sh a" }
-      - { key: "b", desc: Mark b, cmd: "niri-mark-set.sh b" }
+      - { key: "'", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "a", desc: Mark a, cmd: "niri-mark-set.sh a; /home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "b", desc: Mark b, cmd: "niri-mark-set.sh b; /home/willisk/bin/wlr-which-key-home.sh" }
 
   # Jump to mark
   - key: "m"
     desc: Jump to mark
     submenu:
-      - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
-      - { key: "'",         desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
-      - { key: "a", desc: Jump a, cmd: "niri-mark-jump.sh a" }
-      - { key: "b", desc: Jump b, cmd: "niri-mark-jump.sh b" }
+      - { key: "'", desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "a", desc: Jump a, cmd: "niri-mark-jump.sh a; /home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "b", desc: Jump b, cmd: "niri-mark-jump.sh b; /home/willisk/bin/wlr-which-key-home.sh" }
 
   # Misc
-  - { key: "t",   desc: Terminal,        cmd: "kitty" }
-  - { key: "F11", desc: Toggle floating, cmd: "niri msg action toggle-window-floating" }
+  - { key: "t",   desc: Terminal,        cmd: "kitty & /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "F11", desc: Toggle floating, cmd: "niri msg action toggle-window-floating; /home/willisk/bin/wlr-which-key-home.sh" }
   - { key: "b",   desc: Back,            cmd: "niri msg action focus-window-previous", keep_open: true }
-  - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview" }
-  - { key: "q",   desc: Close,           cmd: "niri msg action close-window" }
+  - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "q",   desc: Close,           cmd: "niri msg action close-window; /home/willisk/bin/wlr-which-key-home.sh" }
