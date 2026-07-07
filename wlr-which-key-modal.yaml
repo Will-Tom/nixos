@@ -45,17 +45,17 @@ menu:
   - { key: "d", desc: Workspace down, cmd: "niri msg action focus-workspace-down",          keep_open: true }
   - { key: "D", desc: Move ws down,   cmd: "niri msg action move-column-to-workspace-down", keep_open: true }
 
-  # Go to workspace — returns to main menu after switching
-  - { key: "0", desc: Workspace 0, cmd: "niri msg action focus-workspace 0; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "1", desc: Workspace 1, cmd: "niri msg action focus-workspace 1; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "2", desc: Workspace 2, cmd: "niri msg action focus-workspace 2; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "3", desc: Workspace 3, cmd: "niri msg action focus-workspace 3; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "4", desc: Workspace 4, cmd: "niri msg action focus-workspace 4; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "5", desc: Workspace 5, cmd: "niri msg action focus-workspace 5; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "6", desc: Workspace 6, cmd: "niri msg action focus-workspace 6; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "7", desc: Workspace 7, cmd: "niri msg action focus-workspace 7; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "8", desc: Workspace 8, cmd: "niri msg action focus-workspace 8; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "9", desc: Workspace 9, cmd: "niri msg action focus-workspace 9; /home/willisk/bin/wlr-which-key-home.sh" }
+  # Go to workspace
+  - { key: "0", desc: Workspace 0, cmd: "niri msg action focus-workspace 0", keep_open: true }
+  - { key: "1", desc: Workspace 1, cmd: "niri msg action focus-workspace 1", keep_open: true }
+  - { key: "2", desc: Workspace 2, cmd: "niri msg action focus-workspace 2", keep_open: true }
+  - { key: "3", desc: Workspace 3, cmd: "niri msg action focus-workspace 3", keep_open: true }
+  - { key: "4", desc: Workspace 4, cmd: "niri msg action focus-workspace 4", keep_open: true }
+  - { key: "5", desc: Workspace 5, cmd: "niri msg action focus-workspace 5", keep_open: true }
+  - { key: "6", desc: Workspace 6, cmd: "niri msg action focus-workspace 6", keep_open: true }
+  - { key: "7", desc: Workspace 7, cmd: "niri msg action focus-workspace 7", keep_open: true }
+  - { key: "8", desc: Workspace 8, cmd: "niri msg action focus-workspace 8", keep_open: true }
+  - { key: "9", desc: Workspace 9, cmd: "niri msg action focus-workspace 9", keep_open: true }
 
   # Monitor — F10 submenu (hjkl=focus, HJKL=move)
   - key: "F10"
@@ -102,8 +102,8 @@ menu:
       - { key: "b", desc: Jump b, cmd: "niri-mark-jump.sh b; /home/willisk/bin/wlr-which-key-home.sh" }
 
   # Misc
-  - { key: "t",   desc: Terminal,        cmd: "kitty & /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "F11", desc: Toggle floating, cmd: "niri msg action toggle-window-floating; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "b",   desc: Back,            cmd: "niri msg action focus-window-previous", keep_open: true }
-  - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview; /home/willisk/bin/wlr-which-key-home.sh" }
-  - { key: "q",   desc: Close,           cmd: "niri msg action close-window; /home/willisk/bin/wlr-which-key-home.sh" }
+  - { key: "t",   desc: Terminal,        cmd: "kitty",                                    keep_open: true }
+  - { key: "F11", desc: Toggle floating, cmd: "niri msg action toggle-window-floating",   keep_open: true }
+  - { key: "b",   desc: Back,            cmd: "niri msg action focus-window-previous",    keep_open: true }
+  - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview",          keep_open: true }
+  - { key: "q",   desc: Close,           cmd: "niri msg action close-window",             keep_open: true }
