@@ -10,6 +10,21 @@
     executable = true;
   };
 
+  home.file."bin/wlr-which-key-home.sh" = {
+    source = ./wlr-which-key-home.sh;
+    executable = true;
+  };
+
+  home.file."bin/niri-mark-set.sh" = {
+    source = ./niri-mark-set.sh;
+    executable = true;
+  };
+
+  home.file."bin/niri-mark-jump.sh" = {
+    source = ./niri-mark-jump.sh;
+    executable = true;
+  };
+
   programs.helix = {
     enable = true;
     defaultEditor = true;
@@ -36,6 +51,7 @@
     playerctl
     brightnessctl
     wireplumber
+    jq
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 

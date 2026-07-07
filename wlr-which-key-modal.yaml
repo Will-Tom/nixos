@@ -14,26 +14,30 @@ margin_right: 20
 margin_bottom: 20
 
 menu:
-  # Launcher
+  # Exit — CapsLock only
+  - { key: "Caps_Lock", desc: Exit,     cmd: "true" }
+  - { key: "'",         desc: Main menu, cmd: "true", keep_open: true }
+
+  # Launcher (exits modal)
   - { key: "space", desc: Launcher, cmd: "fuzzel" }
 
-  # Focus — lowercase
+  # Focus — lowercase hjkl
   - { key: "h", desc: Focus left,  cmd: "niri msg action focus-column-left",  keep_open: true }
   - { key: "j", desc: Focus down,  cmd: "niri msg action focus-window-down",  keep_open: true }
   - { key: "k", desc: Focus up,    cmd: "niri msg action focus-window-up",    keep_open: true }
   - { key: "l", desc: Focus right, cmd: "niri msg action focus-column-right", keep_open: true }
 
-  # Move — Shift+hjkl (uppercase)
+  # Move — uppercase HJKL
   - { key: "H", desc: Move left,  cmd: "niri msg action move-column-left",  keep_open: true }
   - { key: "J", desc: Move down,  cmd: "niri msg action move-window-down",  keep_open: true }
   - { key: "K", desc: Move up,    cmd: "niri msg action move-window-up",    keep_open: true }
   - { key: "L", desc: Move right, cmd: "niri msg action move-column-right", keep_open: true }
 
   # Strip ends — g/; focus, G/: move
-  - { key: "g", desc: First column,      cmd: "niri msg action focus-column-first",      keep_open: true }
-  - { key: ";", desc: Last column,       cmd: "niri msg action focus-column-last",       keep_open: true }
-  - { key: "G", desc: Move to first,     cmd: "niri msg action move-column-to-first",    keep_open: true }
-  - { key: ":", desc: Move to last,      cmd: "niri msg action move-column-to-last",     keep_open: true }
+  - { key: "g", desc: First column,  cmd: "niri msg action focus-column-first",   keep_open: true }
+  - { key: ";", desc: Last column,   cmd: "niri msg action focus-column-last",    keep_open: true }
+  - { key: "G", desc: Move to first, cmd: "niri msg action move-column-to-first", keep_open: true }
+  - { key: ":", desc: Move to last,  cmd: "niri msg action move-column-to-last",  keep_open: true }
 
   # Workspace up/down — u/d focus, U/D move
   - { key: "u", desc: Workspace up,   cmd: "niri msg action focus-workspace-up",            keep_open: true }
@@ -41,59 +45,69 @@ menu:
   - { key: "d", desc: Workspace down, cmd: "niri msg action focus-workspace-down",          keep_open: true }
   - { key: "D", desc: Move ws down,   cmd: "niri msg action move-column-to-workspace-down", keep_open: true }
 
-  # Monitor focus — arrows
-  - { key: "Left",  desc: Monitor left,  cmd: "niri msg action focus-monitor-left",  keep_open: true }
-  - { key: "Right", desc: Monitor right, cmd: "niri msg action focus-monitor-right", keep_open: true }
-  - { key: "Up",    desc: Monitor up,    cmd: "niri msg action focus-monitor-up",    keep_open: true }
-  - { key: "Down",  desc: Monitor down,  cmd: "niri msg action focus-monitor-down",  keep_open: true }
+  # Go to workspace — direct
+  - { key: "0", desc: Workspace 0, cmd: "niri msg action focus-workspace 0" }
+  - { key: "1", desc: Workspace 1, cmd: "niri msg action focus-workspace 1" }
+  - { key: "2", desc: Workspace 2, cmd: "niri msg action focus-workspace 2" }
+  - { key: "3", desc: Workspace 3, cmd: "niri msg action focus-workspace 3" }
+  - { key: "4", desc: Workspace 4, cmd: "niri msg action focus-workspace 4" }
+  - { key: "5", desc: Workspace 5, cmd: "niri msg action focus-workspace 5" }
+  - { key: "6", desc: Workspace 6, cmd: "niri msg action focus-workspace 6" }
+  - { key: "7", desc: Workspace 7, cmd: "niri msg action focus-workspace 7" }
+  - { key: "8", desc: Workspace 8, cmd: "niri msg action focus-workspace 8" }
+  - { key: "9", desc: Workspace 9, cmd: "niri msg action focus-workspace 9" }
 
-  # Move to monitor — submenu
-  - key: "m"
-    desc: Move to monitor
+  # Monitor — F10 submenu (hjkl=focus, HJKL=move)
+  - key: "F10"
+    desc: Monitor
     submenu:
-      - { key: "Left",  desc: Left,  cmd: "niri msg action move-column-to-monitor-left" }
-      - { key: "Right", desc: Right, cmd: "niri msg action move-column-to-monitor-right" }
-      - { key: "Up",    desc: Up,    cmd: "niri msg action move-column-to-monitor-up" }
-      - { key: "Down",  desc: Down,  cmd: "niri msg action move-column-to-monitor-down" }
-
-  # Go to
-  - key: "w"
-    desc: Go to
-    submenu:
-      - { key: "1", desc: Workspace 1, cmd: "niri msg action focus-workspace 1" }
-      - { key: "2", desc: Workspace 2, cmd: "niri msg action focus-workspace 2" }
-      - { key: "3", desc: Workspace 3, cmd: "niri msg action focus-workspace 3" }
-      - { key: "o", desc: Overview,    cmd: "niri msg action toggle-overview" }
+      - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
+      - { key: "'",         desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "h", desc: Focus left,  cmd: "niri msg action focus-monitor-left",           keep_open: true }
+      - { key: "j", desc: Focus down,  cmd: "niri msg action focus-monitor-down",           keep_open: true }
+      - { key: "k", desc: Focus up,    cmd: "niri msg action focus-monitor-up",             keep_open: true }
+      - { key: "l", desc: Focus right, cmd: "niri msg action focus-monitor-right",          keep_open: true }
+      - { key: "H", desc: Move left,   cmd: "niri msg action move-column-to-monitor-left",  keep_open: true }
+      - { key: "J", desc: Move down,   cmd: "niri msg action move-column-to-monitor-down",  keep_open: true }
+      - { key: "K", desc: Move up,     cmd: "niri msg action move-column-to-monitor-up",    keep_open: true }
+      - { key: "L", desc: Move right,  cmd: "niri msg action move-column-to-monitor-right", keep_open: true }
 
   # Resize
   - key: "r"
     desc: Resize
     submenu:
-      - { key: "1", desc: Full width,   cmd: "niri msg action maximize-column" }
-      - { key: "2", desc: Half width,   cmd: "niri msg action set-column-width \"50%\"" }
-      - { key: "3", desc: Third width,  cmd: "niri msg action set-column-width \"33%\"" }
-      - { key: "f", desc: Fullscreen,   cmd: "niri msg action fullscreen-window" }
-      - { key: "h", desc: Width -10%,   cmd: "niri msg action set-column-width \"-10%\"",  keep_open: true }
-      - { key: "l", desc: Width +10%,   cmd: "niri msg action set-column-width \"+10%\"",  keep_open: true }
-      - { key: "j", desc: Height -10%,  cmd: "niri msg action set-window-height \"-10%\"", keep_open: true }
-      - { key: "k", desc: Height +10%,  cmd: "niri msg action set-window-height \"+10%\"", keep_open: true }
+      - { key: "Caps_Lock", desc: Exit,       cmd: "true" }
+      - { key: "'",         desc: Main menu,  cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "1", desc: Full width,  cmd: "niri msg action maximize-column; /home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "2", desc: Half width,  cmd: "niri msg action set-column-width '50%'; /home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "3", desc: Third width, cmd: "niri msg action set-column-width '33%'; /home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "f", desc: Fullscreen,  cmd: "niri msg action fullscreen-window; /home/willisk/bin/wlr-which-key-home.sh" }
+      - { key: "h", desc: Width -10%,  cmd: "niri msg action set-column-width '-10%'",  keep_open: true }
+      - { key: "l", desc: Width +10%,  cmd: "niri msg action set-column-width '+10%'",  keep_open: true }
+      - { key: "j", desc: Height -10%, cmd: "niri msg action set-window-height '-10%'", keep_open: true }
+      - { key: "k", desc: Height +10%, cmd: "niri msg action set-window-height '+10%'", keep_open: true }
 
-  # Marks
+  # Set mark
   - key: "M"
     desc: Set mark
     submenu:
+      - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
+      - { key: "'",         desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
       - { key: "a", desc: Mark a, cmd: "niri-mark-set.sh a" }
       - { key: "b", desc: Mark b, cmd: "niri-mark-set.sh b" }
-  - key: "`"
+
+  # Jump to mark
+  - key: "m"
     desc: Jump to mark
     submenu:
+      - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
+      - { key: "'",         desc: Main menu, cmd: "/home/willisk/bin/wlr-which-key-home.sh" }
       - { key: "a", desc: Jump a, cmd: "niri-mark-jump.sh a" }
       - { key: "b", desc: Jump b, cmd: "niri-mark-jump.sh b" }
 
   # Misc
   - { key: "t",   desc: Terminal,        cmd: "kitty" }
   - { key: "F11", desc: Toggle floating, cmd: "niri msg action toggle-window-floating" }
-  - { key: "b", desc: Back,            cmd: "niri msg action focus-window-previous", keep_open: true }
-  - { key: "o", desc: Overview,        cmd: "niri msg action toggle-overview" }
-  - { key: "q", desc: Close,           cmd: "niri msg action close-window" }
-  - { key: "'", desc: Exit,            cmd: "true" }
+  - { key: "b",   desc: Back,            cmd: "niri msg action focus-window-previous", keep_open: true }
+  - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview" }
+  - { key: "q",   desc: Close,           cmd: "niri msg action close-window" }
