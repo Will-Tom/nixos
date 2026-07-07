@@ -2,7 +2,11 @@
 let
   niriCmd = pkgs.writeShellScriptBin "niri-cmd" ''
     export XDG_RUNTIME_DIR=/run/user/1000
-    export NIRI_SOCKET=$(ls /run/user/1000/niri.wayland-*.sock 2>/dev/null | head -1)
+    for f in /run/user/1000/niri.wayland-*.sock; do
+      NIRI_SOCKET="$f"
+      break
+    done
+    export NIRI_SOCKET
     ${pkgs.niri}/bin/niri msg action "$@"
   '';
 in
