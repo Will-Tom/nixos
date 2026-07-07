@@ -29,6 +29,7 @@
   };
 
   home.packages = with pkgs; [
+    claude-code
     wlr-which-key
     fuzzel
     playerctl

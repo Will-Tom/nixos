@@ -105,7 +105,6 @@
       settings.main.capslock = "M-f12";
     };
   };
-    
 
   programs.helium.policies = {
     HomepageLocation = "http://localhost:8080/";
@@ -136,7 +135,7 @@
     shell = pkgs.fish;
   };
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [ git ];
+  environment.systemPackages = with pkgs; [ git nodejs_22 ];
   system.stateVersion = "26.05";
 }
 
