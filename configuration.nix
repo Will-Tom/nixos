@@ -112,61 +112,61 @@
 
         leader = {
           space = "command(fuzzel)";
-          h = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-column-left)";
-          j = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-window-down)";
-          k = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-window-up)";
-          l = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-column-right)";
-          g = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-column-first)";
-          semicolon = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-column-last)";
-          u = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-workspace-up)";
-          d = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-workspace-down)";
-          left = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-monitor-left)";
-          right = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-monitor-right)";
-          up = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-monitor-up)";
-          down = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-monitor-down)";
-          t = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd toggle-window-floating)";
-          b = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-window-previous)";
-          o = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd toggle-overview)";
-          q = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd close-window)";
+          h = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-column-left)";
+          j = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-window-down)";
+          k = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-window-up)";
+          l = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-column-right)";
+          g = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-column-first)";
+          semicolon = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-column-last)";
+          u = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace-up)";
+          d = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace-down)";
+          left = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-monitor-left)";
+          right = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-monitor-right)";
+          up = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-monitor-up)";
+          down = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-monitor-down)";
+          t = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd toggle-window-floating)";
+          b = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-window-previous)";
+          o = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd toggle-overview)";
+          q = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd close-window)";
           w = "layer(leader-w)";
           r = "layer(leader-r)";
           m = "layer(leader-m)";
         };
 
         "leader+shift" = {
-          h = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-left)";
-          j = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-window-down)";
-          k = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-window-up)";
-          l = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-right)";
-          g = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-to-first)";
-          semicolon = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-to-last)";
-          u = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-to-workspace-up)";
-          d = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-to-workspace-down)";
+          h = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-left)";
+          j = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-window-down)";
+          k = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-window-up)";
+          l = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-right)";
+          g = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-first)";
+          semicolon = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-last)";
+          u = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-workspace-up)";
+          d = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-workspace-down)";
         };
 
         "leader-w" = {
-          "1" = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-workspace 1)";
-          "2" = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-workspace 2)";
-          "3" = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd focus-workspace 3)";
-          o = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd toggle-overview)";
+          "1" = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace 1)";
+          "2" = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace 2)";
+          "3" = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd focus-workspace 3)";
+          o = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd toggle-overview)";
         };
 
         "leader-r" = {
-          "1" = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd maximize-column)";
-          "2" = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd set-column-width 50%)";
-          "3" = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd set-column-width 33%)";
-          f = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd fullscreen-window)";
-          h = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd set-column-width -10%)";
-          l = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd set-column-width +10%)";
-          j = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd set-window-height -10%)";
-          k = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd set-window-height +10%)";
+          "1" = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd maximize-column)";
+          "2" = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-column-width 50%)";
+          "3" = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-column-width 33%)";
+          f = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd fullscreen-window)";
+          h = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-column-width -10%)";
+          l = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-column-width +10%)";
+          j = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-window-height -10%)";
+          k = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd set-window-height +10%)";
         };
 
         "leader-m" = {
-          left = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-to-monitor-left)";
-          right = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-to-monitor-right)";
-          up = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-to-monitor-up)";
-          down = "command(/nix/store/bjgm55b4hk8w0c21rzkci5yy3f7fia50-niri-cmd/bin/niri-cmd move-column-to-monitor-down)";
+          left = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-monitor-left)";
+          right = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-monitor-right)";
+          up = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-monitor-up)";
+          down = "command(/nix/store/m57r1ff2vkwlshmbqalx9ax20xav0ss2-niri-cmd/bin/niri-cmd move-column-to-monitor-down)";
         };
       };
     };
