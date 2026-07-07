@@ -102,8 +102,67 @@
     enable = true;
     keyboards.default = {
       ids = [ "*" ];
-      settings.main = {
-        capslock = "M-f12";
+      settings = {
+        main.capslock = "layer(leader)";
+
+        leader = {
+          space = "command(fuzzel)";
+          h = "command(/home/willisk/bin/niri-cmd.sh focus-column-left)";
+          j = "command(/home/willisk/bin/niri-cmd.sh focus-window-down)";
+          k = "command(/home/willisk/bin/niri-cmd.sh focus-window-up)";
+          l = "command(/home/willisk/bin/niri-cmd.sh focus-column-right)";
+          g = "command(/home/willisk/bin/niri-cmd.sh focus-column-first)";
+          semicolon = "command(/home/willisk/bin/niri-cmd.sh focus-column-last)";
+          u = "command(/home/willisk/bin/niri-cmd.sh focus-workspace-up)";
+          d = "command(/home/willisk/bin/niri-cmd.sh focus-workspace-down)";
+          left = "command(/home/willisk/bin/niri-cmd.sh focus-monitor-left)";
+          right = "command(/home/willisk/bin/niri-cmd.sh focus-monitor-right)";
+          up = "command(/home/willisk/bin/niri-cmd.sh focus-monitor-up)";
+          down = "command(/home/willisk/bin/niri-cmd.sh focus-monitor-down)";
+          t = "command(/home/willisk/bin/niri-cmd.sh toggle-window-floating)";
+          b = "command(/home/willisk/bin/niri-cmd.sh focus-window-previous)";
+          o = "command(/home/willisk/bin/niri-cmd.sh toggle-overview)";
+          q = "command(/home/willisk/bin/niri-cmd.sh close-window)";
+          w = "layer(leader-w)";
+          r = "layer(leader-r)";
+          m = "layer(leader-m)";
+        };
+
+        "leader+shift" = {
+          h = "command(/home/willisk/bin/niri-cmd.sh move-column-left)";
+          j = "command(/home/willisk/bin/niri-cmd.sh move-window-down)";
+          k = "command(/home/willisk/bin/niri-cmd.sh move-window-up)";
+          l = "command(/home/willisk/bin/niri-cmd.sh move-column-right)";
+          g = "command(/home/willisk/bin/niri-cmd.sh move-column-to-first)";
+          semicolon = "command(/home/willisk/bin/niri-cmd.sh move-column-to-last)";
+          u = "command(/home/willisk/bin/niri-cmd.sh move-column-to-workspace-up)";
+          d = "command(/home/willisk/bin/niri-cmd.sh move-column-to-workspace-down)";
+        };
+
+        "leader-w" = {
+          "1" = "command(/home/willisk/bin/niri-cmd.sh focus-workspace 1)";
+          "2" = "command(/home/willisk/bin/niri-cmd.sh focus-workspace 2)";
+          "3" = "command(/home/willisk/bin/niri-cmd.sh focus-workspace 3)";
+          o = "command(/home/willisk/bin/niri-cmd.sh toggle-overview)";
+        };
+
+        "leader-r" = {
+          "1" = "command(/home/willisk/bin/niri-cmd.sh maximize-column)";
+          "2" = "command(/home/willisk/bin/niri-cmd.sh set-column-width 50%)";
+          "3" = "command(/home/willisk/bin/niri-cmd.sh set-column-width 33%)";
+          f = "command(/home/willisk/bin/niri-cmd.sh fullscreen-window)";
+          h = "command(/home/willisk/bin/niri-cmd.sh set-column-width -10%)";
+          l = "command(/home/willisk/bin/niri-cmd.sh set-column-width +10%)";
+          j = "command(/home/willisk/bin/niri-cmd.sh set-window-height -10%)";
+          k = "command(/home/willisk/bin/niri-cmd.sh set-window-height +10%)";
+        };
+
+        "leader-m" = {
+          left = "command(/home/willisk/bin/niri-cmd.sh move-column-to-monitor-left)";
+          right = "command(/home/willisk/bin/niri-cmd.sh move-column-to-monitor-right)";
+          up = "command(/home/willisk/bin/niri-cmd.sh move-column-to-monitor-up)";
+          down = "command(/home/willisk/bin/niri-cmd.sh move-column-to-monitor-down)";
+        };
       };
     };
   };

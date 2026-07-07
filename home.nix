@@ -4,6 +4,12 @@
     home.username = "willisk";
     home.homeDirectory = "/home/willisk";
     programs.home-manager.enable = true;
+
+    home.file."bin/niri-cmd.sh" = {
+      source = ./niri-cmd.sh;
+      executable = true;
+    };
+    
     programs.helix = {
       enable = true;
       defaultEditor = true;
