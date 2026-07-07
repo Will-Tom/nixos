@@ -103,7 +103,7 @@
     keyboards.default = {
       ids = [ "*" ];
       settings = {
-        main.capslock = "layer(leader)";
+        main.capslock = "overload(leader, esc)";
 
         leader = {
           space = "command(fuzzel)";
