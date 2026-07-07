@@ -14,8 +14,6 @@ margin_right: 20
 margin_bottom: 20
 
 menu:
-  # Exit — CapsLock only
-  - { key: "Caps_Lock", desc: Exit,      cmd: "true" }
   - { key: "'",         desc: Main menu, cmd: "true", keep_open: true }
 
   # Launcher (exits modal)
