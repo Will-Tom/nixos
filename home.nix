@@ -1,13 +1,23 @@
 { pkgs, inputs, ... }:
 let
   niriCmd = pkgs.writeShellScriptBin "niri-cmd" ''
-    export XDG_RUNTIME_DIR=/run/user/1000
-    for f in /run/user/1000/niri.wayland-*.sock; do
-      NIRI_SOCKET="$f"
-      break
-    done
-    export NIRI_SOCKET
-    ${pkgs.niri}/bin/niri msg action "$@"
+    {
+      echo "=== $(date) ==="
+      echo "UID: $(id)"
+      echo "XDG_RUNTIME_DIR was: $XDG_RUNTIME_DIR"
+      export XDG_RUNTIME_DIR=/run/user/1000
+      echo "Contents of /run/user/1000:"
+      ls -la /run/user/1000 2>&1
+      for f in /run/user/1000/niri.wayland-*.sock; do
+        NIRI_SOCKET="$f"
+        break
+      done
+      export NIRI_SOCKET
+      echo "NIRI_SOCKET resolved to: $NIRI_SOCKET"
+      echo "Attempting niri msg action $@"
+      ${pkgs.niri}/bin/niri msg action "$@" 2>&1
+      echo "Exit code: $?"
+    } >> /tmp/niri-cmd-debug.log 2>&1
   '';
 in
 {
@@ -48,3 +58,4 @@ in
   xdg.configFile."niri/noctalia.kdl".source = ./noctalia.kdl;
   xdg.configFile."wlr-which-key/modal.yaml".source = ./wlr-which-key-modal.yaml;
 }
+
