@@ -1,4 +1,18 @@
 # ~/.config/wlr-which-key/modal.yaml
+
+# Theming — fully transparent, nothing renders
+font: JetBrainsMono Nerd Font 11
+background: "#00000000"
+color: "#00000000"
+border: "#00000000"
+border_width: 0
+corner_r: 0
+padding: 0
+
+anchor: bottom-right
+margin_right: 20
+margin_bottom: 20
+
 menu:
   # Launcher
   - { key: "space", desc: Launcher, cmd: "fuzzel" }
@@ -33,7 +47,7 @@ menu:
   - { key: "Up",    desc: Monitor up,    cmd: "niri msg action focus-monitor-up",    keep_open: true }
   - { key: "Down",  desc: Monitor down,  cmd: "niri msg action focus-monitor-down",  keep_open: true }
 
-  # Move to monitor — submenu instead of Shift+arrows
+  # Move to monitor — submenu
   - key: "m"
     desc: Move to monitor
     submenu:
@@ -42,7 +56,7 @@ menu:
       - { key: "Up",    desc: Up,    cmd: "niri msg action move-column-to-monitor-up" }
       - { key: "Down",  desc: Down,  cmd: "niri msg action move-column-to-monitor-down" }
 
-  # Go to — jump to a specific numbered workspace, or overview
+  # Go to
   - key: "w"
     desc: Go to
     submenu:
