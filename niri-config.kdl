@@ -209,7 +209,7 @@ animations {
 }
 
 binds {
-    F13         repeat=false { spawn "/home/willisk/bin/wlr-which-key-toggle.sh"; }
+    Mod+F12    repeat=false { spawn "/home/willisk/bin/wlr-which-key-toggle.sh"; }
     
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
