@@ -5,6 +5,11 @@
   home.homeDirectory = "/home/willisk";
   programs.home-manager.enable = true;
 
+  home.file."bin/wlr-which-key-toggle.sh" = {
+    source = ./wlr-which-key-toggle.sh;
+    executable = true;
+  };
+
   programs.helix = {
     enable = true;
     defaultEditor = true;
