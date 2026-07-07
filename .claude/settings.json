@@ -1,0 +1,36 @@
+{
+  "permissions": {
+    "defaultMode": "default",
+    "allow": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash(git *)",
+      "Bash(systemctl *)",
+      "Bash(journalctl *)",
+      "Bash(cat *)",
+      "Bash(ls *)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(which *)",
+      "Bash(nixos-rebuild *)",
+      "Bash(nix *)"
+    ],
+    "ask": [
+      "Edit",
+      "Write"
+    ],
+    "deny": [
+      "Bash(rm -rf /*)",
+      "Bash(rm -rf /nix/store*)"
+    ]
+  },
+  "mcpServers": {
+    "nixos": {
+      "command": "uvx",
+      "args": [
+        "mcp-nixos"
+      ]
+    }
+  }
+}

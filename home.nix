@@ -30,6 +30,7 @@
 
   home.packages = with pkgs; [
     claude-code
+    uv
     wlr-which-key
     fuzzel
     playerctl
