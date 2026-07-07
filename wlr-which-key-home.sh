@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
-trap '' TERM
-pkill -x wlr-which-key 2>/dev/null
-sleep 0.6
-systemd-run --user --no-block \
-  -E WAYLAND_DISPLAY="$WAYLAND_DISPLAY" \
-  -E XDG_RUNTIME_DIR="$XDG_RUNTIME_DIR" \
-  -E HOME="$HOME" \
-  -E PATH="$PATH" \
-  wlr-which-key "$HOME/.config/wlr-which-key/modal.yaml"
+cfg="$HOME/.config/wlr-which-key/modal.yaml"
+
+# Detach restart so it survives wlr-which-key (our parent) dying
+(
+    trap '' HUP
+    sleep 0.5
+    exec wlr-which-key "$cfg"
+) &
+disown
+
+pkill -x wlr-which-key
