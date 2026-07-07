@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 let
-  niriCmd = pkgs.writeShellScriptBin "niri-cmd" ''
-    {
+ niriCmd = pkgs.writeShellScriptBin "niri-cmd" ''
+  {
       echo "=== $(date) ==="
       echo "UID: $(id)"
       echo "XDG_RUNTIME_DIR was: $XDG_RUNTIME_DIR"
@@ -17,7 +17,7 @@ let
       echo "Attempting niri msg action $@"
       ${pkgs.niri}/bin/niri msg action "$@" 2>&1
       echo "Exit code: $?"
-    } >> /tmp/niri-cmd-debug.log 2>&1
+    } >> /var/log/niri-cmd-debug.log 2>&1
   '';
 in
 {
