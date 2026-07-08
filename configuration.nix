@@ -102,7 +102,53 @@
     enable = true;
     keyboards.default = {
       ids = [ "*" ];
-      settings.main.capslock = "macro(M-f12)";
+      extraConfig = ''
+        [main]
+        capslock = toggle(niri)
+
+        # ── Main menu (Super+Alt = focus, +Shift = move) ──
+        [niri:A-M]
+        capslock = toggle(niri)
+        esc = clear()
+        space = clearm(A-M-space)
+        t = clearm(A-M-t)
+        r = toggle(resize)
+        f10 = toggle(monitor)
+        m = toggle(jumpmark)
+        shift.m = toggle(setmark)
+
+        # ── Monitor (Super+Ctrl = focus, +Shift = move) ──
+        [monitor:C-M]
+        capslock = clear()
+        esc = clear()
+        backspace = toggle(monitor)
+
+        # ── Resize (Super+Ctrl+Alt); 1/2/3/f commit & return, hjkl stay ──
+        [resize:C-A-M]
+        capslock = clear()
+        esc = clear()
+        backspace = toggle(resize)
+        1 = togglem(resize, C-A-M-1)
+        2 = togglem(resize, C-A-M-2)
+        3 = togglem(resize, C-A-M-3)
+        f = togglem(resize, C-A-M-f)
+
+        # ── Set mark (Super+Ctrl + a/b) ──
+        [setmark:C-M]
+        capslock = clear()
+        esc = clear()
+        backspace = toggle(setmark)
+        a = togglem(setmark, C-M-a)
+        b = togglem(setmark, C-M-b)
+
+        # ── Jump mark (Super+Ctrl+Alt + a/b) ──
+        [jumpmark:C-A-M]
+        capslock = clear()
+        esc = clear()
+        backspace = toggle(jumpmark)
+        a = togglem(jumpmark, C-A-M-a)
+        b = togglem(jumpmark, C-A-M-b)
+      '';
     };
   };
 

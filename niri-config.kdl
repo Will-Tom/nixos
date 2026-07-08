@@ -209,7 +209,67 @@ animations {
 }
 
 binds {
-    Mod+F12    repeat=false { spawn "/home/willisk/bin/wlr-which-key-toggle.sh"; }
+    // ── Main: focus (Mod+Alt) ──
+    Mod+Alt+H { focus-column-left; }
+    Mod+Alt+J { focus-window-down; }
+    Mod+Alt+K { focus-window-up; }
+    Mod+Alt+L { focus-column-right; }
+    Mod+Alt+G { focus-column-first; }
+    Mod+Alt+Semicolon { focus-column-last; }
+    Mod+Alt+U { focus-workspace-up; }
+    Mod+Alt+D { focus-workspace-down; }
+    Mod+Alt+B { focus-window-previous; }
+    Mod+Alt+O { toggle-overview; }
+    Mod+Alt+Q { close-window; }
+    Mod+Alt+F11 { toggle-window-floating; }
+    Mod+Alt+Space { spawn "fuzzel"; }
+    Mod+Alt+T { spawn "kitty"; }
+    Mod+Alt+0 { focus-workspace 0; }
+    Mod+Alt+1 { focus-workspace 1; }
+    Mod+Alt+2 { focus-workspace 2; }
+    Mod+Alt+3 { focus-workspace 3; }
+    Mod+Alt+4 { focus-workspace 4; }
+    Mod+Alt+5 { focus-workspace 5; }
+    Mod+Alt+6 { focus-workspace 6; }
+    Mod+Alt+7 { focus-workspace 7; }
+    Mod+Alt+8 { focus-workspace 8; }
+    Mod+Alt+9 { focus-workspace 9; }
+
+    // ── Main: move (Mod+Alt+Shift) ──
+    Mod+Alt+Shift+H { move-column-left; }
+    Mod+Alt+Shift+J { move-window-down; }
+    Mod+Alt+Shift+K { move-window-up; }
+    Mod+Alt+Shift+L { move-column-right; }
+    Mod+Alt+Shift+G { move-column-to-first; }
+    Mod+Alt+Shift+Semicolon { move-column-to-last; }
+    Mod+Alt+Shift+U { move-column-to-workspace-up; }
+    Mod+Alt+Shift+D { move-column-to-workspace-down; }
+
+    // ── Monitor (Mod+Ctrl focus, +Shift move) ──
+    Mod+Ctrl+H { focus-monitor-left; }
+    Mod+Ctrl+J { focus-monitor-down; }
+    Mod+Ctrl+K { focus-monitor-up; }
+    Mod+Ctrl+L { focus-monitor-right; }
+    Mod+Ctrl+Shift+H { move-column-to-monitor-left; }
+    Mod+Ctrl+Shift+J { move-column-to-monitor-down; }
+    Mod+Ctrl+Shift+K { move-column-to-monitor-up; }
+    Mod+Ctrl+Shift+L { move-column-to-monitor-right; }
+
+    // ── Resize (Mod+Ctrl+Alt) ──
+    Mod+Ctrl+Alt+1 { maximize-column; }
+    Mod+Ctrl+Alt+2 { set-column-width "50%"; }
+    Mod+Ctrl+Alt+3 { set-column-width "33%"; }
+    Mod+Ctrl+Alt+F { fullscreen-window; }
+    Mod+Ctrl+Alt+H { set-column-width "-10%"; }
+    Mod+Ctrl+Alt+L { set-column-width "+10%"; }
+    Mod+Ctrl+Alt+J { set-window-height "-10%"; }
+    Mod+Ctrl+Alt+K { set-window-height "+10%"; }
+
+    // ── Marks (set: Mod+Ctrl, jump: Mod+Ctrl+Alt) ──
+    Mod+Ctrl+A { spawn "/home/willisk/bin/niri-mark-set.sh" "a"; }
+    Mod+Ctrl+B { spawn "/home/willisk/bin/niri-mark-set.sh" "b"; }
+    Mod+Ctrl+Alt+A { spawn "/home/willisk/bin/niri-mark-jump.sh" "a"; }
+    Mod+Ctrl+Alt+B { spawn "/home/willisk/bin/niri-mark-jump.sh" "b"; }
     
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0"; }
     XF86AudioLowerVolume allow-when-locked=true { spawn-sh "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-"; }
