@@ -106,26 +106,27 @@
         [main]
         capslock = f13
         f13 = toggle(niri)
-              
+
+        # ── Main menu (Super+Alt = focus, +Shift = move) ──
         [niri:A-M]
-        capslock = toggle(niri)
+        f13 = toggle(niri)
         esc = clear()
         space = clearm(A-M-space)
         t = clearm(A-M-t)
         r = toggle(resize)
         f10 = toggle(monitor)
         m = toggle(jumpmark)
-        shift.m = toggle(setmark)C
+        shift.m = toggle(setmark)
 
         # ── Monitor (Super+Ctrl = focus, +Shift = move) ──
         [monitor:C-M]
-        capslock = clear()
+        f13 = clear()
         esc = clear()
         backspace = toggle(monitor)
 
         # ── Resize (Super+Ctrl+Alt); 1/2/3/f commit & return, hjkl stay ──
         [resize:C-A-M]
-        capslock = clear()
+        f13 = clear()
         esc = clear()
         backspace = toggle(resize)
         1 = togglem(resize, C-A-M-1)
@@ -135,7 +136,7 @@
 
         # ── Set mark (Super+Ctrl + a/b) ──
         [setmark:C-M]
-        capslock = clear()
+        f13 = clear()
         esc = clear()
         backspace = toggle(setmark)
         a = togglem(setmark, C-M-a)
@@ -143,7 +144,7 @@
 
         # ── Jump mark (Super+Ctrl+Alt + a/b) ──
         [jumpmark:C-A-M]
-        capslock = clear()
+        f13 = clear()
         esc = clear()
         backspace = toggle(jumpmark)
         a = togglem(jumpmark, C-A-M-a)
