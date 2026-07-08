@@ -98,65 +98,11 @@
     flags = [ "--ozone-platform-hint=auto" ];
   };
 
-  services.keyd = {
-    enable = true;
-    keyboards.default = {
-      ids = [ "*" ];
-      extraConfig = ''
-        
-        
-        [main]
-        capslock = key(f24)
-        f24 = toggle(niri)
+  services.udev.extraHwdb = ''
+    evdev:atkbd:dmi:*
+      KEYBOARD_KEY_3a=f13
+  '';
 
-        x = toggle(niri)
-
-        # ── Main menu (Super+Alt = focus, +Shift = move) ──
-        [niri:A-M]
-        capslock = toggle(niri)
-        esc = clear()
-        space = clearm(A-M-space)
-        t = clearm(A-M-t)
-        r = toggle(resize)
-        f10 = toggle(monitor)
-        m = toggle(jumpmark)
-        shift.m = toggle(setmark)
-
-        # ── Monitor (Super+Ctrl = focus, +Shift = move) ──
-        [monitor:C-M]
-        capslock = clear()
-        esc = clear()
-        backspace = toggle(monitor)
-
-        # ── Resize (Super+Ctrl+Alt); 1/2/3/f commit & return, hjkl stay ──
-        [resize:C-A-M]
-        capslock = clear()
-        esc = clear()
-        backspace = toggle(resize)
-        1 = togglem(resize, C-A-M-1)
-        2 = togglem(resize, C-A-M-2)
-        3 = togglem(resize, C-A-M-3)
-        f = togglem(resize, C-A-M-f)
-
-        # ── Set mark (Super+Ctrl + a/b) ──
-        [setmark:C-M]
-        capslock = clear()
-        esc = clear()
-        backspace = toggle(setmark)
-        a = togglem(setmark, C-M-a)
-        b = togglem(setmark, C-M-b)
-
-        # ── Jump mark (Super+Ctrl+Alt + a/b) ──
-        [jumpmark:C-A-M]
-        capslock = clear()
-        esc = clear()
-        backspace = toggle(jumpmark)
-        a = togglem(jumpmark, C-A-M-a)
-        b = togglem(jumpmark, C-A-M-b)
-      '';
-    };
-  };
- 
   programs.helium.policies = {
     HomepageLocation = "http://localhost:8080/";
     HomepageIsNewTabPage = false;
