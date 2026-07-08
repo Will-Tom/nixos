@@ -1,6 +1,7 @@
 # ~/.config/wlr-which-key/modal.yaml
 
 # Theming — fully transparent, nothing renders
+inhibit_compositor_keyboard_shortcuts: true
 font: JetBrainsMono Nerd Font 11
 background: "#00000000"
 color: "#00000000"
