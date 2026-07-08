@@ -103,6 +103,11 @@
     keyboards.default = {
       ids = [ "*" ];
       extraConfig = ''
+        [ids]
+        *
+
+        [global]
+        overload_tap_timeout = 0
         [main]
         capslock = toggle(niri)
         x = toggle(niri)
