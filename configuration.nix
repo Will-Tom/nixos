@@ -104,12 +104,13 @@
       ids = [ "*" ];
       extraConfig = ''
         [main]
-        capslock = togglem(niri, capslock)
+        capslock.tap_timeout = 0
+        capslock = toggle(niri)
         x = toggle(niri)
 
         # ── Main menu (Super+Alt = focus, +Shift = move) ──
         [niri:A-M]
-        capslock = togglem(niri, capslock)
+        capslock = toggle(niri)
         esc = clear()
         space = clearm(A-M-space)
         t = clearm(A-M-t)
