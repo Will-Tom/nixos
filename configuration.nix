@@ -104,12 +104,11 @@
       ids = [ "*" ];
       extraConfig = ''
         
-        [global]
-        capslock.modifier = false
         
         [main]
-        capslock.tap_timeout = 0
-        capslock = toggle(niri)
+        capslock = key(f24)
+        f24 = toggle(niri)
+
         x = toggle(niri)
 
         # ── Main menu (Super+Alt = focus, +Shift = move) ──
