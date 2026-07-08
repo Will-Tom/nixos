@@ -104,12 +104,12 @@
       ids = [ "*" ];
       extraConfig = ''
         [main]
-        capslock = macro(toggle(niri))
+        capslock = togglem(niri, capslock)
         x = toggle(niri)
 
         # ── Main menu (Super+Alt = focus, +Shift = move) ──
         [niri:A-M]
-        capslock = toggle(niri)
+        capslock = togglem(niri, capslock)
         esc = clear()
         space = clearm(A-M-space)
         t = clearm(A-M-t)
