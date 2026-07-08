@@ -100,7 +100,7 @@
 
   services.udev.extraHwdb = ''
     evdev:atkbd:dmi:*
-      KEYBOARD_KEY_3a=f13
+      KEYBOARD_KEY_3a=f12
   '';
 
   programs.helium.policies = {
