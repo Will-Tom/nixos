@@ -14,7 +14,9 @@ margin_right: 20
 margin_bottom: 20
 
 menu:
- 
+
+  # Capslock (Super+F12) closes the modal from inside it
+  - { key: "Mod4+F12", desc: Close, cmd: "true" }
 
   # Launcher (exits modal)
   - { key: "space", desc: Launcher, cmd: "fuzzel" }
