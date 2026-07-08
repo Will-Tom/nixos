@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-# Kill the current instance and relaunch at root, fully detached so it
-# survives the parent wlr-which-key that spawned this script dying.
-pkill -x wlr-which-key
+pkill -f 'wlr-which-key modal'
+for _ in $(seq 1 20); do
+    pgrep -f 'wlr-which-key modal' >/dev/null || break
+    sleep 0.02
+done
 setsid --fork wlr-which-key modal >/dev/null 2>&1 </dev/null

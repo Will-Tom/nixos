@@ -1,14 +1,7 @@
 #!/usr/bin/env bash
-marker=/tmp/wlrwk-closed
-guard_ms=1500
-
-if [ -f "$marker" ]; then
-    now=$(date +%s%N)
-    last=$(cat "$marker" 2>/dev/null || echo 0)
-    if [ $(( (now - last) / 1000000 )) -lt "$guard_ms" ]; then
-        exit 0    # the modal just closed itself; this is the leaked re-trigger
-    fi
+# niri fires this on Super+F12 whether the modal is open or not.
+# Match by full command line, not process name — that was the bug.
+if pkill -f 'wlr-which-key modal'; then
+    exit 0
 fi
-
-pkill -x wlr-which-key && exit 0
 exec wlr-which-key modal
