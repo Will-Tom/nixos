@@ -17,7 +17,7 @@ margin_bottom: 20
 menu:
 
   # Capslock (Super+F12) closes the modal from inside it
-  - { key: "Mod4+F12", desc: Close, cmd: "true" }
+  - { key: ["Mod4+F12", "F12"], desc: Close, cmd: "date +%s%N > /tmp/wlrwk-closed" }
 
   # Launcher (exits modal)
   - { key: "space", desc: Launcher, cmd: "fuzzel" }

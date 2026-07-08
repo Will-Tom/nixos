@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
-# Kill the current instance and relaunch at root, fully detached so it
-# survives the parent wlr-which-key that spawned this script dying.
-pkill -x wlr-which-key
-setsid --fork wlr-which-key modal >/dev/null 2>&1 </dev/null
+marker=/tmp/wlrwk-closed
+guard_ms=1500
+
+if [ -f "$marker" ]; then
+    now=$(date +%s%N)
+    last=$(cat "$marker" 2>/dev/null || echo 0)
+    if [ $(( (now - last) / 1000000 )) -lt "$guard_ms" ]; then
+        exit 0    # the modal just closed itself; this is the leaked re-trigger
+    fi
+fi
+
+pkill -x wlr-which-key && exit 0
+exec wlr-which-key modal
