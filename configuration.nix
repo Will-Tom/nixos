@@ -103,15 +103,10 @@
     keyboards.default = {
       ids = [ "*" ];
       extraConfig = ''
-        [ids]
-        *
-
-        [global]
-        overload_tap_timeout = 0
         [main]
-        capslock = toggle(niri)
-        x = toggle(niri)
-        # ── Main menu (Super+Alt = focus, +Shift = move) ──
+        capslock = f13
+        f13 = toggle(niri)
+              
         [niri:A-M]
         capslock = toggle(niri)
         esc = clear()
@@ -120,7 +115,7 @@
         r = toggle(resize)
         f10 = toggle(monitor)
         m = toggle(jumpmark)
-        shift.m = toggle(setmark)
+        shift.m = toggle(setmark)C
 
         # ── Monitor (Super+Ctrl = focus, +Shift = move) ──
         [monitor:C-M]
