@@ -106,89 +106,52 @@
         [main]
         capslock = toggle(niri)
 
-        [niri]
+        # ── Main menu (Super+Alt = focus, +Shift = move) ──
+        [niri:A-M]
         capslock = toggle(niri)
         esc = clear()
-        h = A-M-h
-        j = A-M-j
-        k = A-M-k
-        l = A-M-l
-        S-h = A-M-S-h
-        S-j = A-M-S-j
-        S-k = A-M-S-k
-        S-l = A-M-S-l
-        g = A-M-g
-        S-g = A-M-S-g
-        semicolon = A-M-semicolon
-        S-semicolon = A-M-S-semicolon
-        u = A-M-u
-        S-u = A-M-S-u
-        d = A-M-d
-        S-d = A-M-S-d
-        0 = A-M-0
-        1 = A-M-1
-        2 = A-M-2
-        3 = A-M-3
-        4 = A-M-4
-        5 = A-M-5
-        6 = A-M-6
-        7 = A-M-7
-        8 = A-M-8
-        9 = A-M-9
-        b = A-M-b
-        o = A-M-o
-        q = A-M-q
-        f11 = A-M-f11
         space = clearm(A-M-space)
         t = clearm(A-M-t)
         r = toggle(resize)
         f10 = toggle(monitor)
         m = toggle(jumpmark)
-        S-m = toggle(setmark)
+        shift.m = toggle(setmark)
 
-        [monitor]
-        f13 = clear()
+        # ── Monitor (Super+Ctrl = focus, +Shift = move) ──
+        [monitor:C-M]
+        capslock = clear()
         esc = clear()
         backspace = toggle(monitor)
-        h = C-M-h
-        j = C-M-j
-        k = C-M-k
-        l = C-M-l
-        S-h = C-M-S-h
-        S-j = C-M-S-j
-        S-k = C-M-S-k
-        S-l = C-M-S-l
 
-        [resize]
-        f13 = clear()
+        # ── Resize (Super+Ctrl+Alt); 1/2/3/f commit & return, hjkl stay ──
+        [resize:C-A-M]
+        capslock = clear()
         esc = clear()
         backspace = toggle(resize)
-        h = C-A-M-h
-        l = C-A-M-l
-        j = C-A-M-j
-        k = C-A-M-k
         1 = togglem(resize, C-A-M-1)
         2 = togglem(resize, C-A-M-2)
         3 = togglem(resize, C-A-M-3)
         f = togglem(resize, C-A-M-f)
 
-        [setmark]
-        f13 = clear()
+        # ── Set mark (Super+Ctrl + a/b) ──
+        [setmark:C-M]
+        capslock = clear()
         esc = clear()
         backspace = toggle(setmark)
         a = togglem(setmark, C-M-a)
         b = togglem(setmark, C-M-b)
 
-        [jumpmark]
-        f13 = clear()
+        # ── Jump mark (Super+Ctrl+Alt + a/b) ──
+        [jumpmark:C-A-M]
+        capslock = clear()
         esc = clear()
         backspace = toggle(jumpmark)
         a = togglem(jumpmark, C-A-M-a)
-        b = togglem(jumpmark, C-A-M-b)B
-              '';
+        b = togglem(jumpmark, C-A-M-b)
+      '';
     };
   };
-
+ 
   programs.helium.policies = {
     HomepageLocation = "http://localhost:8080/";
     HomepageIsNewTabPage = false;
