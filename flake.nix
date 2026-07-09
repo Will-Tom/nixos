@@ -51,7 +51,6 @@
           home-manager.useUserPackages = true;
           home-manager.extraSpecialArgs = { inherit inputs; };
           home-manager.users.willisk = import ./home.nix;
-          home-manager.sharedModules = [ impermanence.nixosModules.home-manager.impermanence ];
         }
       ];
     };

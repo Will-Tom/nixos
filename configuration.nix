@@ -8,6 +8,7 @@
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  fileSystems."/persist".neededForBoot = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   networking.hostName = "nixos";
