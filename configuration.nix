@@ -6,15 +6,15 @@
     ];
 
   # Bootloader
-  boot.loader.grub.enable = true;
-  boot.loader.grub.device = "/dev/vda";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   services.openssh = {
     enable = true;
-    settings.PasswordAuthentication = true;
+    settings.PasswordAuthentication = false;
   };
   time.timeZone = "Australia/Melbourne";
   i18n.defaultLocale = "en_AU.UTF-8";
@@ -34,23 +34,45 @@
     layout = "us";
     variant = "";
   };
+
+  boot.initrd.systemd.enable = true;
+
+  #sops.defaultSopsFile = ./secrets.yaml;
+  sops.age.keyFile = "/persist/var/lib/sops-nix/key.txt";
+
+  sops.secrets."nixos_backup_key" = {
+      sopsFile = ./secrets/nixos_backup_key.enc;
+      format = "binary";
+      owner = "root";
+      mode = "0400";
+      path = "/root/.ssh/nixos_backup_key";
+    };
+
+  environment.persistence."/persist" = {
+    hideMounts = true;
+    directories = [
+      "/var/log"
+      "/var/lib/nixos"
+      "/var/lib/systemd/coredump"
+      "/etc/NetworkManager/system-connections"
+      "/var/lib/sops-nix"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+      "/etc/ssh/ssh_host_rsa_key"
+      "/etc/ssh/ssh_host_rsa_key.pub"
+    ];
+    users.willisk.directories = [
+      "Downloads" "Documents" ".config" ".local/share"
+    ];
+  };
   
   system.activationScripts.gitBackup = {
     text = ''
       export HOME=/root
-
-      if [ ! -f /root/.ssh/nixos_backup_key ]; then
-        mkdir -p /root/.ssh
-        ${pkgs.openssh}/bin/ssh-keygen -t ed25519 -f /root/.ssh/nixos_backup_key -N ""
-        echo "=================================================="
-        echo "New deploy key generated. Add this to GitHub"
-        echo "(repo Settings -> Deploy keys -> Add, allow write):"
-        cat /root/.ssh/nixos_backup_key.pub
-        echo "=================================================="
-      fi
-
       cd /etc/nixos
-
       if [ ! -d .git ]; then
         ${pkgs.git}/bin/git init
         ${pkgs.git}/bin/git config user.email "willthompson696@gmail.com"
@@ -58,11 +80,10 @@
         ${pkgs.git}/bin/git branch -M main
         ${pkgs.git}/bin/git remote add origin git@github.com:Will-Tom/nixos.git
       fi
-
       ${pkgs.git}/bin/git add -A
       if ! ${pkgs.git}/bin/git diff --cached --quiet; then
         ${pkgs.git}/bin/git commit -m "Auto-backup: $(date '+%Y-%m-%d %H:%M:%S')"
-        GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i /root/.ssh/nixos_backup_key -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" ${pkgs.git}/bin/git push origin main || true
+        GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."nixos_backup_key".path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" ${pkgs.git}/bin/git push origin main || true
       fi
     '';
   };
@@ -121,12 +142,17 @@
     pulse.enable = true;
   };
   programs.fish.enable = true;
+  
   users.users."willisk" = {
     isNormalUser = true;
     description = "Will Thompson";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGm8b8/LQKQRi8Zw33danKnB4p1ICA1x1lDLb9+jxZNm"
+    ];
   };
+  
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [ git nodejs_22 ];
   system.stateVersion = "26.05";
