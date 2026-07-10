@@ -58,6 +58,7 @@
       "/etc/NetworkManager/system-connections"
       "/var/lib/sops-nix"
       "/var/lib/systemd/timers"
+      "/etc/nixos"
     ];
     files = [
       "/etc/machine-id"
