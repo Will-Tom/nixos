@@ -78,6 +78,14 @@
   system.activationScripts.gitBackup = {
     text = ''
       export HOME=/root
+      export GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."nixos_backup_key".path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+
+      if [ ! -f /etc/nixos/flake.nix ]; then
+        echo "No flake found in /etc/nixos — cloning from GitHub..."
+        rm -rf /etc/nixos
+        ${pkgs.git}/bin/git clone git@github.com:Will-Tom/nixos.git /etc/nixos
+      fi
+
       cd /etc/nixos
       if [ ! -d .git ]; then
         ${pkgs.git}/bin/git init
@@ -86,10 +94,11 @@
         ${pkgs.git}/bin/git branch -M main
         ${pkgs.git}/bin/git remote add origin git@github.com:Will-Tom/nixos.git
       fi
+
       ${pkgs.git}/bin/git add -A
       if ! ${pkgs.git}/bin/git diff --cached --quiet; then
         ${pkgs.git}/bin/git commit -m "Auto-backup: $(date '+%Y-%m-%d %H:%M:%S')"
-        GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."nixos_backup_key".path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new" ${pkgs.git}/bin/git push origin main || true
+        ${pkgs.git}/bin/git push origin main || true
       fi
     '';
   };
