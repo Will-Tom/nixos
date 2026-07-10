@@ -57,6 +57,7 @@
       "/var/lib/systemd/coredump"
       "/etc/NetworkManager/system-connections"
       "/var/lib/sops-nix"
+      "/var/lib/systemd/timers"
     ];
     files = [
       "/etc/machine-id"
@@ -66,9 +67,12 @@
       "/etc/ssh/ssh_host_rsa_key.pub"
     ];
     users.willisk.directories = [
-      "Downloads" "Documents" ".config" ".local/share"
+      "Downloads" "Documents" "Projects" "Videos" "Pictures" ".config" ".local/share"
+      ".ssh" ".local/state"
     ];
   };
+
+  services.journald.storage = "persistent";
   
   system.activationScripts.gitBackup = {
     text = ''
