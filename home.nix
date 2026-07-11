@@ -51,7 +51,7 @@
         sudo nixos-rebuild switch --flake /etc/nixos $argv
       '';
     };
-  }
+  };
   
   home.packages = with pkgs; [
     claude-code
