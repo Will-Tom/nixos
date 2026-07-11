@@ -7,6 +7,7 @@
   boot.extraModulePackages = [ ];
   boot.initrd.luks.devices."cryptroot".device = "/dev/disk/by-partlabel/disk-main-luks";
   fileSystems."/" = { device = "none"; fsType = "tmpfs"; options = [ "defaults" "size=2G" "mode=755" ]; };
+  fileSystems."/tmp" = { device = "none"; fsType = "tmpfs"; options = [ "defaults" "size=4G" "mode=1777" ]; };
   swapDevices = [ ];
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

@@ -54,6 +54,7 @@
       "/var/lib/sops-nix"
       "/var/lib/systemd/timers"
       "/etc/nixos"
+      "/root/.cache/nix"
     ];
     files = [
       "/etc/machine-id"
@@ -70,34 +71,45 @@
 
   services.journald.storage = "persistent";
   
-  system.activationScripts.gitBackup = {
-    text = ''
-      export HOME=/root
-      export GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."nixos_backup_key".path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
+  # Remove system.activationScripts.gitBackup entirely, replace with:
+  systemd.services.gitBackup = {
+    description = "Auto-backup /etc/nixos to GitHub";
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      TimeoutStartSec = "30s";
+    };
+    script = ''
+    set -euo pipefail
+    export HOME=/root
+    export GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."nixos_backup_key".path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10"
 
-      if [ ! -f /etc/nixos/flake.nix ]; then
-        echo "No flake found in /etc/nixos — cloning from GitHub..."
-        rm -rf /etc/nixos
-        ${pkgs.git}/bin/git clone git@github.com:Will-Tom/nixos.git /etc/nixos
-      fi
+    if [ ! -f /etc/nixos/flake.nix ]; then
+      echo "No flake found in /etc/nixos — cloning from GitHub..."
+      rm -rf /etc/nixos
+      ${pkgs.git}/bin/git clone git@github.com:Will-Tom/nixos.git /etc/nixos
+    fi
 
-      cd /etc/nixos
-      if [ ! -d .git ]; then
-        ${pkgs.git}/bin/git init
-        ${pkgs.git}/bin/git config user.email "willthompson696@gmail.com"
-        ${pkgs.git}/bin/git config user.name "Will Thompson"
-        ${pkgs.git}/bin/git branch -M main
-        ${pkgs.git}/bin/git remote add origin git@github.com:Will-Tom/nixos.git
-      fi
+    cd /etc/nixos
 
-      ${pkgs.git}/bin/git add -A
-      if ! ${pkgs.git}/bin/git diff --cached --quiet; then
-        ${pkgs.git}/bin/git commit -m "Auto-backup: $(date '+%Y-%m-%d %H:%M:%S')"
-        ${pkgs.git}/bin/git push origin main || true
-      fi
-    '';
+    if [ ! -d .git ]; then
+      ${pkgs.git}/bin/git init
+      ${pkgs.git}/bin/git config user.email "willthompson696@gmail.com"
+      ${pkgs.git}/bin/git config user.name "Will Thompson"
+      ${pkgs.git}/bin/git branch -M main
+      ${pkgs.git}/bin/git remote add origin git@github.com:Will-Tom/nixos.git
+    fi
+
+    ${pkgs.git}/bin/git add -A
+    if ! ${pkgs.git}/bin/git diff --cached --quiet; then
+      ${pkgs.git}/bin/git commit -m "Auto-backup: $(date '+%Y-%m-%d %H:%M:%S')"
+      ${pkgs.git}/bin/git pull --rebase origin main || true
+      ${pkgs.git}/bin/git push origin main || true
+    fi
+  '';
+    wantedBy = [ "multi-user.target" ];
   };
-
   system.autoUpgrade = {
     enable = true;
     flake = "path:/etc/nixos";
@@ -179,5 +191,6 @@
   environment.systemPackages = with pkgs; [ git nodejs_22 ];
   system.stateVersion = "26.05";
 }
+
 
 
