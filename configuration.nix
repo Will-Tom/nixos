@@ -175,6 +175,8 @@
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };
+
+  services.getty.autologinUser = "willisk";
   
   users.users."willisk" = {
     isNormalUser = true;
