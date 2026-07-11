@@ -157,6 +157,18 @@
     pulse.enable = true;
   };
   programs.fish.enable = true;
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+  
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
+  };
   
   users.users."willisk" = {
     isNormalUser = true;

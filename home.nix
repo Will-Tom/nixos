@@ -51,6 +51,16 @@
     playerctl
     brightnessctl
     wireplumber
+    obsidian
+    yazi
+    localsend
+    xwayland-satellite
+    godot_4
+    mission-center
+    hardinfo2
+    htop
+    bat
+    eza
     jq
     inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
