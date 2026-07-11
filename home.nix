@@ -43,6 +43,12 @@
     };
   };
 
+  programs.fish.loginShellInit = ''
+    if test (tty) = "/dev/tty1"; and not set -q DISPLAY; and not set -q WAYLAND_DISPLAY
+      exec niri-session
+    end
+  '';
+  
   home.packages = with pkgs; [
     claude-code
     uv
