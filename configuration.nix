@@ -181,7 +181,18 @@
     localNetworkGameTransfers.openFirewall = true;
   };
 
-  services.getty.autologinUser = "willisk";
+  services.greetd = {
+    enable = true;
+    settings = {
+      initial_session = {
+        command = "${config.programs.niri.package}/bin/niri-session";
+        user = "willisk";
+      };
+      default_session.command = "${config.programs.niri.package}/bin/niri-session";
+    };
+  };
+
+  systemd.user.services.niri.enableDefaultPath = false;
   
   users.users."willisk" = {
     isNormalUser = true;

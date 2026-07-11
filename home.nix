@@ -45,12 +45,13 @@
 
   programs.fish = {
     enable = true;
-    loginShellInit = ''
-      if test (tty) = "/dev/tty1"; and not set -q DISPLAY; and not set -q WAYLAND_DISPLAY
-        exec niri-session
-      end
-    '';
-  };
+    functions = {
+      nrs = ''
+        sudo git -C /etc/nixos add -A
+        sudo nixos-rebuild switch --flake /etc/nixos $argv
+      '';
+    };
+  }
   
   home.packages = with pkgs; [
     claude-code
