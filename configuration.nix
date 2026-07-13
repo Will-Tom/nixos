@@ -88,6 +88,7 @@
     script = ''
     set -euo pipefail
     export HOME=/root
+    ${pkgs.git}/bin/git config --global --add safe.directory /etc/nixos
     export GIT_SSH_COMMAND="${pkgs.openssh}/bin/ssh -i ${config.sops.secrets."nixos_backup_key".path} -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=10"
 
     if [ ! -f /etc/nixos/flake.nix ]; then

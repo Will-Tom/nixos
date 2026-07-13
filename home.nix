@@ -54,6 +54,8 @@
   };
   
   home.packages = with pkgs; [
+    bitwarden-cli
+    ghostty
     claude-code
     uv
     wlr-which-key
