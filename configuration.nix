@@ -207,7 +207,7 @@
   };
   
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [ git nodejs_22 ];
+  environment.systemPackages = with pkgs; [ git nodejs_22 sops ssh-to-age];
   system.stateVersion = "26.05";
 }
 
