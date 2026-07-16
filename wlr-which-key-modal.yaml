@@ -94,7 +94,7 @@ menu:
       - { key: "'", desc: Back,   cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
   # Misc
-  - { key: "tab", desc: Toggle bar, cmd: "noctalia msg bar-toggle", keep_open: true }
+  - { key: "Tab", desc: Toggle bar, cmd: "noctalia msg bar-toggle", keep_open: true }
   - { key: "t",   desc: Terminal,        cmd: "ghostty",                                   keep_open: true }
   - { key: "F11", desc: Toggle floating, cmd: "niri msg action toggle-window-floating",  keep_open: true }
   - { key: "b",   desc: Back,            cmd: "niri msg action focus-window-previous",   keep_open: true }
