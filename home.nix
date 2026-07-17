@@ -24,6 +24,10 @@
     source = ./niri-mark-jump.sh;
     executable = true;
   };
+  home.file."bin/float-to-region.sh" = {
+    source = ./float-to-region.sh;
+    executable = true;
+  };
 
   programs.helix = {
     enable = true;
@@ -91,6 +95,7 @@
     bat
     eza
     jq
+    slurp
   ];
 
   xdg.configFile."niri/config.kdl".source = ./niri-config.kdl;
