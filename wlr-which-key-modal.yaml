@@ -100,6 +100,7 @@ menu:
   - { key: "Tab", desc: Toggle bar, cmd: "noctalia msg bar-toggle", keep_open: true }
   - { key: "t",   desc: Terminal,        cmd: "ghostty",                                   keep_open: true }
   - { key: "F11", desc: Float to region, cmd: "/home/willisk/bin/float-to-region.sh", keep_open: false }
+  - { key: "F12", desc: Toggle floating, cmd: "niri msg action toggle-window-floating", keep_open: true }
   - { key: "b",   desc: Back,            cmd: "niri msg action focus-window-previous",   keep_open: true }
   - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview",         keep_open: true }
   - { key: "q",   desc: Close,           cmd: "niri msg action close-window",            keep_open: true }
