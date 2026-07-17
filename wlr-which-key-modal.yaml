@@ -29,6 +29,9 @@ menu:
   - { key: "K", desc: Move up,    cmd: "niri msg action move-window-up",    keep_open: true }
   - { key: "L", desc: Move right, cmd: "niri msg action move-column-right", keep_open: true }
 
+  - { key: "[", desc: Consume/expel left,  cmd: "niri msg action consume-or-expel-window-left",  keep_open: true }
+  - { key: "]", desc: Consume/expel right, cmd: "niri msg action consume-or-expel-window-right", keep_open: true }
+
   # Strip ends — g/; focus, G/: move
   - { key: "g", desc: First column,  cmd: "niri msg action focus-column-first",   keep_open: true }
   - { key: ";", desc: Last column,   cmd: "niri msg action focus-column-last",    keep_open: true }
@@ -100,3 +103,4 @@ menu:
   - { key: "b",   desc: Back,            cmd: "niri msg action focus-window-previous",   keep_open: true }
   - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview",         keep_open: true }
   - { key: "q",   desc: Close,           cmd: "niri msg action close-window",            keep_open: true }
+  - { key: "p", desc: Screenshot,          cmd: "niri msg action screenshot",                    keep_open: true }
