@@ -85,15 +85,15 @@ menu:
   - key: "M"
     desc: Set mark
     submenu:
-      - { key: "a", desc: Mark a, cmd: "/home/willisk/bin/niri-mark-set.sh a; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-      - { key: "b", desc: Mark b, cmd: "/home/willisk/bin/niri-mark-set.sh b; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "a", desc: Mark a, cmd: "/home/willisk/bin/niri-mark-set.sh a" }
+      - { key: "b", desc: Mark b, cmd: "/home/willisk/bin/niri-mark-set.sh b" }
       - { key: "'", desc: Back,   cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
   - key: "m"
     desc: Jump to mark
     submenu:
-      - { key: "a", desc: Jump a, cmd: "/home/willisk/bin/niri-mark-jump.sh a; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-      - { key: "b", desc: Jump b, cmd: "/home/willisk/bin/niri-mark-jump.sh b; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "a", desc: Jump a, cmd: "/home/willisk/bin/niri-mark-jump.sh a" }
+      - { key: "b", desc: Jump b, cmd: "/home/willisk/bin/niri-mark-jump.sh b" }
       - { key: "'", desc: Back,   cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
   # Misc
