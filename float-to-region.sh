@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Define left/top edge offset (accounts for waybar + gaps/structs)
 X_OFFSET=0
