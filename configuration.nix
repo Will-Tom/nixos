@@ -190,7 +190,6 @@
         user = "willisk";
       };
       default_session = {
-        command = "${config.programs.niri.package}/bin/niri-session";
         user = "willisk";
       };
     };
