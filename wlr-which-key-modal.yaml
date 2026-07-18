@@ -103,7 +103,7 @@ menu:
       - { key: "r", desc: Restart,          cmd: "systemctl reboot",                 keep_open: true }
       - { key: "h", desc: Hibernate,        cmd: "systemctl hibernate",              keep_open: true }
       - { key: "l", desc: Logout, cmd: "niri msg action quit --skip-confirmation", keep_open: true }
-      - { key: "k", desc: Lock,             cmd: "swaylock",                         keep_open: true }
+      - { key: "k", desc: Lock,             cmd: "swaylock" }
       - { key: "u", desc: Reboot to UEFI,   cmd: "systemctl reboot --firmware-setup", keep_open: true }
       - { key: "'", desc: Back,             cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
   
