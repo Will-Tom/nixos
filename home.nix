@@ -75,9 +75,9 @@
   };
   
   home.packages = with pkgs; [
+    waylock
     bitwarden-cli
     ghostty
-    claude-code
     uv
     wlr-which-key
     fuzzel
@@ -91,7 +91,7 @@
     godot_4
     mission-center
     hardinfo2
-    htop
+    btop
     bat
     eza
     jq

@@ -96,6 +96,17 @@ menu:
       - { key: "b", desc: Jump b, cmd: "/home/willisk/bin/niri-mark-jump.sh b", keep_open: true }
       - { key: "'", desc: Back,   cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
+  - key: "P"
+    desc: Power
+    submenu:
+      - { key: "s", desc: Suspend,          cmd: "systemctl suspend",                keep_open: true }
+      - { key: "r", desc: Restart,          cmd: "systemctl reboot",                 keep_open: true }
+      - { key: "h", desc: Hibernate,        cmd: "systemctl hibernate",              keep_open: true }
+      - { key: "l", desc: Logout,           cmd: "niri msg action quit skip-confirmation=true", keep_open: true }
+      - { key: "k", desc: Lock,             cmd: "waylock",                         keep_open: true }
+      - { key: "u", desc: Reboot to UEFI,   cmd: "systemctl reboot --firmware-setup", keep_open: true }
+      - { key: "'", desc: Back,             cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+  
   # Misc
   - { key: "Tab", desc: Toggle bar, cmd: "noctalia msg bar-toggle", keep_open: true }
   - { key: "t",   desc: Terminal,        cmd: "ghostty",                                   keep_open: true }
