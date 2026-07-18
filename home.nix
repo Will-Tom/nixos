@@ -75,7 +75,7 @@
   };
   
   home.packages = with pkgs; [
-    waylock
+    swaylock
     bitwarden-cli
     ghostty
     uv
