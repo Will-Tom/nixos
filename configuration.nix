@@ -49,6 +49,12 @@
       path = "/root/.ssh/nixos_backup_key";
     };
 
+  sops.secrets."user_password_hash" = {
+    sopsFile = ./secrets/user_password.enc;
+    format = "binary";
+    neededForUsers = true;
+  };  
+
   environment.persistence."/persist" = {
     hideMounts = true;
     directories = [
@@ -202,7 +208,6 @@
     description = "Will Thompson";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
-    initialPassword = "changeme";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGm8b8/LQKQRi8Zw33danKnB4p1ICA1x1lDLb9+jxZNm"
     ];
