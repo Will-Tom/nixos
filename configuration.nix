@@ -202,7 +202,8 @@
     };
   };
   systemd.user.services.niri.enableDefaultPath = false;
-  
+
+  users.mutableUsers = false;
   users.users."willisk" = {
     isNormalUser = true;
     description = "Will Thompson";
