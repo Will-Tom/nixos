@@ -28,6 +28,11 @@
     source = ./float-to-region.sh;
     executable = true;
   };
+  
+  programs.swaylock = {
+    enable = true;
+    package = pkgs.swaylock;
+  };
 
   programs.helix = {
     enable = true;
@@ -75,7 +80,6 @@
   };
   
   home.packages = with pkgs; [
-    swaylock
     bitwarden-cli
     ghostty
     uv
