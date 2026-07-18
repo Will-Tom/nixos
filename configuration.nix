@@ -201,14 +201,16 @@
       };
     };
   };
+  
   systemd.user.services.niri.enableDefaultPath = false;
 
-  users.mutableUsers = false;
+  
   users.users."willisk" = {
     isNormalUser = true;
     description = "Will Thompson";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
+    initialPassword = "changeme";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGm8b8/LQKQRi8Zw33danKnB4p1ICA1x1lDLb9+jxZNm"
     ];
