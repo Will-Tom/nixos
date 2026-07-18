@@ -80,6 +80,7 @@
     claude-code
     uv
     wlr-which-key
+    wtype
     fuzzel
     playerctl
     brightnessctl
