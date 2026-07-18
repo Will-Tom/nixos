@@ -85,16 +85,14 @@ menu:
   - key: "M"
     desc: Set mark
     submenu:
-    - { key: "a", desc: Mark a, cmd: "/home/willisk/bin/niri-mark-set.sh a; wtype -k BackSpace", keep_open: true }
-    - { key: "b", desc: Mark b, cmd: "/home/willisk/bin/niri-mark-set.sh b; wtype -k BackSpace", keep_open: true }
-    - { key: "'", desc: Back,   cmd: "wtype -k BackSpace", keep_open: true }
+      - { key: "a", desc: Mark a, cmd: "/home/willisk/bin/niri-mark-set.sh a", keep_open: true }
+      - { key: "b", desc: Mark b, cmd: "/home/willisk/bin/niri-mark-set.sh b", keep_open: true }
 
   - key: "m"
     desc: Jump to mark
     submenu:
-    - { key: "a", desc: Jump a, cmd: "/home/willisk/bin/niri-mark-jump.sh a; wtype -k BackSpace", keep_open: true }
-    - { key: "b", desc: Jump b, cmd: "/home/willisk/bin/niri-mark-jump.sh b; wtype -k BackSpace", keep_open: true }
-    - { key: "'", desc: Back,   cmd: "wtype -k BackSpace", keep_open: true }
+      - { key: "a", desc: Jump a, cmd: "/home/willisk/bin/niri-mark-jump.sh a", keep_open: true }
+      - { key: "b", desc: Jump b, cmd: "/home/willisk/bin/niri-mark-jump.sh b", keep_open: true }
 
   # Misc
   - { key: "Tab", desc: Toggle bar, cmd: "noctalia msg bar-toggle", keep_open: true }

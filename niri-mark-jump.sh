@@ -5,3 +5,4 @@ markfile=~/.local/share/niri/marks/"$mark"
 id=$(cat "$markfile")
 [ -z "$id" ] && exit 1
 niri msg action focus-window --id "$id"
+wtype -k BackSpace
