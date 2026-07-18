@@ -106,7 +106,8 @@ menu:
       - { key: "k", desc: Lock,             cmd: "swaylock" }
       - { key: "u", desc: Reboot to UEFI,   cmd: "systemctl reboot --firmware-setup", keep_open: true }
       - { key: "'", desc: Back,             cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-  
+      - { key: "Delete", desc: Shutdown, cmd: "systemctl poweroff", keep_open: true }
+
   # Misc
   - { key: "Tab", desc: Toggle bar, cmd: "noctalia msg bar-toggle", keep_open: true }
   - { key: "t",   desc: Terminal,        cmd: "ghostty",                                   keep_open: true }
