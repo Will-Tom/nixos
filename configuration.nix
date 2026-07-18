@@ -49,11 +49,6 @@
       path = "/root/.ssh/nixos_backup_key";
     };
 
-  sops.secrets."user_password_hash" = {
-    sopsFile = ./secrets/user_password.enc;
-    format = "binary";
-    neededForUsers = true;
-  };  
 
   environment.persistence."/persist" = {
     hideMounts = true;
