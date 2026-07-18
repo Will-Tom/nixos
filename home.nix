@@ -29,11 +29,6 @@
     executable = true;
   };
   
-  programs.swaylock = {
-    enable = true;
-    package = pkgs.swaylock;
-  };
-
   programs.helix = {
     enable = true;
     defaultEditor = true;
@@ -80,6 +75,7 @@
   };
   
   home.packages = with pkgs; [
+    swaylock
     bitwarden-cli
     ghostty
     uv
