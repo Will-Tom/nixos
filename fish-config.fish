@@ -1,19 +1,10 @@
 if status is-interactive
-    fish_add_path ~/.local/bin
-    fish_add_path /opt/rocm/bin
-    starship init fish | source
-    zoxide init fish | source
     abbr -a hx helix
-    abbr -a ff fastfetch
     abbr -a yz yazi
-    abbr -a tm tmux
     set -gx EDITOR helix
     set -gx VISUAL helix
     abbr -a ls eza
     abbr -a cat bat
-    set -gx HSA_OVERRIDE_GFX_VERSION 10.3.0
-    set -gx ROC_ENABLE_PRE_VEGA 1
-    set -gx HIP_VISIBLE_DEVICES 0
 
     set -g fish_key_bindings fish_vi_key_bindings
 
