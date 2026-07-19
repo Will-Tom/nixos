@@ -17,6 +17,9 @@ menu:
   # Launcher (exits modal)
   - { key: "space", desc: Launcher, cmd: "fuzzel" }
 
+  # Exit modal entirely
+  - { key: "i", desc: Exit, cmd: "true" }
+
   # Focus — lowercase hjkl
   - { key: "h", desc: Focus left,  cmd: "niri msg action focus-column-left",  keep_open: true }
   - { key: "j", desc: Focus down,  cmd: "niri msg action focus-window-down",  keep_open: true }
@@ -44,7 +47,7 @@ menu:
   - { key: "d", desc: Workspace down, cmd: "niri msg action focus-workspace-down",          keep_open: true }
   - { key: "D", desc: Move ws down,   cmd: "niri msg action move-column-to-workspace-down", keep_open: true }
 
-  # Go to workspace  
+  # Go to workspace
   - { key: "0", desc: Workspace 0, cmd: "niri msg action focus-workspace 0; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
   - { key: "1", desc: Workspace 1, cmd: "niri msg action focus-workspace 1; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
   - { key: "2", desc: Workspace 2, cmd: "niri msg action focus-workspace 2; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
@@ -67,7 +70,7 @@ menu:
       - { key: "J", desc: Move down,   cmd: "niri msg action move-column-to-monitor-down",  keep_open: true }
       - { key: "K", desc: Move up,     cmd: "niri msg action move-column-to-monitor-up",    keep_open: true }
       - { key: "L", desc: Move right,  cmd: "niri msg action move-column-to-monitor-right", keep_open: true }
-      - { key: "'", desc: Back,        cmd: "/home/willisk/bin/wlr-which-key-home.sh",      keep_open: true }
+      - { key: "a", desc: Back,        cmd: "/home/willisk/bin/wlr-which-key-home.sh",      keep_open: true }
 
   - key: "r"
     desc: Resize
@@ -80,7 +83,7 @@ menu:
       - { key: "l", desc: Width +10%,  cmd: "niri msg action set-column-width '+10%'",  keep_open: true }
       - { key: "j", desc: Height -10%, cmd: "niri msg action set-window-height '-10%'", keep_open: true }
       - { key: "k", desc: Height +10%, cmd: "niri msg action set-window-height '+10%'", keep_open: true }
-      - { key: "'", desc: Back,        cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "a", desc: Back,        cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
   - key: "M"
     desc: Set mark
@@ -105,7 +108,7 @@ menu:
       - { key: "l", desc: Logout, cmd: "niri msg action quit --skip-confirmation", keep_open: true }
       - { key: "k", desc: Lock,             cmd: "swaylock" }
       - { key: "u", desc: Reboot to UEFI,   cmd: "systemctl reboot --firmware-setup", keep_open: true }
-      - { key: "'", desc: Back,             cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "a", desc: Back,             cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "Delete", desc: Shutdown, cmd: "systemctl poweroff", keep_open: true }
 
   # Misc
