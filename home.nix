@@ -51,6 +51,7 @@
         sudo nixos-rebuild switch --flake /etc/nixos $argv
       '';
     };
+    interactiveShellInit = builtins.readFile ./fish-config.fish;
   };
 
   imports = [ inputs.noctalia.homeModules.default ];
