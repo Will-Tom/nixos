@@ -32,10 +32,6 @@
   programs.helix = {
     enable = true;
     defaultEditor = true;
-    settings = {
-      theme = "onedark";
-      editor.cursor-shape.insert = "bar";
-    };
   };
 
   programs.kitty = {
@@ -97,7 +93,7 @@
     jq
     slurp
   ];
-
+  xdg.configFile."helix/config.toml".source = ./helix-config.toml;
   xdg.configFile."niri/config.kdl".source = ./niri-config.kdl;
   xdg.configFile."niri/noctalia.kdl".source = ./noctalia.kdl;
   xdg.configFile."wlr-which-key/modal.yaml".source = ./wlr-which-key-modal.yaml;

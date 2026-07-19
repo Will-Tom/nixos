@@ -1,0 +1,76 @@
+theme = "ao"
+[editor]
+true-color = true
+line-number = "relative"
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.soft-wrap]
+enable = true
+wrap-indicator = ""
+
+[keys.normal]
+"I" = "append_mode"
+a = "collapse_selection"
+A = "keep_primary_selection"
+S = "remove_primary_selection"
+u = "page_cursor_half_up"
+d = "page_cursor_half_down"
+s = "delete_selection"
+z = "undo"
+Z = "redo"
+F = "goto_word"
+e = "select_regex"
+E = "split_selection"
+t = "copy_selection_on_next_line"
+T = "copy_selection_on_prev_line"
+f = { f = "goto_file", t = "goto_window_top", c = "goto_window_center", b = "goto_window_bottom", d = "goto_definition", y = "goto_type_definition", r = "goto_reference", i = "goto_implementation", l = "goto_last_modification", n = "goto_line" }
+g = "goto_line_start"
+";" = "goto_line_end"
+U = "goto_file_start"
+D = "goto_last_line"
+G = "goto_first_nonwhitespace"
+w = { h = "move_prev_word_start", H = "move_prev_long_word_start", l = "move_next_word_end", L = "move_next_long_word_end", ";" = "move_next_word_start", ":" = "move_next_long_word_start" }
+b = "no_op"
+W = "no_op"
+B = "no_op"
+H = { D = "goto_first_diag", d = "goto_prev_diag", F = "goto_prev_function", C = "goto_prev_class", a = "goto_prev_parameter", c = "goto_prev_comment", T = "goto_prev_test", p = "goto_prev_paragraph", g = "goto_prev_change", G = "goto_first_change", space = "open_above", k = "add_newline_above", j = "add_newline_below", J = "jump_backward", f = "find_prev_char", t = "till_prev_char", b = "goto_previous_buffer" }
+L = { D = "goto_last_diag", d = "goto_next_diag", F = "goto_next_function", C = "goto_next_class", a = "goto_next_parameter", c = "goto_next_comment", T = "goto_next_test", p = "goto_next_paragraph", g = "goto_next_change", G = "goto_last_change", space = "open_below", j = "add_newline_below", k = "add_newline_above", J = "jump_forward", f = "find_next_char", t = "find_till_char", b = "goto_next_buffer" }
+C = { s = "switch_case", j = "decrement", k = "increment", J = "switch_to_lowercase", K = "switch_to_uppercase", c = "toggle_comments" }
+p = { h = "paste_before", l = "paste_after", H = "paste_clipboard_before", L = "paste_clipboard_after" }
+
+[keys.select]
+"I" = "append_mode"
+a = "collapse_selection"
+A = "keep_primary_selection"
+S = "remove_primary_selection"
+u = "page_cursor_half_up"
+d = "page_cursor_half_down"
+s = "delete_selection"
+z = "undo"
+Z = "redo"
+F = "goto_word"
+e = "select_regex"
+E = "split_selection"
+t = "copy_selection_on_next_line"
+T = "copy_selection_on_prev_line"
+f = { f = "goto_file", t = "goto_window_top", c = "goto_window_center", b = "goto_window_bottom", d = "goto_definition", y = "goto_type_definition", r = "goto_reference", i = "goto_implementation", l = "goto_last_modification", n = "goto_line" }
+g = "goto_line_start"
+";" = "goto_line_end"
+U = "goto_file_start"
+D = "goto_last_line"
+G = "goto_first_nonwhitespace"
+w = { h = "move_prev_word_start", H = "move_prev_long_word_start", l = "move_next_word_end", L = "move_next_long_word_end", ";" = "move_next_word_start", ":" = "move_next_long_word_start" }
+b = "no_op"
+W = "no_op"
+B = "no_op"
+H = { D = "goto_first_diag", d = "goto_prev_diag", F = "goto_prev_function", C = "goto_prev_class", a = "goto_prev_parameter", c = "goto_prev_comment", T = "goto_prev_test", p = "goto_prev_paragraph", g = "goto_prev_change", G = "goto_first_change", space = "open_above", k = "add_newline_above", j = "add_newline_below", J = "jump_backward", f = "find_prev_char", t = "till_prev_char", b = "goto_previous_buffer" }
+L = { D = "goto_last_diag", d = "goto_next_diag", F = "goto_next_function", C = "goto_next_class", a = "goto_next_parameter", c = "goto_next_comment", T = "goto_next_test", p = "goto_next_paragraph", g = "goto_next_change", G = "goto_last_change", space = "open_below", j = "add_newline_below", k = "add_newline_above", J = "jump_forward", f = "find_next_char", t = "find_till_char", b = "goto_next_buffer" }
+C = { s = "switch_case", j = "decrement", k = "increment", J = "switch_to_lowercase", K = "switch_to_uppercase", c = "toggle_comments" }
+p = { h = "paste_before", l = "paste_after", H = "paste_clipboard_before", L = "paste_clipboard_after" }
+
+
+
