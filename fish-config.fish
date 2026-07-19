@@ -1,5 +1,4 @@
 if status is-interactive
-    abbr -a hx helix
     abbr -a yz yazi
     set -gx EDITOR helix
     set -gx VISUAL helix
