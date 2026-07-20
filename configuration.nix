@@ -145,6 +145,12 @@
     };
   };
 
+ services.btrfs.autoScrub = {
+    enable = true;
+    interval = "monthly";
+    fileSystems = [ "/nix" "/persist" ];
+  };
+
   ############################################
   ## Users
   ############################################
