@@ -136,7 +136,7 @@
   services.btrbk.instances."persist" = {
     onCalendar = "hourly";
     settings = {
-      snapshot_preserve_min = "2m";
+      snapshot_preserve_min = "2d";
       snapshot_preserve = "48h 14d 6m";
       volume."/persist" = {
         subvolume = ".";
