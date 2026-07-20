@@ -160,7 +160,8 @@
   security.pam.services.swaylock = {};
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
-  
+  security.pam.services.login.enableGnomeKeyring = true;
+
   programs.niri.enable = true;
   systemd.user.services.niri.enableDefaultPath = false;
 
