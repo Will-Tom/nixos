@@ -22,18 +22,17 @@
               type = "luks";
               name = "cryptroot";
               passwordFile = "/tmp/disko-password";
-              settings.allowDiscards = true;
               content = {
                 type = "btrfs";
                 extraArgs = [ "-f" ];
                 subvolumes = {
                   "/nix" = {
                     mountpoint = "/nix";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [ "compress=zstd:1" "noatime" ];
                   };
                   "/persist" = {
                     mountpoint = "/persist";
-                    mountOptions = [ "compress=zstd" "noatime" ];
+                    mountOptions = [ "compress=zstd:1" "noatime" ];
                   };
                 };
               };

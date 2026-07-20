@@ -118,6 +118,29 @@
 
   services.journald.storage = "persistent";
 
+
+  ############################################
+  ## Storage: TRIM / Swap / Snapshots
+  ############################################
+  services.fstrim.enable = true;
+
+  zramSwap = {
+    enable = true;
+    memoryPercent = 50;
+  };
+
+  services.btrbk.instances."persist" = {
+    onCalendar = "hourly";
+    settings = {
+      snapshot_preserve_min = "2d";
+      snapshot_preserve = "48h 14d 6m";
+      volume."/persist" = {
+        subvolume = ".";
+        snapshot_dir = "/persist/.snapshots";
+      };
+    };
+  };
+
   ############################################
   ## Users
   ############################################
@@ -159,8 +182,6 @@
 
   security.pam.services.swaylock = {};
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.greetd.enableGnomeKeyring = true;
-  security.pam.services.login.enableGnomeKeyring = true;
 
   programs.niri.enable = true;
   systemd.user.services.niri.enableDefaultPath = false;
