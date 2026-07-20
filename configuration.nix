@@ -124,6 +124,10 @@
   ############################################
   services.fstrim.enable = true;
 
+  systemd.tmpfiles.rules = [
+    "d /persist/.snapshots 0750 root root -"
+  ];
+
   zramSwap = {
     enable = true;
     memoryPercent = 50;
