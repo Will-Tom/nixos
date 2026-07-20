@@ -53,6 +53,7 @@
 
   fileSystems."/persist".neededForBoot = true;
 
+
   ############################################
   ## System identity / Locale
   ############################################
@@ -128,6 +129,9 @@
 
   systemd.tmpfiles.rules = [
     "d /persist/.snapshots 0750 root root -"
+    "D /home/willisk/Downloads/tmp 0755 willisk users -"
+    "D /home/willisk/Pictures/screenshots/tmp 0755 willisk users -"
+
   ];
 
   zramSwap = {
@@ -192,6 +196,11 @@
     };
   };
 
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+  };
+  
   security.pam.services.swaylock = {};
   services.gnome.gnome-keyring.enable = true;
 
@@ -210,6 +219,7 @@
     HomepageLocation = "http://localhost:8080/";
     HomepageIsNewTabPage = false;
     NewTabPageLocation = "http://localhost:8080/";
+    DownloadDirectory = "/home/willisk/Downloads/tmp";
   };
 
   services.nginx = {
