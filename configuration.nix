@@ -46,6 +46,7 @@
   ## Boot / Filesystem
   ############################################
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.initrd.systemd.enable = true;
@@ -117,8 +118,9 @@
   };
 
   services.journald.storage = "persistent";
-
-
+  services.journald.extraConfig = ''
+    SystemMaxUse=500M
+  '';
   ############################################
   ## Storage: TRIM / Swap / Snapshots
   ############################################
