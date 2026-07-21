@@ -87,10 +87,14 @@
     format = "binary";
     owner = "root";
     group = "users";
-    mode = "0400";
+    mode = "0440";
     path = "/etc/secrets/nixos_backup_key";
   };
 
+  sops.secrets."willisk_password_hash" = {
+    sopsFile = ./secrets/user_password.yaml;
+    neededForUsers = true;
+  };
   ############################################
   ## Impermanence
   ############################################
@@ -163,7 +167,7 @@
     description = "Will Thompson";
     extraGroups = [ "networkmanager" "wheel" ];
     shell = pkgs.fish;
-    initialPassword = "changeme";
+    hashedPasswordFile = config.sops.secrets."willisk_password_hash".path;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGm8b8/LQKQRi8Zw33danKnB4p1ICA1x1lDLb9+jxZNm"
     ];
