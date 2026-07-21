@@ -333,6 +333,21 @@
       ${pkgs.git}/bin/git push origin main || true
     '';
   }) repos);
+  systemd.timers.gitBackup-ObsidianBackup = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5min";
+      OnUnitActiveSec = "30min";
+    };
+  };
+
+  systemd.timers.gitBackup-GalaxySlayer = {
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnBootSec = "5min";
+      OnUnitActiveSec = "30min";
+    };
+  };
   ############################################
   ## System packages
   ############################################
