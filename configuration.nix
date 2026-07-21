@@ -86,7 +86,7 @@
     sopsFile = ./secrets/nixos_backup_key.enc;
     format = "binary";
     owner = "root";
-    group = "willisk";
+    group = "users";
     mode = "0400";
     path = "/root/.ssh/nixos_backup_key";
   };
