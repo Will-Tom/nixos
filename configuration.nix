@@ -129,9 +129,6 @@
 
   systemd.tmpfiles.rules = [
     "d /persist/.snapshots 0750 root root -"
-    "D /home/willisk/Downloads/tmp 0755 willisk users -"
-    "D /home/willisk/Pictures/screenshots/tmp 0755 willisk users -"
-
   ];
 
   zramSwap = {
