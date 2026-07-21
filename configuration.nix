@@ -88,7 +88,7 @@
     owner = "root";
     group = "users";
     mode = "0400";
-    path = "/root/.ssh/nixos_backup_key";
+    path = "/etc/secrets/nixos_backup_key";
   };
 
   ############################################
