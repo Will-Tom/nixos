@@ -81,7 +81,7 @@
   ############################################
   # sops.defaultSopsFile = ./secrets.yaml;
   sops.age.keyFile = "/persist/var/lib/sops-nix/key.txt";
-
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
   sops.secrets."nixos_backup_key" = {
     sopsFile = ./secrets/nixos_backup_key.enc;
     format = "binary";
