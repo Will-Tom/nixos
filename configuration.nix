@@ -181,6 +181,8 @@
     settings.PasswordAuthentication = false;
   };
 
+  networking.nameservers = ["1.1.1.1" "1.0.0.1" "8.8.8.8" ];
+  networking.networkmanager.dns = "none";
   ############################################
   ## Desktop: display manager / compositor
   ############################################
