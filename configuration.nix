@@ -298,9 +298,9 @@
         ${pkgs.git}/bin/git add -A
         if ! ${pkgs.git}/bin/git diff --cached --quiet; then
           ${pkgs.git}/bin/git commit -m "Auto-backup: $(date '+%Y-%m-%d %H:%M:%S')"
-          ${pkgs.git}/bin/git pull --rebase origin main || true
-          ${pkgs.git}/bin/git push origin main || true
         fi
+        ${pkgs.git}/bin/git pull --rebase origin main || true
+        ${pkgs.git}/bin/git push origin main || true
       '';
       wantedBy = [ "multi-user.target" ];
     };
