@@ -99,17 +99,17 @@ menu:
       - { key: "b", desc: Jump b, cmd: "/home/willisk/bin/niri-mark-jump.sh b", keep_open: true }
       - { key: "'", desc: Back,   cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
-  - key: "P"
+  - key: "Q"
     desc: Power
     submenu:
-      - { key: "s", desc: Suspend,          cmd: "systemctl suspend",                keep_open: true }
+      - { key: "Delete", desc: Suspend,          cmd: "systemctl suspend",                keep_open: true }
       - { key: "r", desc: Restart,          cmd: "systemctl reboot",                 keep_open: true }
       - { key: "h", desc: Hibernate,        cmd: "systemctl hibernate",              keep_open: true }
       - { key: "l", desc: Logout, cmd: "niri msg action quit --skip-confirmation", keep_open: true }
       - { key: "k", desc: Lock,             cmd: "swaylock" }
       - { key: "u", desc: Reboot to UEFI,   cmd: "systemctl reboot --firmware-setup", keep_open: true }
       - { key: "a", desc: Back,             cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-      - { key: "Delete", desc: Shutdown, cmd: "systemctl poweroff", keep_open: true }
+      - { key: "s", desc: Shutdown, cmd: "systemctl poweroff", keep_open: true }
 
   # Misc
   - { key: "Tab", desc: Toggle bar, cmd: "noctalia msg bar-toggle", keep_open: true }
@@ -120,3 +120,4 @@ menu:
   - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview",         keep_open: true }
   - { key: "s",   desc: Close,           cmd: "niri msg action close-window",            keep_open: true }
   - { key: "p", desc: Screenshot, cmd: "niri msg action screenshot" }
+  - { key: "P", desc: "Screenshot (saved)", cmd: "niri msg action screenshot --path '~/Pictures/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png'" }
