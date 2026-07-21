@@ -50,7 +50,7 @@ hotkey-overlay {
      skip-at-startup
 }
 
-screenshot-path "~/Pictures/screenshots/tmp from %Y-%m-%d %H-%M-%S.png"
+screenshot-path "~/Pictures/screenshots/tmp/screenshot from %Y-%m-%d %H-%M-%S.png"
 
 animations {
 
