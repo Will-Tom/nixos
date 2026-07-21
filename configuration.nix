@@ -257,6 +257,8 @@
     enable32Bit = true;
   };
 
+  hardware.enableRedistributableFirmware = true;
+  
   ############################################
   ## Gaming
   ############################################
