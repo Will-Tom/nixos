@@ -119,5 +119,5 @@ menu:
   - { key: "b",   desc: Back,            cmd: "niri msg action focus-window-previous",   keep_open: true }
   - { key: "o",   desc: Overview,        cmd: "niri msg action toggle-overview",         keep_open: true }
   - { key: "s",   desc: Close,           cmd: "niri msg action close-window",            keep_open: true }
-  - { key: "p", desc: Screenshot, cmd: "niri msg action screenshot", keep_open: true }
-  - { key: "P", desc: "Screenshot (saved)", cmd: "niri msg action screenshot --path '~/Pictures/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png'", keep_open: true }
+  - { key: "p", desc: Screenshot, cmd: "niri msg action screenshot"  }
+  - { key: "P", desc: "Screenshot (saved)", cmd: "niri msg action screenshot --path '~/Pictures/screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png'" }
