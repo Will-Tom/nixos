@@ -52,7 +52,7 @@
     enable = true;
     functions = {
       nrs = ''
-        sudo git -C /etc/nixos add -A
+        git -C /etc/nixos add -A
         sudo nixos-rebuild switch --flake /etc/nixos $argv
       '';
       perdown = ''
