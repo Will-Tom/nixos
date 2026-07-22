@@ -109,6 +109,7 @@
       "/var/lib/systemd/timers"
       "/etc/nixos"
       "/root/.cache/nix"
+      "/var/lib/bluetooth"
     ];
     files = [
       "/etc/machine-id"
@@ -252,6 +253,11 @@
     pulse.enable = true;
   };
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = true;
+  };
+  
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
