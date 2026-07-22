@@ -1,8 +1,4 @@
 input {
-    cursor {
-        xcursor-theme "Bibata-Modern-Classic"
-        xcursor-size 32
-    }
     keyboard {
         xkb {
         options "caps:none"
@@ -14,6 +10,12 @@ input {
     warp-mouse-to-focus
     focus-follows-mouse max-scroll-amount="0%"
 }
+
+cursor {
+    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-size 32
+}
+
 
 output "DP-2" {
     mode "3840x2160@240.000"
