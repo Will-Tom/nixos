@@ -12,7 +12,7 @@ input {
 }
 
 cursor {
-    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-theme "Posy_Cursor_Black"
     xcursor-size 32
 }
 
