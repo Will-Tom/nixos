@@ -1,4 +1,8 @@
 input {
+    cursor {
+        xcursor-theme "Bibata-Modern-Classic"
+        xcursor-size 32
+    }
     keyboard {
         xkb {
         options "caps:none"
