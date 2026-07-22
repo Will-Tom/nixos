@@ -91,6 +91,7 @@
   };
   
   home.packages = with pkgs; [
+    fastfetch
     swaylock
     bitwarden-cli
     ghostty
