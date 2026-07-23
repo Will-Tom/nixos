@@ -219,6 +219,17 @@
   programs.niri.enable = true;
   systemd.user.services.niri.enableDefaultPath = false;
 
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
+      settings = {
+        main = {
+          leftmeta = "f13";
+        };
+      };
+    };
+  };
   ############################################
   ## Desktop: browser / startpage
   ############################################
