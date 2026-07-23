@@ -36,15 +36,15 @@ menu:
   - { key: "]", desc: Consume/expel right, cmd: "niri msg action consume-or-expel-window-right", keep_open: true }
 
   # Strip ends — g/; focus, G/: move
-  - { key: "g", desc: First column,  cmd: "niri msg action focus-column-first",   keep_open: true }
-  - { key: ";", desc: Last column,   cmd: "niri msg action focus-column-last",    keep_open: true }
+  - { key: "g", desc: First column,  cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-column-first", keep_open: false }
+  - { key: ";", desc: Last column,   cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-column-last",  keep_open: false }
   - { key: "G", desc: Move to first, cmd: "niri msg action move-column-to-first", keep_open: true }
   - { key: ":", desc: Move to last,  cmd: "niri msg action move-column-to-last",  keep_open: true }
 
   # Workspace up/down — u/d focus, U/D move
-  - { key: "u", desc: Workspace up,   cmd: "niri msg action focus-workspace-up",            keep_open: true }
+  - { key: "u", desc: Workspace up,   cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-workspace-up",   keep_open: false }
   - { key: "U", desc: Move ws up,     cmd: "niri msg action move-column-to-workspace-up",   keep_open: true }
-  - { key: "d", desc: Workspace down, cmd: "niri msg action focus-workspace-down",          keep_open: true }
+  - { key: "d", desc: Workspace down, cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-workspace-down", keep_open: false }
   - { key: "D", desc: Move ws down,   cmd: "niri msg action move-column-to-workspace-down", keep_open: true }
 
   # Go to workspace
