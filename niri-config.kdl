@@ -47,7 +47,9 @@ layout {
     default-column-width {}
 
     focus-ring {
-        off
+    width 1
+    active-color "#000000"
+    inactive-color "#000000"
     }
 
 }
