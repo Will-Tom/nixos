@@ -18,6 +18,11 @@
     "D %h/Pictures/screenshots/tmp 0755 - - -"
   ];
 
+  home.file."bin/wlr-which-key-warp.sh" = {
+    source = ./wlr-which-key-warp.sh;
+    executable = true;
+  };
+  
   home.file."bin/wlr-which-key-toggle.sh" = {
     source = ./wlr-which-key-toggle.sh;
     executable = true;
