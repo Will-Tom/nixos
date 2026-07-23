@@ -225,7 +225,7 @@
       ids = [ "*" ];
       settings = {
         main = {
-          leftmeta = "f13";
+          leftmeta = "f1";
         };
       };
     };
