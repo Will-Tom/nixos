@@ -10,10 +10,8 @@ while true; do
         fi
     else
         misses=$((misses + 1))
-        # debounce: warp.sh briefly kills+relaunches the modal, don't flicker
         if [ "$shown" -eq 1 ] && [ "$misses" -ge 3 ]; then
             eww close mode-indicator >/dev/null 2>&1
-            eww update modetext=normal >/dev/null 2>&1
             shown=0
         fi
     fi
