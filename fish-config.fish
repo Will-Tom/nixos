@@ -1,4 +1,5 @@
 if status is-interactive
+    set -fish_greeting
     abbr -a yz yazi
     set -gx EDITOR helix
     set -gx VISUAL helix
