@@ -130,13 +130,19 @@
       shell.launch_apps_as_systemd_services = true;
     };
   };
+
+  programs.ghostty = {
+    enable = true;
+    settings = {
+      confirm-close-surface = false;
+    };
+  };
   
   home.packages = with pkgs; [
     eww
     fastfetch
     swaylock
     bitwarden-cli
-    ghostty
     uv
     wlr-which-key
     fuzzel
