@@ -235,7 +235,7 @@
   ############################################
   programs.helium = {
     enable = true;
-    flags = [ "--ozone-platform-hint=auto" ];
+    flags = [ "--ozone-platform-hint=auto" "--password-store=basic" ];
   };
 
   programs.helium.policies = {
