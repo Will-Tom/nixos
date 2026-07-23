@@ -15,4 +15,6 @@ while true; do
             shown=0
         fi
     fi
+
+    sleep 0.1
 done
