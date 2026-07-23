@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+eww update modetext="normal"
 pkill -f 'wlr-which-key modal'
 for _ in $(seq 1 20); do
     pgrep -f 'wlr-which-key modal' >/dev/null || break

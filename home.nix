@@ -17,11 +17,6 @@
     "D %h/Downloads/tmp 0755 - - -"
     "D %h/Pictures/screenshots/tmp 0755 - - -"
   ];
-
-  home.file."bin/wlr-which-key-warp.sh" = {
-    source = ./wlr-which-key-warp.sh;
-    executable = true;
-  };
   
   home.file."bin/wlr-which-key-toggle.sh" = {
     source = ./wlr-which-key-toggle.sh;
@@ -45,6 +40,18 @@
   home.file."bin/float-to-region.sh" = {
     source = ./float-to-region.sh;
     executable = true;
+  };
+
+  systemd.user.services.eww-daemon = {
+    Unit = {
+      Description = "eww widget daemon";
+      After = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.eww}/bin/eww daemon --no-daemonize";
+      Restart = "on-failure";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
   };
   
   programs.helix = {
@@ -104,6 +111,7 @@
   };
   
   home.packages = with pkgs; [
+    eww
     fastfetch
     swaylock
     bitwarden-cli
@@ -131,5 +139,7 @@
   xdg.configFile."niri/config.kdl".source = ./niri-config.kdl;
   xdg.configFile."niri/noctalia.kdl".source = ./noctalia.kdl;
   xdg.configFile."wlr-which-key/modal.yaml".source = ./wlr-which-key-modal.yaml;
+  xdg.configFile."eww/eww.yuck".source = ./eww.yuck;
+  xdg.configFile."eww/eww.scss".source = ./eww.scss;
 }
 
