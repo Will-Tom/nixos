@@ -27,6 +27,11 @@
     executable = true;
   };
 
+  home.file."bin/eww-mode-watcher.sh" = {
+    source = ./eww-mode-watcher.sh;
+    executable = true;
+  };
+  
   home.file."bin/wlr-which-key-home.sh" = {
     source = ./wlr-which-key-home.sh;
     executable = true;
@@ -44,6 +49,18 @@
   home.file."bin/float-to-region.sh" = {
     source = ./float-to-region.sh;
     executable = true;
+  };
+
+  systemd.user.services.eww-mode-watcher = {
+    Unit = {
+      Description = "wlr-which-key mode indicator watcher";
+      After = [ "eww-daemon.service" ];
+    };
+    Service = {
+      ExecStart = "/home/willisk/bin/eww-mode-watcher.sh";
+      Restart = "on-failure";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
   };
 
   systemd.user.services.eww-daemon = {
@@ -146,4 +163,3 @@
   xdg.configFile."eww/eww.yuck".source = ./eww.yuck;
   xdg.configFile."eww/eww.scss".source = ./eww.scss;
 }
-

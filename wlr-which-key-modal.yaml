@@ -21,10 +21,10 @@ menu:
   - { key: "i", desc: Exit, cmd: "true" }
 
   # Focus — lowercase hjkl
-  - { key: "h", desc: Focus left,  cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-column-left",  keep_open: false }
-  - { key: "j", desc: Focus down,  cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-window-down",  keep_open: false }
-  - { key: "k", desc: Focus up,    cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-window-up",    keep_open: false }
-  - { key: "l", desc: Focus right, cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-column-right", keep_open: false }
+  - { key: "h", desc: Focus left,  cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-column-left",  keep_open: true }
+  - { key: "j", desc: Focus down,  cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-window-down",  keep_open: true }
+  - { key: "k", desc: Focus up,    cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-window-up",    keep_open: true }
+  - { key: "l", desc: Focus right, cmd: "/home/willisk/bin/wlr-which-key-warp.sh focus-column-right", keep_open: true }
 
   # Move — uppercase HJKL
   - { key: "H", desc: Move left,  cmd: "niri msg action move-column-left",  keep_open: true }
