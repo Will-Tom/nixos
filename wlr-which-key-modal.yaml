@@ -78,7 +78,7 @@ menu:
       - { key: "1", desc: Full width,  cmd: "niri msg action maximize-column; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "2", desc: Half width,  cmd: "niri msg action set-column-width '50%'; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "3", desc: Third width, cmd: "niri msg action set-column-width '33%'; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
-      - { key: "f", desc: Fullscreen,  cmd: "niri msg action fullscreen-window; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
+      - { key: "f", desc: Fullscreen,  cmd: "/home/willisk/bin/niri-fullscreen-toggle.sh; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "h", desc: Width -10%,  cmd: "niri msg action set-column-width '-10%'",  keep_open: true }
       - { key: "l", desc: Width +10%,  cmd: "niri msg action set-column-width '+10%'",  keep_open: true }
       - { key: "j", desc: Height -10%, cmd: "niri msg action set-window-height '-10%'", keep_open: true }

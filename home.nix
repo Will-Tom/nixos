@@ -22,6 +22,11 @@
       executable = true;
     };  
 
+  home.file."bin/niri-fullscreen-toggle.sh" = {
+    source = ./niri-fullscreen-toggle.sh;
+    executable = true;
+  };
+  
   home.file."bin/wlr-which-key-toggle.sh" = {
     source = ./wlr-which-key-toggle.sh;
     executable = true;
