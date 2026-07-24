@@ -1,8 +1,32 @@
+(defwidget bar [] (box :class "mode-border" ""))
+
+(defwindow border-top
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "2px" :anchor "top left")
+  :stacking "overlay" :exclusive false :focusable false
+  (bar))
+
+(defwindow border-bottom
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "100%" :height "2px" :anchor "bottom left")
+  :stacking "overlay" :exclusive false :focusable false
+  (bar))
+
+(defwindow border-left
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "2px" :height "100%" :anchor "top left")
+  :stacking "overlay" :exclusive false :focusable false
+  (bar))
+
+(defwindow border-right
+  :monitor 0
+  :geometry (geometry :x "0px" :y "0px" :width "2px" :height "100%" :anchor "top right")
+  :stacking "overlay" :exclusive false :focusable false
+  (bar))
+
 (defwindow mode-indicator
   :monitor 0
   :geometry (geometry :x "0px" :y "0px" :width "90px" :height "28px" :anchor "bottom right")
-  :stacking "overlay"
-  :exclusive false
-  :focusable false
+  :stacking "overlay" :exclusive false :focusable false
   (box :class "mode-box" :halign "fill" :valign "fill"
     (label :class "mode-label" :text "MODAL")))
