@@ -1,4 +1,4 @@
-(defwidget bar [] (box :class "mode-border" ""))
+(defwidget bar [] (box :class "mode-border"))
 
 (defwindow border-top
   :monitor 0
