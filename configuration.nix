@@ -160,6 +160,7 @@
     fileSystems = [ "/nix" "/persist" ];
   };
 
+  services.udisks2.enable = true; #USB auto mount
   ############################################
   ## Users
   ############################################

@@ -12,6 +12,12 @@
     name = "Posy_Cursor_Black";
     size = 32; 
   };
+
+  services.udiskie = {
+    enable = true;
+    automount = true;
+    notify = true;
+  };
   
   systemd.user.tmpfiles.rules = [
     "D %h/Downloads/tmp 0755 - - -"
