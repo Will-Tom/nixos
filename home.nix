@@ -144,6 +144,7 @@
   };
   
   home.packages = with pkgs; [
+    wl-screenrec
     eww
     fastfetch
     swaylock
