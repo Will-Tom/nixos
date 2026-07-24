@@ -17,10 +17,12 @@
     "D %h/Downloads/tmp 0755 - - -"
     "D %h/Pictures/screenshots/tmp 0755 - - -"
   ];
-    home.file."bin/wlr-which-key-warp.sh" = {
-      source = ./wlr-which-key-warp.sh;
-      executable = true;
-    };  
+
+  
+  home.file."bin/wlr-which-key-warp.sh" = {
+    source = ./wlr-which-key-warp.sh;
+    executable = true;
+  };  
 
   home.file."bin/niri-fullscreen-toggle.sh" = {
     source = ./niri-fullscreen-toggle.sh;
@@ -59,14 +61,17 @@
   systemd.user.services.eww-mode-watcher = {
     Unit = {
       Description = "wlr-which-key mode indicator watcher";
-      After = [ "eww-daemon.service" ];
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" "eww-daemon.service" ];
     };
     Service = {
       ExecStart = "/home/willisk/bin/eww-mode-watcher.sh";
       Restart = "on-failure";
+      RestartSec = 2;
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
+
 
   systemd.user.services.eww-daemon = {
     Unit = {
