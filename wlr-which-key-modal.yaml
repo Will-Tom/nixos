@@ -105,8 +105,7 @@ menu:
       - { key: "Delete", desc: Suspend,          cmd: "systemctl suspend",                keep_open: true }
       - { key: "r", desc: Restart,          cmd: "systemctl reboot",                 keep_open: true }
       - { key: "h", desc: Hibernate,        cmd: "systemctl hibernate",              keep_open: true }
-      - { key: "l", desc: Logout, cmd: "noctalia msg session lock", keep_open: true }
-      - { key: "k", desc: Lock,             cmd: "qs -c noctalia-shell ipc call lockScreen lock" }
+      - { key: "l", desc: Lock,             cmd: "noctalia msg session lock" }
       - { key: "u", desc: Reboot to UEFI,   cmd: "systemctl reboot --firmware-setup", keep_open: true }
       - { key: "a", desc: Back,             cmd: "/home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
       - { key: "s", desc: Shutdown, cmd: "systemctl poweroff", keep_open: true }
