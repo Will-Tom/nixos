@@ -158,7 +158,6 @@
     wl-screenrec
     eww
     fastfetch
-    swaylock
     bitwarden-cli
     uv
     wlr-which-key

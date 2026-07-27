@@ -214,7 +214,6 @@
     extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
   };
   
-  security.pam.services.swaylock = {};
   services.gnome.gnome-keyring.enable = true;
 
   programs.niri.enable = true;
