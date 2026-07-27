@@ -236,7 +236,10 @@
   ############################################
   programs.helium = {
     enable = true;
-    flags = ["-enable-blink-features=MiddleClickAutoscroll" "--ozone-platform-hint=auto" "--password-store=basic" ];
+    flags = [
+      "--ozone-platform-hint=auto"
+      "--password-store=basic"
+      "--enable-features=HardwareMediaKeyHandling" ];
   };
 
   programs.helium.policies = {
