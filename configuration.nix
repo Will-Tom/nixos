@@ -218,7 +218,7 @@
   services.gnome.gnome-keyring.enable = true;
 
   programs.niri.enable = true;
-  systemd.user.services.niri.enableDefaultPath = false;
+  systemd.user.services.niri.enableDefaultPath = lib.mkForce true;
 
   services.keyd = {
     enable = true;
