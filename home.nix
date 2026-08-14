@@ -155,6 +155,8 @@
   };
   
   home.packages = with pkgs; [
+    google-chrome
+    qutebrowser
     wl-screenrec
     eww
     fastfetch
