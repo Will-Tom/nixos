@@ -156,7 +156,7 @@
   
   home.packages = with pkgs; [
     google-chrome
-    qutebrowser
+    ladybird
     wl-screenrec
     eww
     fastfetch
