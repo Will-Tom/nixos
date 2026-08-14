@@ -33,10 +33,9 @@
     allowReboot = false;
   };
 
-  systemd.timers.nixos-upgrade.timerConfig = {
-    OnCalendar = lib.mkForce "";
+  systemd.timers.nixos-upgrade.timerConfig = lib.mkForce {
     OnBootSec = "2min";
-    Persistent = lib.mkForce false;
+    Persistent = false;
   };
 
   nixpkgs.config.allowUnfree = true;
