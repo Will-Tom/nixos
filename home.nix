@@ -156,7 +156,6 @@
   
   home.packages = with pkgs; [
     google-chrome
-    ladybird
     wl-screenrec
     eww
     fastfetch
