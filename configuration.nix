@@ -295,6 +295,8 @@
     localNetworkGameTransfers.openFirewall = true;
   };
 
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
   ############################################
   ## Shell
   ############################################

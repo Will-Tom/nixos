@@ -2,7 +2,7 @@
   disko.devices = {
     disk.main = {
       type = "disk";
-      device = "/dev/vda";
+      device = "/dev/nvme1n1";
       content = {
         type = "gpt";
         partitions = {
