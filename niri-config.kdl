@@ -238,6 +238,11 @@ overview {
     backdrop-color "#000000"
 }
 
+
+spawn-at-startup "ghostty" "--title=dash-updates"    "-e" "/home/willisk/bin/dash-updates.sh"
+spawn-at-startup "ghostty" "--title=dash-filesystem" "-e" "/home/willisk/bin/dash-filesystem.sh"
+spawn-at-startup "ghostty" "--title=dash-git"        "-e" "/home/willisk/bin/dash-git.sh"
+
 workspace "1"
 workspace "2"
 workspace "3"

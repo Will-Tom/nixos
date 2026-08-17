@@ -22,22 +22,6 @@
     options = "--delete-older-than 30d";
   };
 
-  system.autoUpgrade = {
-    enable = true;
-    flake = "path:/etc/nixos";
-    flags = [
-      "--update-input" "nixpkgs"
-      "--no-write-lock-file"
-      "-L"
-    ];
-    allowReboot = false;
-  };
-
-  systemd.timers.nixos-upgrade.timerConfig = lib.mkForce {
-    OnBootSec = "2min";
-    Persistent = false;
-  };
-
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [ inputs.helium-flake.overlays.default ];
 
@@ -229,6 +213,20 @@
       };
     };
   };
+
+  ############################################
+  ## Dashboard
+  ############################################
+
+  security.sudo.extraRules = [{
+    users = [ "willisk" ];
+    commands = [
+      { command = "${pkgs.btrfs-progs}/bin/btrfs device stats *";      options = [ "NOPASSWD" ]; }
+      { command = "${pkgs.btrfs-progs}/bin/btrfs scrub status *";      options = [ "NOPASSWD" ]; }
+      { command = "${pkgs.btrfs-progs}/bin/btrfs filesystem usage *";  options = [ "NOPASSWD" ]; }
+    ];
+  }];
+  
   ############################################
   ## Desktop: browser / startpage
   ############################################

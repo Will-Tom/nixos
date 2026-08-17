@@ -64,6 +64,11 @@
     executable = true;
   };
 
+  home.file."bin/dash-updates.sh"     = { source = ./dash-updates.sh;    executable = true; };
+  home.file."bin/dash-filesystem.sh"  = { source = ./dash-filesystem.sh; executable = true; };
+  home.file."bin/dash-git.sh"         = { source = ./dash-git.sh;        executable = true; };
+  home.file."bin/dash-syncthing.sh"   = { source = ./dash-syncthing.sh;  executable = true; };
+
   systemd.user.services.eww-mode-watcher = {
     Unit = {
       Description = "wlr-which-key mode indicator watcher";
@@ -155,6 +160,7 @@
   };
   
   home.packages = with pkgs; [
+    nvd
     google-chrome
     wl-screenrec
     eww
