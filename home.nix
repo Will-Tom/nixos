@@ -187,7 +187,6 @@
   ];
   xdg.configFile."helix/config.toml".source = ./helix-config.toml;
   xdg.configFile."niri/config.kdl".source = ./niri-config.kdl;
-  xdg.configFile."niri/noctalia.kdl".source = ./noctalia.kdl;
   xdg.configFile."wlr-which-key/modal.yaml".source = ./wlr-which-key-modal.yaml;
   xdg.configFile."eww/eww.yuck".source = ./eww.yuck;
   xdg.configFile."eww/eww.scss".source = ./eww.scss;

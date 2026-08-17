@@ -252,5 +252,4 @@ workspace "6"
 workspace "7"
 workspace "8"
 workspace "9"
-include "./noctalia.kdl"
 prefer-no-csd  
