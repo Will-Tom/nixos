@@ -160,48 +160,26 @@
     };
   };
 
-  systemd.user.services.dash-updates = {
+  systemd.user.services.dashboard = {
     Unit = {
-      Description = "Dashboard: updates";
+      Description = "Boot dashboard terminals";
       After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
     Service = {
-      ExecStart = "${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-updates -e /home/willisk/bin/dash-updates.sh";
-      Restart = "no";
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-
-  systemd.user.services.dash-filesystem = {
-    Unit = {
-      Description = "Dashboard: filesystem";
-      After = [ "graphical-session.target" "dash-updates.service" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
-      ExecStart = "${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh";
-      Restart = "no";
-    };
-    Install.WantedBy = [ "graphical-session.target" ];
-  };
-
-  systemd.user.services.dash-git = {
-    Unit = {
-      Description = "Dashboard: git";
-      After = [ "graphical-session.target" "dash-filesystem.service" ];
-      PartOf = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
-      ExecStart = "${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-git -e /home/willisk/bin/dash-git.sh";
-      Restart = "no";
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.writeShellScript "launch-dashboard" ''
+        ${pkgs.foot}/bin/foot --title=dash-updates    /home/willisk/bin/dash-updates.sh &
+        ${pkgs.foot}/bin/foot --title=dash-filesystem /home/willisk/bin/dash-filesystem.sh &
+        ${pkgs.foot}/bin/foot --title=dash-git        /home/willisk/bin/dash-git.sh &
+      ''}";
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
   
   home.packages = with pkgs; [
+    foot
     nvd
     google-chrome
     wl-screenrec
