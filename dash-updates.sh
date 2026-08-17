@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# Update preview pane (one-shot, interactive, non-destructive).
 # Fast on open: shows how far behind you are, waits for ENTER.
 # Then builds a preview, shows ONLY real version changes (not closure churn),
 # and lets you apply or discard. Nothing touches your real flake.lock unless
@@ -45,16 +44,19 @@ if ! nix build "$TMP#nixosConfigurations.nixos.config.system.build.toplevel" \
   echo; dim "Press ENTER to close."; read -r _; exit 1
 fi
 
-# Full diff to a file; show only the signal.
+# Full diff to a file (plain, for grepping) and a colored copy (for viewing).
 nvd diff /run/current-system "$TMP/result" > "$TMP/nvd.out" 2>&1 || true
+nvd --color=always diff /run/current-system "$TMP/result" > "$TMP/nvd.color" 2>&1 || cp "$TMP/nvd.out" "$TMP/nvd.color"
 date '+%Y-%m-%d %H:%M' > "$STATE/last-preview"
 
 echo
 bold "──────────── REAL CHANGES ────────────"
 if grep -qE '^\[(U|A|R)' "$TMP/nvd.out"; then
-  grep -E '^\[U' "$TMP/nvd.out" | sed 's/^/  /'
-  grep -E '^\[A' "$TMP/nvd.out" | sed 's/^/  /'
-  grep -E '^\[R' "$TMP/nvd.out" | sed 's/^/  /'
+  # Color the filtered lines ourselves so it works regardless of nvd version:
+  # upgrades + additions green, removals red.
+  grep -E '^\[U' "$TMP/nvd.out" | sed 's/^/  /' | while IFS= read -r l; do green "$l"; done
+  grep -E '^\[A' "$TMP/nvd.out" | sed 's/^/  /' | while IFS= read -r l; do green "$l"; done
+  grep -E '^\[R' "$TMP/nvd.out" | sed 's/^/  /' | while IFS= read -r l; do red   "$l"; done
 else
   dim "  No version changes — only closure dedup / rebuilds."
 fi
@@ -68,7 +70,7 @@ echo
 yellow "Apply these updates?  [y] switch   [v] view full diff first   [N] discard"
 read -r ans
 if [ "${ans,,}" = "v" ]; then
-  less -R "$TMP/nvd.out"
+  less -R "$TMP/nvd.color"
   yellow "Apply now?  [y] switch   [N] discard"
   read -r ans
 fi
