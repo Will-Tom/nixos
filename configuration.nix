@@ -221,9 +221,7 @@
   security.sudo.extraRules = [{
     users = [ "willisk" ];
     commands = [
-      { command = "/run/current-system/sw/bin/btrfs device stats *";     options = [ "NOPASSWD" ]; }
-      { command = "/run/current-system/sw/bin/btrfs scrub status *";     options = [ "NOPASSWD" ]; }
-      { command = "/run/current-system/sw/bin/btrfs filesystem usage *"; options = [ "NOPASSWD" ]; }
+      { command = "/run/current-system/sw/bin/btrfs"; options = [ "NOPASSWD" ]; }
     ];
   }];
   
