@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
+# Update preview pane (one-shot, interactive, non-destructive).
 # Fast on open: shows how far behind you are, waits for ENTER.
-# Then builds a preview, shows ONLY real version changes (not closure churn),
-# and lets you apply or discard. Nothing touches your real flake.lock unless
-# you choose to apply.
+# Then builds a preview, shows ONLY real version changes (not closure churn)
+# while preserving nvd's own informative coloring, and lets you apply or
+# discard. Nothing touches your real flake.lock unless you choose to apply.
 
 set -uo pipefail
 FLAKE=/etc/nixos
@@ -44,19 +45,20 @@ if ! nix build "$TMP#nixosConfigurations.nixos.config.system.build.toplevel" \
   echo; dim "Press ENTER to close."; read -r _; exit 1
 fi
 
-# Full diff to a file (plain, for grepping) and a colored copy (for viewing).
+# Colored copy: preserves nvd's own per-version coloring (red removed /
+# green added, and the [U]/[C]/[R] tag colors). Used for display + full view.
+nvd --color=always diff /run/current-system "$TMP/result" > "$TMP/nvd.color" 2>&1 \
+  || nvd diff /run/current-system "$TMP/result" > "$TMP/nvd.color" 2>&1 || true
+# Plain copy: used for reliable grep tests and counts (no escape codes).
 nvd diff /run/current-system "$TMP/result" > "$TMP/nvd.out" 2>&1 || true
-nvd --color=always diff /run/current-system "$TMP/result" > "$TMP/nvd.color" 2>&1 || cp "$TMP/nvd.out" "$TMP/nvd.color"
 date '+%Y-%m-%d %H:%M' > "$STATE/last-preview"
 
 echo
 bold "──────────── REAL CHANGES ────────────"
 if grep -qE '^\[(U|A|R)' "$TMP/nvd.out"; then
-  # Color the filtered lines ourselves so it works regardless of nvd version:
-  # upgrades + additions green, removals red.
-  grep -E '^\[U' "$TMP/nvd.out" | sed 's/^/  /' | while IFS= read -r l; do green "$l"; done
-  grep -E '^\[A' "$TMP/nvd.out" | sed 's/^/  /' | while IFS= read -r l; do green "$l"; done
-  grep -E '^\[R' "$TMP/nvd.out" | sed 's/^/  /' | while IFS= read -r l; do red   "$l"; done
+  # Display the real-change lines FROM THE COLORED stream so nvd's own
+  # coloring is preserved; -a so grep treats escape bytes as text.
+  grep -aE '^\[(U|A|R)' "$TMP/nvd.color" | sed 's/^/  /'
 else
   dim "  No version changes — only closure dedup / rebuilds."
 fi
