@@ -171,11 +171,11 @@
       RemainAfterExit = true;
       Environment = [ "TERM_PROGRAM=ghostty" ];
       ExecStart = "${pkgs.writeShellScript "launch-dashboard" ''
-        ${pkgs.ghostty}/bin/ghostty --class=com.dashboard.updates    --gtk-single-instance=false --title=dash-updates    -e /home/willisk/bin/dash-updates.sh &
-        sleep 0.5
-        ${pkgs.ghostty}/bin/ghostty --class=com.dashboard.filesystem --gtk-single-instance=false --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh &
-        sleep 0.5
-        ${pkgs.ghostty}/bin/ghostty --class=com.dashboard.git        --gtk-single-instance=false --title=dash-git        -e /home/willisk/bin/dash-git.sh &
+        ${pkgs.ghostty}/bin/ghostty -e true &     # sacrificial: absorbs the startup signal
+        sleep 1
+        ${pkgs.ghostty}/bin/ghostty --title=dash-updates    -e /home/willisk/bin/dash-updates.sh &
+        ${pkgs.ghostty}/bin/ghostty --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh &
+        ${pkgs.ghostty}/bin/ghostty --title=dash-git        -e /home/willisk/bin/dash-git.sh &
       ''}";
     };
     Install.WantedBy = [ "graphical-session.target" ];
