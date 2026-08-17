@@ -238,7 +238,7 @@ overview {
     backdrop-color "#000000"
 }
 
-
+spawn-at-startup "systemctl" "--user" "start" "dashboard.service"
 
 workspace "1"
 workspace "2"

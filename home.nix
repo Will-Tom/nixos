@@ -177,7 +177,6 @@
         ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-git        -e /home/willisk/bin/dash-git.sh &
       ''}";
     };
-    Install.WantedBy = [ "graphical-session.target" ];
   };
   
   home.packages = with pkgs; [
