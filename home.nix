@@ -170,11 +170,12 @@
       Type = "oneshot";
       RemainAfterExit = true;
       ExecStart = "${pkgs.writeShellScript "launch-dashboard" ''
-        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-updates    -e /home/willisk/bin/dash-updates.sh &
-        sleep 0.3
-        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh &
-        sleep 0.3
-        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-git        -e /home/willisk/bin/dash-git.sh &
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --class=dash.updates    --title=dash-updates    -e /home/willisk/bin/dash-updates.sh &
+        sleep 0.5
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --class=dash.filesystem --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh &
+        sleep 0.5
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --class=dash.git        --title=dash-git        -e /home/willisk/bin/dash-git.sh &
+        sleep 1
       ''}";
     };
   };
