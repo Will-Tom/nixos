@@ -156,6 +156,7 @@
     enable = true;
     settings = {
       confirm-close-surface = false;
+      gtk-single-instance = false;
     };
   };
   
