@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+# Update preview pane (one-shot, interactive, non-destructive).
+# Fast on open: shows how far behind you are, waits for ENTER.
+# Then builds a preview, shows ONLY real version changes (not closure churn),
+# and lets you apply or discard. Nothing touches your real flake.lock unless
+# you choose to apply.
+
 set -uo pipefail
 FLAKE=/etc/nixos
 STATE=/persist/home/willisk/.local/state/dashboard
@@ -14,48 +20,79 @@ clear
 bold "──────────── SYSTEM UPDATES ────────────"
 echo
 
-# Current locked nixpkgs rev vs upstream, cheap check (no build).
 cur_rev=$(nix flake metadata "$FLAKE" --json 2>/dev/null \
-  | ${JQ:-jq} -r '.locks.nodes.nixpkgs.locked.rev // "unknown"' 2>/dev/null)
+  | jq -r '.locks.nodes.nixpkgs.locked.rev // "unknown"' 2>/dev/null)
 dim "Locked nixpkgs: ${cur_rev:0:12}"
-
-last_preview=$(cat "$STATE/last-preview" 2>/dev/null || echo "never")
-dim "Last full preview: $last_preview"
+dim "Last full preview: $(cat "$STATE/last-preview" 2>/dev/null || echo never)"
 echo
-yellow "Press ENTER to build a preview of pending updates (slow, needs network)."
-yellow "Ctrl-C or close this window to skip."
+yellow "Press ENTER to build an update preview (slow, needs network)."
+yellow "Close this window to skip."
 read -r _
 
 echo
 bold "Updating flake inputs on a scratch copy…"
 TMP=$(mktemp -d)
 cp -r "$FLAKE"/. "$TMP"/ 2>/dev/null
-# ensure the scratch copy is a usable flake
 git -C "$TMP" add -A >/dev/null 2>&1 || true
 nix flake update --flake "$TMP" 2>&1 | sed 's/^/  /'
 
 echo
 bold "Building new system closure (not switching)…"
-if nix build "$TMP#nixosConfigurations.nixos.config.system.build.toplevel" \
+if ! nix build "$TMP#nixosConfigurations.nixos.config.system.build.toplevel" \
       -o "$TMP/result" 2>&1 | sed 's/^/  /'; then
-  echo
-  bold "──────────── PENDING CHANGES ────────────"
-  nvd diff /run/current-system "$TMP/result" || true
-  date '+%Y-%m-%d %H:%M' > "$STATE/last-preview"
-  echo
-  green "Apply these updates now?  [y] switch   [N] discard"
+  red "Build failed — nothing changed. See output above."
+  rm -rf "$TMP"
+  echo; dim "Press ENTER to close."; read -r _; exit 1
+fi
+
+# Full diff to a file; show only the signal.
+nvd diff /run/current-system "$TMP/result" > "$TMP/nvd.out" 2>&1 || true
+date '+%Y-%m-%d %H:%M' > "$STATE/last-preview"
+
+echo
+bold "──────────── REAL CHANGES ────────────"
+if grep -qE '^\[(U|A|R)' "$TMP/nvd.out"; then
+  grep -E '^\[U' "$TMP/nvd.out" | sed 's/^/  /'
+  grep -E '^\[A' "$TMP/nvd.out" | sed 's/^/  /'
+  grep -E '^\[R' "$TMP/nvd.out" | sed 's/^/  /'
+else
+  dim "  No version changes — only closure dedup / rebuilds."
+fi
+echo
+grep -E 'Closure size' "$TMP/nvd.out" | sed 's/^/  /'
+echo
+churn=$(grep -cE '^\[C' "$TMP/nvd.out")
+dim "  ($churn closure-only changes hidden — press v then ENTER to view full diff)"
+echo
+
+yellow "Apply these updates?  [y] switch   [v] view full diff first   [N] discard"
+read -r ans
+if [ "${ans,,}" = "v" ]; then
+  less -R "$TMP/nvd.out"
+  yellow "Apply now?  [y] switch   [N] discard"
   read -r ans
-  if [ "${ans,,}" = "y" ]; then
-    # copy the updated lock back into the real flake, then switch
-    cp "$TMP/flake.lock" "$FLAKE/flake.lock"
-    git -C "$FLAKE" add flake.lock >/dev/null 2>&1 || true
-    sudo nixos-rebuild switch --flake "$FLAKE#nixos"
-    green "Done. Updated flake.lock committed on next backup."
+fi
+
+if [ "${ans,,}" = "y" ]; then
+  cp "$TMP/flake.lock" "$FLAKE/flake.lock"
+  git -C "$FLAKE" add flake.lock >/dev/null 2>&1 || true
+  if sudo nixos-rebuild switch --flake "$FLAKE#nixos"; then
+    echo
+    green "Switched. Updated flake.lock staged (committed on next backup)."
+    reboot_bits=$(nvd diff /run/booted-system /run/current-system 2>/dev/null \
+                  | grep -E '(^|\s)(linux|systemd)\b' || true)
+    echo
+    if [ -n "$reboot_bits" ]; then
+      yellow "⚠ Kernel/systemd changed — a reboot is recommended:"
+      echo "$reboot_bits" | sed 's/^/    /'
+    else
+      green "No kernel/systemd change — no reboot needed."
+    fi
   else
-    yellow "Discarded. Your real flake.lock was not touched."
+    red "Switch failed — see output above. flake.lock was copied but not committed."
   fi
 else
-  red "Build failed — nothing changed. See output above."
+  yellow "Discarded. Your real flake.lock was not touched."
 fi
 
 rm -rf "$TMP"
