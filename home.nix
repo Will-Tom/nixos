@@ -160,24 +160,45 @@
     };
   };
 
-  systemd.user.services.dashboard = {
+  systemd.user.services.dash-updates = {
     Unit = {
-      Description = "Boot dashboard terminals";
-      After = [ "graphical-session.target" "niri.service" ];
+      Description = "Dashboard: updates";
+      After = [ "graphical-session.target" ];
       PartOf = [ "graphical-session.target" ];
     };
     Service = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.writeShellScript "launch-dashboard" ''
-        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --class=dash.updates    --title=dash-updates    -e /home/willisk/bin/dash-updates.sh &
-        sleep 0.5
-        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --class=dash.filesystem --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh &
-        sleep 0.5
-        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --class=dash.git        --title=dash-git        -e /home/willisk/bin/dash-git.sh &
-        sleep 1
-      ''}";
+      ExecStart = "${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-updates -e /home/willisk/bin/dash-updates.sh";
+      Restart = "no";
     };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
+  systemd.user.services.dash-filesystem = {
+    Unit = {
+      Description = "Dashboard: filesystem";
+      After = [ "graphical-session.target" "dash-updates.service" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
+      ExecStart = "${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh";
+      Restart = "no";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
+
+  systemd.user.services.dash-git = {
+    Unit = {
+      Description = "Dashboard: git";
+      After = [ "graphical-session.target" "dash-filesystem.service" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 2";
+      ExecStart = "${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-git -e /home/willisk/bin/dash-git.sh";
+      Restart = "no";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
   };
   
   home.packages = with pkgs; [
