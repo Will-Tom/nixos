@@ -159,6 +159,26 @@
       gtk-single-instance = false;
     };
   };
+
+  systemd.user.services.dashboard = {
+    Unit = {
+      Description = "Boot dashboard terminals";
+      After = [ "graphical-session.target" "niri.service" ];
+      PartOf = [ "graphical-session.target" ];
+    };
+    Service = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.writeShellScript "launch-dashboard" ''
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-updates    -e /home/willisk/bin/dash-updates.sh &
+        sleep 0.3
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh &
+        sleep 0.3
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-git        -e /home/willisk/bin/dash-git.sh &
+      ''}";
+    };
+    Install.WantedBy = [ "graphical-session.target" ];
+  };
   
   home.packages = with pkgs; [
     nvd
