@@ -169,17 +169,19 @@
     Service = {
       Type = "oneshot";
       RemainAfterExit = true;
+      Environment = [ "TERM_PROGRAM=ghostty" ];
       ExecStart = "${pkgs.writeShellScript "launch-dashboard" ''
-        ${pkgs.foot}/bin/foot --title=dash-updates    /home/willisk/bin/dash-updates.sh &
-        ${pkgs.foot}/bin/foot --title=dash-filesystem /home/willisk/bin/dash-filesystem.sh &
-        ${pkgs.foot}/bin/foot --title=dash-git        /home/willisk/bin/dash-git.sh &
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-updates    -e /home/willisk/bin/dash-updates.sh &
+        sleep 0.5
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-filesystem -e /home/willisk/bin/dash-filesystem.sh &
+        sleep 0.5
+        ${pkgs.ghostty}/bin/ghostty --gtk-single-instance=false --title=dash-git        -e /home/willisk/bin/dash-git.sh &
       ''}";
     };
     Install.WantedBy = [ "graphical-session.target" ];
   };
   
   home.packages = with pkgs; [
-    foot
     nvd
     google-chrome
     wl-screenrec
