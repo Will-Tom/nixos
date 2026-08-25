@@ -185,7 +185,6 @@
   home.packages = with pkgs; [
     seahorse
     nvd
-    google-chrome
     wl-screenrec
     eww
     fastfetch
