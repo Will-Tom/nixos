@@ -183,6 +183,7 @@
   };
   
   home.packages = with pkgs; [
+    super-productivity
     seahorse
     nvd
     wl-screenrec
