@@ -25,6 +25,8 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.overlays = [ inputs.helium-flake.overlays.default ];
 
+  programs.nix-ld.enable = true; #needed for celeste modding
+  
   ############################################
   ## Boot / Filesystem
   ############################################
