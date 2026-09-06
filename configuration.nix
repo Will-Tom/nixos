@@ -108,9 +108,7 @@
   };
 
   services.journald.storage = "persistent";
-  services.journald.extraConfig = ''
-    SystemMaxUse=500M
-  '';
+  services.journald.settings.Journal.SystemMaxUse = "500M";
   ############################################
   ## Storage: TRIM / Swap / Snapshots
   ############################################
