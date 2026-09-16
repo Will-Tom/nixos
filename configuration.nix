@@ -150,7 +150,7 @@
   users.users."willisk" = {
     isNormalUser = true;
     description = "Will Thompson";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "lp" ];
     shell = pkgs.fish;
     hashedPasswordFile = config.sops.secrets."willisk_password_hash".path;
     openssh.authorizedKeys.keys = [
@@ -223,6 +223,21 @@
       { command = "/run/current-system/sw/bin/btrfs"; options = [ "NOPASSWD" ]; }
     ];
   }];
+
+  ############################################
+  ## printing
+  ############################################
+
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.gutenprint pkgs.cups-filters ];
+  };
+
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
   
   ############################################
   ## Desktop: browser / startpage
