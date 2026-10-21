@@ -117,7 +117,7 @@
   services.fstrim.enable = true;
 
   systemd.tmpfiles.rules = [
-    "d /persist/.snapshots 0750 root root -"
+    "d /persist/.snapshots 0755 root root -"
   ];
 
   zramSwap = {
