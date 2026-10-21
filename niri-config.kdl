@@ -361,13 +361,13 @@ window-rule {
     variable-refresh-rate true
 }
 
-window-rule {
-    match app-id=r#"^steam$"#
-    open-focused false
-}
+// window-rule {
+//     match app-id=r#"^steam$"#
+//     open-focused false
+// }
 
-window-rule {
-    match app-id=r#"^steam$"#
-    open-floating false
-}
+// window-rule {
+//     match app-id=r#"^steam$"#
+//     open-floating false
+// }
   
