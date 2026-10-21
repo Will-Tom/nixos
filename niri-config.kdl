@@ -232,7 +232,7 @@ animations {
 }
 
 binds {
-    Shift+f1 repeat=false { spawn "/home/willisk/bin/wlr-which-key-toggle.sh"; }
+    f1 repeat=false { spawn "/home/willisk/bin/wlr-which-key-toggle.sh"; }
 
 
     Mod+Left  { focus-monitor-left; }

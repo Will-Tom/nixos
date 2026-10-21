@@ -207,8 +207,8 @@
     keyboards.default = {
       ids = [ "*" ];
       settings = {
-        shift = {
-          leftmeta = "f1";
+        main = {
+          leftmeta = "overload(meta, f1)";
         };
       };
     };
