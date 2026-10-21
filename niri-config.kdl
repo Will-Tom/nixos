@@ -357,4 +357,10 @@ prefer-no-csd
 window-rule {
     match app-id="steam_app_.*"
     variable-refresh-rate true
-}  
+}
+
+window-rule {
+    match app-id=r#"^steam$"#
+    open-floating false
+}
+  
