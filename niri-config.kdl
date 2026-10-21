@@ -8,7 +8,7 @@ input {
     }
 
     warp-mouse-to-focus
-    focus-follows-mouse max-scroll-amount="0%"
+    //focus-follows-mouse max-scroll-amount="0%"
     
 }
 
@@ -354,9 +354,16 @@ workspace "8"
 workspace "9"
 prefer-no-csd
 
+
+
 window-rule {
     match app-id="steam_app_.*"
     variable-refresh-rate true
+}
+
+window-rule {
+    match app-id=r#"^steam$"#
+    focus-on-open false
 }
 
 window-rule {
