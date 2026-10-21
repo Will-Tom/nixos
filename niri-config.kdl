@@ -363,7 +363,7 @@ window-rule {
 
 window-rule {
     match app-id=r#"^steam$"#
-    focus-on-open false
+    open-focused false
 }
 
 window-rule {
