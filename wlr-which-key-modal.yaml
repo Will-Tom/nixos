@@ -59,7 +59,7 @@ menu:
   - { key: "8", desc: Workspace 8, cmd: "niri msg action focus-workspace 8; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
   - { key: "9", desc: Workspace 9, cmd: "niri msg action focus-workspace 9; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
-  - key: "F10"
+  - key: "m"
     desc: Monitor
     submenu:
       - { key: "h", desc: Focus left,  cmd: "niri msg action focus-monitor-left",           keep_open: true }
