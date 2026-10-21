@@ -59,19 +59,6 @@ menu:
   - { key: "8", desc: Workspace 8, cmd: "niri msg action focus-workspace 8; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
   - { key: "9", desc: Workspace 9, cmd: "niri msg action focus-workspace 9; /home/willisk/bin/wlr-which-key-home.sh", keep_open: true }
 
-  - key: "m"
-    desc: Monitor
-    submenu:
-      - { key: "h", desc: Focus left,  cmd: "niri msg action focus-monitor-left",           keep_open: true }
-      - { key: "j", desc: Focus down,  cmd: "niri msg action focus-monitor-down",           keep_open: true }
-      - { key: "k", desc: Focus up,    cmd: "niri msg action focus-monitor-up",             keep_open: true }
-      - { key: "l", desc: Focus right, cmd: "niri msg action focus-monitor-right",          keep_open: true }
-      - { key: "H", desc: Move left,   cmd: "niri msg action move-column-to-monitor-left",  keep_open: true }
-      - { key: "J", desc: Move down,   cmd: "niri msg action move-column-to-monitor-down",  keep_open: true }
-      - { key: "K", desc: Move up,     cmd: "niri msg action move-column-to-monitor-up",    keep_open: true }
-      - { key: "L", desc: Move right,  cmd: "niri msg action move-column-to-monitor-right", keep_open: true }
-      - { key: "a", desc: Back,        cmd: "/home/willisk/bin/wlr-which-key-home.sh",      keep_open: true }
-
   - key: "r"
     desc: Resize
     submenu:
