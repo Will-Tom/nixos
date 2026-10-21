@@ -330,11 +330,11 @@ binds {
     Mod+V       { toggle-window-floating; }
     Mod+Shift+V { switch-focus-between-floating-and-tiling; }
 
-    Print repeat=false { screenshot; }
+    Mod+P repeat=false { screenshot; }
 
 
 
-    Mod+TAB { spawn "qs" "-c" "noctalia-shell" "ipc" "call" "bar" "toggle"; }
+    Mod+Tab repeat=false { spawn "noctalia" "msg" "bar-toggle"; }
 }    
      
 overview {
