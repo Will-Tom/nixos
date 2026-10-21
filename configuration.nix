@@ -207,7 +207,7 @@
     keyboards.default = {
       ids = [ "*" ];
       settings = {
-        main = {
+        shift = {
           leftmeta = "f1";
         };
       };
