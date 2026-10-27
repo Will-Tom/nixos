@@ -168,6 +168,13 @@
   
   networking.networkmanager.dns = "none";
   networking.resolvconf.enable = false;
+  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
+  environment.etc."resolv.conf".text = ''
+    nameserver 1.1.1.1
+    nameserver 1.0.0.1
+    options edns0
+  '';
+  
   ############################################
   ## Desktop: display manager / compositor
   ############################################
