@@ -172,9 +172,8 @@
   environment.etc."resolv.conf".text = ''
     nameserver 1.1.1.1
     nameserver 1.0.0.1
-    options edns0
-  '';
-  
+    options edns0 single-request-reopen timeout:1
+  '';  
   ############################################
   ## Desktop: display manager / compositor
   ############################################
