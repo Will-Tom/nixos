@@ -166,14 +166,13 @@
   };
 
   
-  networking.networkmanager.dns = "none";
-  networking.resolvconf.enable = false;
-  networking.nameservers = [ "1.1.1.1" "1.0.0.1" ];
-  environment.etc."resolv.conf".text = ''
-    nameserver 1.1.1.1
-    nameserver 1.0.0.1
-    options edns0 single-request timeout:1
-  '';  
+  networking.networkmanager.dns = "systemd-resolved";
+  networking.nameservers = [ "1.1.1.1#cloudflare-dns.com" "1.0.0.1#cloudflare-dns.com" ];
+  services.resolved = {
+    enable = true;
+    dnsovertls = "true";
+    domains = [ "~." ];
+  };
   ############################################
   ## Desktop: display manager / compositor
   ############################################
