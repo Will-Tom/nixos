@@ -94,6 +94,8 @@
       "/etc/nixos"
       "/root/.cache/nix"
       "/var/lib/bluetooth"
+      "/etc/mullvad-vpn"
+      "/var/cache/mullvad-vpn"
     ];
     files = [
       "/etc/machine-id"
@@ -165,14 +167,14 @@
     settings.PasswordAuthentication = false;
   };
 
+  services.mullvad-vpn = {
+    enable = true;
+    gui.enable = true;
+  };
+
   
   networking.networkmanager.dns = "systemd-resolved";
-  networking.nameservers = [ "1.1.1.1#cloudflare-dns.com" "1.0.0.1#cloudflare-dns.com" ];
-  services.resolved = {
-    enable = true;
-    dnsovertls = "true";
-    domains = [ "~." ];
-  };
+  services.resolved.enable = true;
   ############################################
   ## Desktop: display manager / compositor
   ############################################
