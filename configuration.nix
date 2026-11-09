@@ -257,6 +257,7 @@
     DownloadDirectory = "/home/willisk/Downloads/tmp";
   };
 
+
   services.nginx = {
     enable = true;
     virtualHosts."startpage" = {
@@ -406,6 +407,6 @@
   ############################################
   ## System packages
   ############################################
-  environment.systemPackages = with pkgs; [ git nodejs_22 sops ssh-to-age ];
+  environment.systemPackages = with pkgs; [ git nodejs_22 sops ssh-to-age mullvad-browser ];
 }
 
