@@ -183,6 +183,9 @@
     enable = true;
     fallbackDns = [ ];
   };
+
+  services.resolved.llmnr = "false";
+  
   ############################################
   ## Desktop: display manager / compositor
   ############################################
