@@ -273,6 +273,8 @@
     };
   };
 
+  services.flaresolverr.enable = true;
+  
   services.nginx = {
     enable = true;
     virtualHosts."startpage" = {
