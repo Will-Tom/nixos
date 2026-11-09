@@ -32,7 +32,13 @@
       url = "github:oxcl/nix-flake-helium-browser";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    degoog = {
+      url = "github:degoog-org/degoog";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
+
 
   outputs = inputs@{ self, nixpkgs, home-manager, disko, impermanence, sops-nix, ... }: {
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {

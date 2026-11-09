@@ -3,6 +3,7 @@
   imports = [
     ./hardware-configuration.nix
     inputs.helium-flake.nixosModules.default
+    inputs.degoog.nixosModules.default
   ];
 
   ############################################
@@ -79,6 +80,10 @@
     sopsFile = ./secrets/user_password.yaml;
     neededForUsers = true;
   };
+
+  sops.secrets."degoog_env" = {
+    sopsFile = ./secrets/degoog.yaml;
+  };
   ############################################
   ## Impermanence
   ############################################
@@ -110,7 +115,7 @@
     ];
   };
 
-  services.journald.storage = "persistent";
+  services.journald.settings.Journal.Storage = "persistent";
   services.journald.settings.Journal.SystemMaxUse = "500M";
   ############################################
   ## Storage: TRIM / Swap / Snapshots
@@ -255,6 +260,16 @@
     HomepageIsNewTabPage = false;
     NewTabPageLocation = "http://localhost:8080/";
     DownloadDirectory = "/home/willisk/Downloads/tmp";
+  };
+
+  services.degoog = {
+    enable = true;
+    environmentFile = config.sops.secrets."degoog_env".path;
+    environment = {
+      DEGOOG_BIND_ADDRESS = "127.0.0.1";  # default is 0.0.0.0, i.e. your whole LAN
+      DEGOOG_PORT = 4444;
+      DEGOOG_PUBLIC_INSTANCE = false;     # default is true
+    };
   };
 
 
