@@ -269,10 +269,9 @@
       DEGOOG_BIND_ADDRESS = "127.0.0.1";  # default is 0.0.0.0, i.e. your whole LAN
       DEGOOG_PORT = 4444;
       DEGOOG_PUBLIC_INSTANCE = false;     # default is true
+      DEGOOG_CURL_IMPERSONATE_LIB = "${pkgs.curl-impersonate}/lib/libcurl-impersonate.so";
     };
   };
-
-  services.flaresolverr.enable = true;
 
   services.nginx = {
     enable = true;
@@ -333,6 +332,8 @@
   ## Dotfiles auto-backup to GitHub
   ############################################
   systemd.services = {
+    degoog.path = [ pkgs.curl-impersonate ];
+      
     gitBackup = {
       description = "Auto-backup /etc/nixos to GitHub";
       after = [ "network-online.target" ];
