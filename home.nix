@@ -183,6 +183,7 @@
   };
   
   home.packages = with pkgs; [
+    claude-code
     foliate
     (olympus.override { celesteWrapper = "steam-run"; })
     super-productivity

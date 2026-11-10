@@ -112,6 +112,7 @@
     users.willisk.directories = [
       "Downloads" "Documents" "Projects" "Videos" "Pictures" ".config" ".local/share"
       ".ssh" ".local/state"
+      ".claude"
     ];
   };
 
