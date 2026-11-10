@@ -97,6 +97,12 @@
     Install.WantedBy = [ "graphical-session.target" ];
   };
   
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    enableFishIntegration = true;
+  };
+
   programs.helix = {
     enable = true;
     defaultEditor = true;

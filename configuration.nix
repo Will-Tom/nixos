@@ -36,6 +36,10 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Profiling / benchmarking (chess engine dev)
+  boot.kernel.sysctl."kernel.perf_event_paranoid" = 1;
+  boot.kernelParams = [ "transparent_hugepage=madvise" ];
+
   fileSystems."/persist".neededForBoot = true;
 
 
@@ -113,6 +117,9 @@
       "Downloads" "Documents" "Projects" "Videos" "Pictures" ".config" ".local/share"
       ".ssh" ".local/state"
       ".claude"
+    ];
+    users.willisk.files = [
+      ".claude.json"
     ];
   };
 
