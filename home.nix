@@ -189,6 +189,7 @@
   };
   
   home.packages = with pkgs; [
+    aseprite
     claude-code
     foliate
     (olympus.override { celesteWrapper = "steam-run"; })
