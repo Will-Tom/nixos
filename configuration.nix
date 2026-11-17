@@ -110,6 +110,7 @@
       "/var/lib/bluetooth"
       "/etc/mullvad-vpn"
       "/var/cache/mullvad-vpn"
+       { directory = "/var/lib/private"; mode = "0700"; }
     ];
     files = [
       "/etc/machine-id"
@@ -122,6 +123,7 @@
       "Downloads" "Documents" "Projects" "Videos" "Pictures" ".config" ".local/share"
       ".ssh" ".local/state"
       ".claude"
+      ".mullvad"
     ];
     users.willisk.files = [
       ".claude.json"
