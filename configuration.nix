@@ -196,11 +196,11 @@
   networking.networkmanager.dns = "systemd-resolved";
   services.resolved = {
     enable = true;
-    fallbackDns = [ ];
-  };
-
-  services.resolved.llmnr = "false";
-  
+    settings.Resolve = {
+      FallbackDNS = "";
+      LLMNR = "no";
+    };
+  };  
   ############################################
   ## Desktop: display manager / compositor
   ############################################
