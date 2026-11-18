@@ -13,6 +13,12 @@
     xdg.configFile."umbriel/config.toml".source = ./umbriel/config.toml;
     xdg.configFile."umbriel/effects".source = ./umbriel/effects;
 
+    # Fading "KEY - action" toast on the noctalia bar, called from keybinds
+    home.file."bin/bar-toast" = {
+      source = ./umbriel/bar-toast.sh;
+      executable = true;
+    };
+
     # Modal V: float the focused window into a slurp-drawn region
     home.file."bin/float-to-region.sh" = {
       source = ./umbriel/float-to-region.sh;

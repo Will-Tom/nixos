@@ -133,15 +133,17 @@ default_floating = false
 "XF86MonBrightnessUp"   = { action = "spawn brightnessctl --class=backlight set +10%", allow_when_locked = true }
 "XF86MonBrightnessDown" = { action = "spawn brightnessctl --class=backlight set 10%-", allow_when_locked = true }
 
-"Mod+Space" = { action = "spawn fuzzel", repeat = false }
-"Mod+T"     = { action = "spawn ghostty", repeat = false }
-"Mod+O"     = { action = "overview-toggle", repeat = false }
-"Mod+S"     = { action = "window-close", repeat = false }
-"Mod+Tab"   = { action = "spawn noctalia msg bar-toggle", repeat = false }
+# Launchers and one-shot actions show a fading "KEY - action" toast on the bar
+# via ~/bin/bar-toast; repeatable focus/move/resize binds stay native (instant).
+"Mod+Space" = { action = "spawn ~/bin/bar-toast 'SUPER + SPACE - Launcher'; fuzzel", repeat = false }
+"Mod+T"     = { action = "spawn ~/bin/bar-toast 'SUPER + T - Terminal'; ghostty", repeat = false }
+"Mod+O"     = { action = "spawn ~/bin/bar-toast 'SUPER + O - Overview'; umbriel msg overview-toggle", repeat = false }
+"Mod+S"     = { action = "spawn ~/bin/bar-toast 'SUPER + S - Close window'; umbriel msg window-close", repeat = false }
+"Mod+Tab"   = { action = "spawn ~/bin/bar-toast 'SUPER + TAB - Toggle bar'; noctalia msg bar-toggle", repeat = false }
 
 # Screenshots: Mod+P → screenshots/tmp, Mod+Shift+P → screenshots
-"Mod+P"       = { action = "spawn mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", repeat = false }
-"Mod+Shift+P" = { action = "spawn mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", repeat = false }
+"Mod+P"       = { action = "spawn ~/bin/bar-toast 'SUPER + P - Screenshot (tmp)'; mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", repeat = false }
+"Mod+Shift+P" = { action = "spawn ~/bin/bar-toast 'SUPER + SHIFT + P - Screenshot'; mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", repeat = false }
 
 "Mod+Left"  = "output-focus-left"
 "Mod+Down"  = "output-focus-down"
@@ -173,40 +175,40 @@ default_floating = false
 "Mod+Page_Down" = "workspace-move-down"
 "Mod+Page_Up"   = "workspace-move-up"
 
-"Mod+1" = "workspace-switch 1"
-"Mod+2" = "workspace-switch 2"
-"Mod+3" = "workspace-switch 3"
-"Mod+4" = "workspace-switch 4"
-"Mod+5" = "workspace-switch 5"
-"Mod+6" = "workspace-switch 6"
-"Mod+7" = "workspace-switch 7"
-"Mod+8" = "workspace-switch 8"
-"Mod+9" = "workspace-switch 9"
-"Mod+Shift+1" = "column-move-to-workspace 1"
-"Mod+Shift+2" = "column-move-to-workspace 2"
-"Mod+Shift+3" = "column-move-to-workspace 3"
-"Mod+Shift+4" = "column-move-to-workspace 4"
-"Mod+Shift+5" = "column-move-to-workspace 5"
-"Mod+Shift+6" = "column-move-to-workspace 6"
-"Mod+Shift+7" = "column-move-to-workspace 7"
-"Mod+Shift+8" = "column-move-to-workspace 8"
-"Mod+Shift+9" = "column-move-to-workspace 9"
+"Mod+1" = "spawn ~/bin/bar-toast 'SUPER + 1 - Workspace 1'; umbriel msg workspace-switch 1"
+"Mod+2" = "spawn ~/bin/bar-toast 'SUPER + 2 - Workspace 2'; umbriel msg workspace-switch 2"
+"Mod+3" = "spawn ~/bin/bar-toast 'SUPER + 3 - Workspace 3'; umbriel msg workspace-switch 3"
+"Mod+4" = "spawn ~/bin/bar-toast 'SUPER + 4 - Workspace 4'; umbriel msg workspace-switch 4"
+"Mod+5" = "spawn ~/bin/bar-toast 'SUPER + 5 - Workspace 5'; umbriel msg workspace-switch 5"
+"Mod+6" = "spawn ~/bin/bar-toast 'SUPER + 6 - Workspace 6'; umbriel msg workspace-switch 6"
+"Mod+7" = "spawn ~/bin/bar-toast 'SUPER + 7 - Workspace 7'; umbriel msg workspace-switch 7"
+"Mod+8" = "spawn ~/bin/bar-toast 'SUPER + 8 - Workspace 8'; umbriel msg workspace-switch 8"
+"Mod+9" = "spawn ~/bin/bar-toast 'SUPER + 9 - Workspace 9'; umbriel msg workspace-switch 9"
+"Mod+Shift+1" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 1 - Move to workspace 1'; umbriel msg column-move-to-workspace 1"
+"Mod+Shift+2" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 2 - Move to workspace 2'; umbriel msg column-move-to-workspace 2"
+"Mod+Shift+3" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 3 - Move to workspace 3'; umbriel msg column-move-to-workspace 3"
+"Mod+Shift+4" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 4 - Move to workspace 4'; umbriel msg column-move-to-workspace 4"
+"Mod+Shift+5" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 5 - Move to workspace 5'; umbriel msg column-move-to-workspace 5"
+"Mod+Shift+6" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 6 - Move to workspace 6'; umbriel msg column-move-to-workspace 6"
+"Mod+Shift+7" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 7 - Move to workspace 7'; umbriel msg column-move-to-workspace 7"
+"Mod+Shift+8" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 8 - Move to workspace 8'; umbriel msg column-move-to-workspace 8"
+"Mod+Shift+9" = "spawn ~/bin/bar-toast 'SUPER + SHIFT + 9 - Move to workspace 9'; umbriel msg column-move-to-workspace 9"
 
 "Mod+bracketleft"  = "window-consume-or-expel-left"
 "Mod+bracketright" = "window-consume-or-expel-right"
 
-"Mod+R"       = "window-cycle-primary-extent"
-"Mod+F"       = { action = "window-toggle-maximize", repeat = false }
-"Mod+Shift+F" = { action = "window-toggle-fullscreen", repeat = false }
-"Mod+C"       = "column-center"
+"Mod+R"       = { action = "spawn ~/bin/bar-toast 'SUPER + R - Cycle width'; umbriel msg window-cycle-primary-extent", repeat = false }
+"Mod+F"       = { action = "spawn ~/bin/bar-toast 'SUPER + F - Maximize'; umbriel msg window-toggle-maximize", repeat = false }
+"Mod+Shift+F" = { action = "spawn ~/bin/bar-toast 'SUPER + SHIFT + F - Fullscreen'; umbriel msg window-toggle-fullscreen", repeat = false }
+"Mod+C"       = { action = "spawn ~/bin/bar-toast 'SUPER + C - Center column'; umbriel msg column-center", repeat = false }
 
 "Mod+minus"       = "window-modify-primary-extent -0.1"
 "Mod+equal"       = "window-modify-primary-extent +0.1"
 "Mod+Shift+minus" = "window-modify-secondary-extent -0.1"
 "Mod+Shift+equal" = "window-modify-secondary-extent +0.1"
 
-"Mod+V"       = { action = "window-toggle-floating", repeat = false }
-"Mod+Shift+V" = { action = "spawn ~/bin/float-to-region.sh", repeat = false }
+"Mod+V"       = { action = "spawn ~/bin/bar-toast 'SUPER + V - Toggle floating'; umbriel msg window-toggle-floating", repeat = false }
+"Mod+Shift+V" = { action = "spawn ~/bin/bar-toast 'SUPER + SHIFT + V - Float to region'; ~/bin/float-to-region.sh", repeat = false }
 
 # ------------------------------------------------------------------------------
 # submap: modal (vim-like window management; stays active until i / Esc / F1)
@@ -214,7 +216,7 @@ default_floating = false
 "submap[modal],F1"     = { action = "submap reset", repeat = false }
 "submap[modal],i"      = { action = "submap reset", repeat = false }
 "submap[modal],Escape" = { action = "submap reset", repeat = false }
-"submap[modal],space"  = { action = "spawn fuzzel", submap = "reset", repeat = false }
+"submap[modal],space"  = { action = "spawn ~/bin/bar-toast 'MODAL SPACE - Launcher'; fuzzel", submap = "reset", repeat = false }
 
 "submap[modal],h" = "window-focus-left"
 "submap[modal],j" = "window-focus-down"
@@ -238,25 +240,25 @@ default_floating = false
 "submap[modal],Shift+u" = "column-move-to-workspace-previous"
 "submap[modal],Shift+d" = "column-move-to-workspace-next"
 
-"submap[modal],1" = "workspace-switch 1"
-"submap[modal],2" = "workspace-switch 2"
-"submap[modal],3" = "workspace-switch 3"
-"submap[modal],4" = "workspace-switch 4"
-"submap[modal],5" = "workspace-switch 5"
-"submap[modal],6" = "workspace-switch 6"
-"submap[modal],7" = "workspace-switch 7"
-"submap[modal],8" = "workspace-switch 8"
-"submap[modal],9" = "workspace-switch 9"
+"submap[modal],1" = "spawn ~/bin/bar-toast 'MODAL 1 - Workspace 1'; umbriel msg workspace-switch 1"
+"submap[modal],2" = "spawn ~/bin/bar-toast 'MODAL 2 - Workspace 2'; umbriel msg workspace-switch 2"
+"submap[modal],3" = "spawn ~/bin/bar-toast 'MODAL 3 - Workspace 3'; umbriel msg workspace-switch 3"
+"submap[modal],4" = "spawn ~/bin/bar-toast 'MODAL 4 - Workspace 4'; umbriel msg workspace-switch 4"
+"submap[modal],5" = "spawn ~/bin/bar-toast 'MODAL 5 - Workspace 5'; umbriel msg workspace-switch 5"
+"submap[modal],6" = "spawn ~/bin/bar-toast 'MODAL 6 - Workspace 6'; umbriel msg workspace-switch 6"
+"submap[modal],7" = "spawn ~/bin/bar-toast 'MODAL 7 - Workspace 7'; umbriel msg workspace-switch 7"
+"submap[modal],8" = "spawn ~/bin/bar-toast 'MODAL 8 - Workspace 8'; umbriel msg workspace-switch 8"
+"submap[modal],9" = "spawn ~/bin/bar-toast 'MODAL 9 - Workspace 9'; umbriel msg workspace-switch 9"
 
-"submap[modal],Tab" = { action = "spawn noctalia msg bar-toggle", repeat = false }
-"submap[modal],t"   = { action = "spawn ghostty", repeat = false }
-"submap[modal],v"       = { action = "window-toggle-floating", repeat = false }
-"submap[modal],Shift+v" = { action = "spawn ~/bin/float-to-region.sh", repeat = false }
-"submap[modal],b"   = { action = "window-focus-last", repeat = false }
-"submap[modal],o"   = { action = "overview-toggle", repeat = false }
-"submap[modal],s"   = { action = "window-close", repeat = false }
-"submap[modal],p"       = { action = "spawn mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
-"submap[modal],Shift+p" = { action = "spawn mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
+"submap[modal],Tab" = { action = "spawn ~/bin/bar-toast 'MODAL TAB - Toggle bar'; noctalia msg bar-toggle", repeat = false }
+"submap[modal],t"   = { action = "spawn ~/bin/bar-toast 'MODAL t - Terminal'; ghostty", repeat = false }
+"submap[modal],v"       = { action = "spawn ~/bin/bar-toast 'MODAL v - Toggle floating'; umbriel msg window-toggle-floating", repeat = false }
+"submap[modal],Shift+v" = { action = "spawn ~/bin/bar-toast 'MODAL V - Float to region'; ~/bin/float-to-region.sh", repeat = false }
+"submap[modal],b"   = { action = "spawn ~/bin/bar-toast 'MODAL b - Previous window'; umbriel msg window-focus-last", repeat = false }
+"submap[modal],o"   = { action = "spawn ~/bin/bar-toast 'MODAL o - Overview'; umbriel msg overview-toggle", repeat = false }
+"submap[modal],s"   = { action = "spawn ~/bin/bar-toast 'MODAL s - Close window'; umbriel msg window-close", repeat = false }
+"submap[modal],p"       = { action = "spawn ~/bin/bar-toast 'MODAL p - Screenshot (tmp)'; mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
+"submap[modal],Shift+p" = { action = "spawn ~/bin/bar-toast 'MODAL P - Screenshot'; mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
 
 "submap[modal],r"       = { action = "submap resize", repeat = false }
 "submap[modal],Shift+q" = { action = "submap power", repeat = false }
@@ -264,10 +266,10 @@ default_floating = false
 # ------------------------------------------------------------------------------
 # submap: resize (a / Esc back to modal; F1 leaves both)
 
-"submap[resize],1" = { action = "window-set-primary-extent 1.0", submap = "reset", repeat = false }
-"submap[resize],2" = { action = "window-set-primary-extent 0.5", submap = "reset", repeat = false }
-"submap[resize],3" = { action = "window-set-primary-extent 0.333", submap = "reset", repeat = false }
-"submap[resize],f" = { action = "window-toggle-fullscreen", submap = "reset", repeat = false }
+"submap[resize],1" = { action = "spawn ~/bin/bar-toast 'RESIZE 1 - Full width'; umbriel msg window-set-primary-extent 1.0", submap = "reset", repeat = false }
+"submap[resize],2" = { action = "spawn ~/bin/bar-toast 'RESIZE 2 - Half width'; umbriel msg window-set-primary-extent 0.5", submap = "reset", repeat = false }
+"submap[resize],3" = { action = "spawn ~/bin/bar-toast 'RESIZE 3 - Third width'; umbriel msg window-set-primary-extent 0.333", submap = "reset", repeat = false }
+"submap[resize],f" = { action = "spawn ~/bin/bar-toast 'RESIZE f - Fullscreen'; umbriel msg window-toggle-fullscreen", submap = "reset", repeat = false }
 "submap[resize],h" = "window-modify-primary-extent -0.1"
 "submap[resize],l" = "window-modify-primary-extent +0.1"
 "submap[resize],j" = "window-modify-secondary-extent -0.1"
@@ -279,12 +281,12 @@ default_floating = false
 # ------------------------------------------------------------------------------
 # submap: power (a / Esc back to modal; F1 leaves both)
 
-"submap[power],Delete" = { action = "spawn systemctl suspend", repeat = false }
-"submap[power],r"      = { action = "spawn systemctl reboot", repeat = false }
-"submap[power],h"      = { action = "spawn systemctl hibernate", repeat = false }
-"submap[power],u"      = { action = "spawn systemctl reboot --firmware-setup", repeat = false }
-"submap[power],s"      = { action = "spawn systemctl poweroff", repeat = false }
-"submap[power],l"      = { action = "spawn umbriel msg submap reset; noctalia msg session lock", submap = "reset", repeat = false }
+"submap[power],Delete" = { action = "spawn ~/bin/bar-toast 'POWER DELETE - Suspend'; systemctl suspend", repeat = false }
+"submap[power],r"      = { action = "spawn ~/bin/bar-toast 'POWER r - Reboot'; systemctl reboot", repeat = false }
+"submap[power],h"      = { action = "spawn ~/bin/bar-toast 'POWER h - Hibernate'; systemctl hibernate", repeat = false }
+"submap[power],u"      = { action = "spawn ~/bin/bar-toast 'POWER u - Reboot to UEFI'; systemctl reboot --firmware-setup", repeat = false }
+"submap[power],s"      = { action = "spawn ~/bin/bar-toast 'POWER s - Shutdown'; systemctl poweroff", repeat = false }
+"submap[power],l"      = { action = "spawn ~/bin/bar-toast 'POWER l - Lock'; umbriel msg submap reset; noctalia msg session lock", submap = "reset", repeat = false }
 "submap[power],a"      = { action = "submap reset", repeat = false }
 "submap[power],Escape" = { action = "submap reset", repeat = false }
 "submap[power],F1"     = { action = "spawn umbriel msg submap reset", submap = "reset", repeat = false }
