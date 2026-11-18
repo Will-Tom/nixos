@@ -19,13 +19,13 @@
       executable = true;
     };
 
-    # Super+Shift+Space: launch with fuzzel at half width
-    home.file."bin/launch-half" = {
-      source = ./umbriel/launch-half.sh;
+    # Launch at a given width: Super+Shift+Space (fuzzel, 1/2), Super+Shift+T (terminal, 1/3)
+    home.file."bin/launch-sized" = {
+      source = ./umbriel/launch-sized.sh;
       executable = true;
     };
 
-    # RESIZE ! @ #: set every tiled column on the workspace to 1/3, 1/2, full
+    # RESIZE ! @ #: set every tiled column on the workspace to full, 1/2, 1/3
     home.file."bin/resize-all" = {
       source = ./umbriel/resize-all.sh;
       executable = true;

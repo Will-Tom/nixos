@@ -174,8 +174,9 @@ default_floating = false
 # Launchers and one-shot actions show a fading "KEY - action" toast on the bar
 # via ~/bin/bar-toast; repeatable focus/move/resize binds stay native (instant).
 "Mod+Space" = { action = "spawn ~/bin/bar-toast super 'SPACE - Launcher'; fuzzel", repeat = false }
-"Mod+Shift+Space" = { action = "spawn ~/bin/bar-toast super 'SHIFT + SPACE - Launcher (half)'; ~/bin/launch-half", repeat = false }
+"Mod+Shift+Space" = { action = "spawn ~/bin/bar-toast super 'SHIFT + SPACE - Launcher (half)'; ~/bin/launch-sized 0.5", repeat = false }
 "Mod+T"     = { action = "spawn ~/bin/bar-toast super 'T - Terminal'; ghostty", repeat = false }
+"Mod+Shift+T" = { action = "spawn ~/bin/bar-toast super 'SHIFT + T - Terminal (third)'; ~/bin/launch-sized 0.333 ghostty", repeat = false }
 "Mod+O"     = { action = "spawn ~/bin/bar-toast super 'O - Overview'; umbriel msg overview-toggle", repeat = false }
 "Mod+S"     = { action = "spawn ~/bin/bar-toast super 'S - Close window'; umbriel msg window-close", repeat = false }
 "Mod+Tab"   = { action = "spawn ~/bin/bar-toast super 'TAB - Toggle bar'; noctalia msg bar-toggle", repeat = false }
@@ -261,7 +262,7 @@ default_floating = false
 "submap[modal],i"      = { action = "submap reset", repeat = false }
 "submap[modal],Escape" = { action = "submap reset", repeat = false }
 "submap[modal],space"  = { action = "spawn ~/bin/bar-toast modal 'SPACE - Launcher'; fuzzel", submap = "reset", repeat = false }
-"submap[modal],Shift+space" = { action = "spawn ~/bin/bar-toast modal 'SHIFT + SPACE - Launcher (half)'; ~/bin/launch-half", submap = "reset", repeat = false }
+"submap[modal],Shift+space" = { action = "spawn ~/bin/bar-toast modal 'SHIFT + SPACE - Launcher (half)'; ~/bin/launch-sized 0.5", submap = "reset", repeat = false }
 
 "submap[modal],h" = "window-focus-left"
 "submap[modal],j" = "window-focus-down"
@@ -297,6 +298,7 @@ default_floating = false
 
 "submap[modal],Tab" = { action = "spawn ~/bin/bar-toast modal 'TAB - Toggle bar'; noctalia msg bar-toggle", repeat = false }
 "submap[modal],t"   = { action = "spawn ~/bin/bar-toast modal 't - Terminal'; ghostty", repeat = false }
+"submap[modal],Shift+t" = { action = "spawn ~/bin/bar-toast modal 'T - Terminal (third)'; ~/bin/launch-sized 0.333 ghostty", repeat = false }
 "submap[modal],v"       = { action = "spawn ~/bin/bar-toast modal 'v - Toggle floating'; umbriel msg window-toggle-floating", repeat = false }
 "submap[modal],Shift+v" = { action = "spawn ~/bin/bar-toast modal 'V - Float to region'; ~/bin/float-to-region.sh", repeat = false }
 "submap[modal],b"   = { action = "spawn ~/bin/bar-toast modal 'b - Previous window'; umbriel msg window-focus-last", repeat = false }
@@ -315,9 +317,9 @@ default_floating = false
 "submap[resize],2" = { action = "spawn ~/bin/bar-toast modal '2 - Half width'; umbriel msg window-set-primary-extent 0.5", submap = "reset", repeat = false }
 "submap[resize],3" = { action = "spawn ~/bin/bar-toast modal '3 - Third width'; umbriel msg window-set-primary-extent 0.333", submap = "reset", repeat = false }
 # Shift+1/2/3 (! @ #): every tiled column on the workspace
-"submap[resize],Shift+1" = { action = "spawn ~/bin/bar-toast modal '! - All to third width'; ~/bin/resize-all 0.333", submap = "reset", repeat = false }
+"submap[resize],Shift+1" = { action = "spawn ~/bin/bar-toast modal '! - All to full width'; ~/bin/resize-all 1.0", submap = "reset", repeat = false }
 "submap[resize],Shift+2" = { action = "spawn ~/bin/bar-toast modal '@ - All to half width'; ~/bin/resize-all 0.5", submap = "reset", repeat = false }
-"submap[resize],Shift+3" = { action = "spawn ~/bin/bar-toast modal '# - All to full width'; ~/bin/resize-all 1.0", submap = "reset", repeat = false }
+"submap[resize],Shift+3" = { action = "spawn ~/bin/bar-toast modal '# - All to third width'; ~/bin/resize-all 0.333", submap = "reset", repeat = false }
 "submap[resize],f" = { action = "spawn ~/bin/bar-toast modal 'f - Fullscreen'; umbriel msg window-toggle-fullscreen", submap = "reset", repeat = false }
 "submap[resize],h" = "window-modify-primary-extent -0.1"
 "submap[resize],l" = "window-modify-primary-extent +0.1"
