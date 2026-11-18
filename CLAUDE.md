@@ -1,6 +1,6 @@
 # NixOS config
 
-Flake-based NixOS config. niri + Noctalia, home-manager as a NixOS module,
+Flake-based NixOS config. umbriel + Noctalia, home-manager as a NixOS module,
 impermanence (tmpfs root, state under /persist), sops-nix, disko.
 
 ## Layout
@@ -13,9 +13,13 @@ impermanence (tmpfs root, state under /persist), sops-nix, disko.
 - `modules/`: one file per feature. NixOS settings at the top level, the
   home-manager part under `home-manager.users.${config.my.username}`
   (`my.username` is defined in `modules/user.nix`).
-  - Compositor-neutral desktop parts (keyd, portal, keyring, eww, fuzzel)
-    are in `desktop-common.nix`; niri-only parts are in `niri.nix`.
-  - Native config files (kdl, yaml, yuck, scss, scripts) sit next to their
+  - Compositor-neutral desktop parts (keyd, portal, keyring, fuzzel)
+    are in `desktop-common.nix`; umbriel parts are in `umbriel.nix`.
+  - Noctalia plugins (bar mode badge, dashboard widgets) are in
+    `modules/noctalia/plugins/`. Saved state in
+    `~/.local/state/noctalia/settings.toml` overrides the Nix settings for
+    the plugin list and bar layout.
+  - Native config files (toml, glsl, luau, scripts) sit next to their
     module and are deployed with `xdg.configFile` / `home.file`.
   - Each module declares its own `/persist` paths and its own sops secrets.
 

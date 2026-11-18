@@ -59,26 +59,9 @@ in
       size = 32;
     };
 
-    # eww widgets (the wlr-which-key mode watcher lives in niri.nix)
-    xdg.configFile."eww/eww.yuck".source = ./desktop-common/eww.yuck;
-    xdg.configFile."eww/eww.scss".source = ./desktop-common/eww.scss;
-
-    systemd.user.services.eww-daemon = {
-      Unit = {
-        Description = "eww widget daemon";
-        After = [ "graphical-session.target" ];
-      };
-      Service = {
-        ExecStart = "${pkgs.eww}/bin/eww daemon --no-daemonize";
-        Restart = "on-failure";
-      };
-      Install.WantedBy = [ "graphical-session.target" ];
-    };
-
     home.packages = with pkgs; [
       seahorse
       wl-screenrec
-      eww
       fuzzel
       brightnessctl
       slurp

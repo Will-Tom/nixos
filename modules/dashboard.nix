@@ -6,20 +6,11 @@
 #   dashboard-fs-status      root timer writing /run/dashboard/fs.json (Filesystem widget)
 #   dashboard-apply          root nixos-rebuild switch, started by Accept
 #                            (systemctl start goes through a polkit password prompt)
-# The old dash-*.sh terminal scripts are still installed to run by hand.
 { config, pkgs, ... }:
 let
   username = config.my.username;
 in
 {
-  # dash-filesystem.sh (run by hand) reads btrfs stats
-  security.sudo.extraRules = [{
-    users = [ username ];
-    commands = [
-      { command = "/run/current-system/sw/bin/btrfs"; options = [ "NOPASSWD" ]; }
-    ];
-  }];
-
   systemd.tmpfiles.rules = [ "d /run/dashboard 0755 root root -" ];
 
   systemd.services.dashboard-fs-status = {
@@ -65,10 +56,5 @@ in
   home-manager.users.${username} = {
     home.file."bin/dash-update"     = { source = ./dashboard/dash-update.sh; executable = true; };
     home.file."bin/dash-git-status" = { source = ./dashboard/git-status.sh;  executable = true; };
-
-    home.file."bin/dash-updates.sh"    = { source = ./dashboard/dash-updates.sh;    executable = true; };
-    home.file."bin/dash-filesystem.sh" = { source = ./dashboard/dash-filesystem.sh; executable = true; };
-    home.file."bin/dash-git.sh"        = { source = ./dashboard/dash-git.sh;        executable = true; };
-    home.file."bin/dash-syncthing.sh"  = { source = ./dashboard/dash-syncthing.sh;  executable = true; };
   };
 }

@@ -1,4 +1,4 @@
--- Updates panel: the dash-updates.sh flow as buttons.
+-- Updates panel: preview, review and apply system updates.
 --   idle            locked nixpkgs, last preview, [Check for updates]
 --   checking        live build log
 --   ready           real changes (nvd [U]/[A]/[R]), closure size,

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Git backup status as JSON for the noctalia dashboard Git widget.
-# Same checks as dash-git.sh: /etc/nixos and every repo under ~/Projects
+# Checks /etc/nixos and every repo under ~/Projects
 # (dirty/ahead/behind, last commit and its size), plus backup service/timer health.
 
 set -uo pipefail

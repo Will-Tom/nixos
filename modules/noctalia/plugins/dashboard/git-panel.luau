@@ -1,4 +1,4 @@
--- Git panel: what dash-git.sh showed. The bar widget runs the scan and
+-- Git panel: repo and backup status. The bar widget runs the scan and
 -- shares its JSON through noctalia.state ("git"); refresh asks it to rescan.
 
 local MONO = "Liberation Mono"

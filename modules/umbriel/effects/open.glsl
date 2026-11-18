@@ -1,4 +1,4 @@
-// Window open: fluid reveal (ported from the niri window-open shader).
+// Window open: fluid reveal.
 // Fluid noise helpers (shared by open.glsl and close.glsl).
 float hash(vec2 p) {
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);

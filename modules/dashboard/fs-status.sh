@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Filesystem health as JSON for the noctalia dashboard Filesystem widget.
-# Same checks as dash-filesystem.sh. Needs root (btrfs ioctls), so it runs
+# btrfs counters, scrubs, snapshots, usage. Needs root (btrfs ioctls), so it runs
 # from the dashboard-fs-status system timer and writes /run/dashboard/fs.json.
 
 set -uo pipefail

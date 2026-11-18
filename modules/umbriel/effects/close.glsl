@@ -1,4 +1,4 @@
-// Window close: fluid dissolve (ported from the niri window-close shader).
+// Window close: fluid dissolve.
 // Fluid noise helpers (shared by open.glsl and close.glsl).
 float hash(vec2 p) {
     return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);

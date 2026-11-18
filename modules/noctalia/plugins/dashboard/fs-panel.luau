@@ -1,4 +1,4 @@
--- Filesystem panel: what dash-filesystem.sh showed, read from
+-- Filesystem panel: btrfs health, snapshots and usage, read from
 -- /run/dashboard/fs.json (root dashboard-fs-status timer, every 15 min).
 
 local PATH = "/run/dashboard/fs.json"

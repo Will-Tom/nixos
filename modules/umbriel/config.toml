@@ -1,4 +1,4 @@
-# umbriel config (translated from niri/niri-config.kdl + wlr-which-key-modal.yaml)
+# umbriel config
 # Check edits with `umbriel config validate`. Reloads on save.
 
 [general]
@@ -14,11 +14,11 @@ options = "caps:escape"
 [input.cursor]
 theme = "Posy_Cursor_Black"
 size = 32
-follows_focus = true            # niri warp-mouse-to-focus
+follows_focus = true            # cursor jumps to the focused window
 
 [input.focus]
 follows_mouse = true
-follows_mouse_max_scroll = 0.0  # niri max-scroll-amount="0%"
+follows_mouse_max_scroll = 0.0  # focus-follows-mouse never scrolls the view
 
 # ==============================================================================
 # Outputs
@@ -88,7 +88,7 @@ name = "8"
 name = "9"
 
 # ==============================================================================
-# Animations: fluid dissolve open/close (ported from the niri custom shaders)
+# Animations: fluid dissolve open/close
 
 [effects.preset.dissolve_in]
 kind = "animation"
@@ -138,10 +138,6 @@ shader = "effects/zoom/zoom_8.glsl"
 
 # ==============================================================================
 # Window rules
-
-[[window_rule]]
-match.title = ["^dash-updates$", "^dash-filesystem$", "^dash-git$"]
-default_output = "DP-1"
 
 [[window_rule]]
 match.app_id = "^com\\.mitchellh\\.ghostty$"

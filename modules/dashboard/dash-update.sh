@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # System update backend for the noctalia dashboard Updates widget.
-# Same flow as dash-updates.sh, split into steps the panel buttons call:
+# The update flow, split into steps the panel buttons call:
 #
 #   dash-update check     update flake inputs on a scratch copy and build the
 #                         new system (no switch); writes the nvd diff
