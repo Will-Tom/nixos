@@ -13,6 +13,12 @@
     xdg.configFile."umbriel/config.toml".source = ./umbriel/config.toml;
     xdg.configFile."umbriel/effects".source = ./umbriel/effects;
 
+    # Modal V: float the focused window into a slurp-drawn region
+    home.file."bin/float-to-region.sh" = {
+      source = ./umbriel/float-to-region.sh;
+      executable = true;
+    };
+
     home.packages = with pkgs; [
       grim # screenshots (Mod+P / Mod+Shift+P)
     ];
