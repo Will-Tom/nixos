@@ -1,6 +1,6 @@
 # Compositor-neutral desktop pieces. The compositor module (umbriel.nix) sets
 # the greetd session command.
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 let
   username = config.my.username;
 in
@@ -39,6 +39,13 @@ in
   users.groups.keyd = { };
   users.users.${username}.extraGroups = [ "keyd" ];
   environment.systemPackages = [ config.services.keyd.package ];
+  # Once the group exists keyd calls setgid("keyd") at startup; the NixOS unit's
+  # sandbox blocks that (no CAP_SETGID, @setuid filtered by ~@privileged) and
+  # keyd crashes. Allow it; mkAfter so @setuid comes after ~@privileged.
+  systemd.services.keyd.serviceConfig = {
+    CapabilityBoundingSet = [ "CAP_SETGID" ];
+    SystemCallFilter = lib.mkAfter [ "@setuid" ];
+  };
 
   services.upower.enable = true;
 
