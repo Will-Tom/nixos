@@ -1,5 +1,5 @@
-# Compositor-neutral desktop pieces. The compositor module (niri.nix) sets the
-# greetd session command.
+# Compositor-neutral desktop pieces. The compositor module (umbriel.nix) sets
+# the greetd session command.
 { config, pkgs, ... }:
 let
   username = config.my.username;
@@ -26,7 +26,9 @@ in
       ids = [ "*" ];
       settings = {
         main = {
-          leftmeta = "overload(meta, f1)";
+          # Physical Esc → F1, the modal key. Caps Lock still becomes Escape
+          # via xkb caps:escape (keyd runs below xkb).
+          esc = "f1";
         };
       };
     };
@@ -44,27 +46,9 @@ in
       size = 32;
     };
 
-    # eww widgets, plus the mode indicator fed by wlr-which-key
+    # eww widgets (the wlr-which-key mode watcher lives in niri.nix)
     xdg.configFile."eww/eww.yuck".source = ./desktop-common/eww.yuck;
     xdg.configFile."eww/eww.scss".source = ./desktop-common/eww.scss;
-    home.file."bin/eww-mode-watcher.sh" = {
-      source = ./desktop-common/eww-mode-watcher.sh;
-      executable = true;
-    };
-
-    systemd.user.services.eww-mode-watcher = {
-      Unit = {
-        Description = "wlr-which-key mode indicator watcher";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session.target" "eww-daemon.service" ];
-      };
-      Service = {
-        ExecStart = "/home/willisk/bin/eww-mode-watcher.sh";
-        Restart = "on-failure";
-        RestartSec = 2;
-      };
-      Install.WantedBy = [ "graphical-session.target" ];
-    };
 
     systemd.user.services.eww-daemon = {
       Unit = {

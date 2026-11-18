@@ -1,5 +1,5 @@
 {
-  description = "NixOS config: niri + noctalia";
+  description = "NixOS config: umbriel + noctalia";
 
   nixConfig = {
     extra-substituters = [ "https://noctalia.cachix.org" ];

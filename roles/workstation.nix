@@ -8,7 +8,7 @@
     ../modules/printing.nix
     ../modules/browser.nix
     ../modules/desktop-common.nix
-    ../modules/niri.nix
+    ../modules/umbriel.nix
     ../modules/noctalia.nix
     ../modules/terminals.nix
     ../modules/dashboard.nix
