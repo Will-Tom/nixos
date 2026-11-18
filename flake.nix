@@ -67,7 +67,6 @@
       nixosConfigurations.nixos = mkHost {
         hostname = "nixos";
         modules = [
-          ./disko.nix
           ./hosts/desktop
         ];
       };
