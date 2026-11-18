@@ -41,7 +41,15 @@ in
   systemd.services.dashboard-apply = {
     description = "Switch to the updated system (dashboard Accept button)";
     path = [ "/run/current-system/sw" ];
-    environment.HOME = "/root";
+    environment = {
+      HOME = "/root";
+      # /etc/nixos is owned by the user, so nix's libgit2 refuses it as root
+      # (sudo is exempt, a service isn't). Trust it for this service only.
+      XDG_CONFIG_HOME = "${pkgs.writeTextDir "git/config" ''
+        [safe]
+        	directory = /etc/nixos
+      ''}";
+    };
     # Never restart this unit from inside the switch it is running
     restartIfChanged = false;
     stopIfChanged = false;
