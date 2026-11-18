@@ -2,7 +2,6 @@
 # Check edits with `umbriel config validate`. Reloads on save.
 
 [general]
-autostart = ["systemctl --user start dashboard.service"]
 show_cheatsheet = false
 
 # ==============================================================================

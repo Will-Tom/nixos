@@ -1,0 +1,48 @@
+id = "willisk/dashboard"
+name = "Dashboard"
+version = "1.0.0"
+author = "willisk"
+description = "System updates, filesystem health and git backup status as bar widgets with dropdown panels."
+plugin_api = 54
+
+# Each widget is a status glyph on the bar; clicking it toggles its panel.
+# Backends (in ~/bin, from modules/dashboard): dash-update, dash-git-status;
+# filesystem stats come from the root dashboard-fs-status timer.
+
+[[widget]]
+id = "updates"
+entry = "updates-widget.luau"
+
+[[widget]]
+id = "filesystem"
+entry = "fs-widget.luau"
+
+[[widget]]
+id = "git"
+entry = "git-widget.luau"
+
+[[panel]]
+id = "updates-panel"
+entry = "updates-panel.luau"
+placement = "attached"
+open_near_click = true
+width = 760
+height = 640
+
+[[panel]]
+id = "fs-panel"
+entry = "fs-panel.luau"
+placement = "attached"
+open_near_click = true
+width = 520
+height = "content"
+max_height = 700
+
+[[panel]]
+id = "git-panel"
+entry = "git-panel.luau"
+placement = "attached"
+open_near_click = true
+width = 560
+height = "content"
+max_height = 700
