@@ -16,6 +16,7 @@
     ./modules/audio.nix
     ./modules/printing.nix
     ./modules/browser.nix
+    ./modules/desktop-common.nix
     ./modules/niri.nix
     ./modules/noctalia.nix
     ./modules/terminals.nix
