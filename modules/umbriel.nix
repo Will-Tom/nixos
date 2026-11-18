@@ -19,6 +19,12 @@
       executable = true;
     };
 
+    # Super+Shift+Space: launch with fuzzel at half width
+    home.file."bin/launch-half" = {
+      source = ./umbriel/launch-half.sh;
+      executable = true;
+    };
+
     # Super+scroll screen zoom (steps the zoom_* cursor-effect presets)
     home.file."bin/zoom" = {
       source = ./umbriel/zoom.sh;

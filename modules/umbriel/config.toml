@@ -57,7 +57,13 @@ enabled = false
 
 [layout]
 gap = 0
-extent_presets = [0.33333, 0.5]
+extent_presets = [0.33333, 0.5, 1.0]
+
+# New tiled windows open full width (the terminal opens at half, see window
+# rules; Super+Shift+Space launches something at half). Floating windows
+# keep their own size.
+[layout.scrolling]
+default_extent_fraction = 1.0
 
 [[workspace]]
 name = "1"
@@ -135,6 +141,10 @@ match.title = ["^dash-updates$", "^dash-filesystem$", "^dash-git$"]
 default_output = "DP-1"
 
 [[window_rule]]
+match.app_id = "^com\\.mitchellh\\.ghostty$"
+default_scrolling_extent = 0.5
+
+[[window_rule]]
 match.app_id = "^steam_app_.*"
 vrr = "always"
 
@@ -164,6 +174,7 @@ default_floating = false
 # Launchers and one-shot actions show a fading "KEY - action" toast on the bar
 # via ~/bin/bar-toast; repeatable focus/move/resize binds stay native (instant).
 "Mod+Space" = { action = "spawn ~/bin/bar-toast super 'SPACE - Launcher'; fuzzel", repeat = false }
+"Mod+Shift+Space" = { action = "spawn ~/bin/bar-toast super 'SHIFT + SPACE - Launcher (half)'; ~/bin/launch-half", repeat = false }
 "Mod+T"     = { action = "spawn ~/bin/bar-toast super 'T - Terminal'; ghostty", repeat = false }
 "Mod+O"     = { action = "spawn ~/bin/bar-toast super 'O - Overview'; umbriel msg overview-toggle", repeat = false }
 "Mod+S"     = { action = "spawn ~/bin/bar-toast super 'S - Close window'; umbriel msg window-close", repeat = false }
@@ -250,6 +261,7 @@ default_floating = false
 "submap[modal],i"      = { action = "submap reset", repeat = false }
 "submap[modal],Escape" = { action = "submap reset", repeat = false }
 "submap[modal],space"  = { action = "spawn ~/bin/bar-toast modal 'SPACE - Launcher'; fuzzel", submap = "reset", repeat = false }
+"submap[modal],Shift+space" = { action = "spawn ~/bin/bar-toast modal 'SHIFT + SPACE - Launcher (half)'; ~/bin/launch-half", submap = "reset", repeat = false }
 
 "submap[modal],h" = "window-focus-left"
 "submap[modal],j" = "window-focus-down"
