@@ -34,6 +34,12 @@ in
     };
   };
 
+  # `keyd listen` (used by the noctalia mode widget to show SUPER while Super
+  # is held) needs the keyd socket, which keyd opens to the `keyd` group.
+  users.groups.keyd = { };
+  users.users.${username}.extraGroups = [ "keyd" ];
+  environment.systemPackages = [ config.services.keyd.package ];
+
   services.upower.enable = true;
 
   home-manager.users.${username} = {
