@@ -2,8 +2,8 @@
 --   an active umbriel submap (MODAL, RESIZE, POWER) upper-cased in red,
 --   otherwise SUPER in blue while Super is held (from `keyd listen`),
 --   otherwise NORMAL in the normal text color.
--- Next to it, a toast like "SUPER + T - Terminal" in the normal text color,
--- sent by keybinds through `noctalia msg plugin ... toast <text>`
+-- Next to it, a toast like "T - Terminal" in the color of the mode it came
+-- from, sent by keybinds through `noctalia msg plugin ... toast <mode>|<text>`
 -- (~/bin/bar-toast). It holds, then fades; a new toast replaces it at once.
 
 local SUBMAP_COLOR = "#FF0000"
@@ -17,7 +17,10 @@ local IDLE_MS = 1000
 local submap = nil      -- active umbriel submap name, nil when none
 local superHeld = false -- keyd meta layer active
 local toast = nil       -- current toast text, nil when none
+local toastColor = "on_surface"
 local toastTicks = 0
+
+local TOAST_COLORS = { super = SUPER_COLOR, modal = SUBMAP_COLOR }
 
 local function badge()
   if submap ~= nil and submap ~= "" then
@@ -38,7 +41,7 @@ local function render()
     if toastTicks > HOLD_TICKS then
       opacity = math.max(0, 1 - (toastTicks - HOLD_TICKS) / FADE_TICKS)
     end
-    table.insert(children, ui.label({ key = "toast", text = toast, opacity = opacity }))
+    table.insert(children, ui.label({ key = "toast", text = toast, color = toastColor, opacity = opacity }))
   end
   barWidget.render(container({ gap = 12, align = "center" }, children))
 end
@@ -72,10 +75,15 @@ noctalia.runStream("while true; do keyd listen; sleep 2; done", function(line)
   end
 end)
 
--- `noctalia msg plugin willisk/submap-mode:mode all toast <text>`
+-- `noctalia msg plugin willisk/submap-mode:mode all toast <mode>|<text>`
 function onIpc(event, payload)
   if event == "toast" and payload ~= nil and payload ~= "" then
-    toast = payload
+    local mode, text = string.match(payload, "^(%a+)|(.*)$")
+    if mode == nil then
+      mode, text = "normal", payload
+    end
+    toast = text
+    toastColor = TOAST_COLORS[mode] or "on_surface"
     toastTicks = 0
     noctalia.setUpdateInterval(TICK_MS)
     render()
