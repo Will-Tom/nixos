@@ -25,6 +25,12 @@
       executable = true;
     };
 
+    # RESIZE ! @ #: set every tiled column on the workspace to 1/3, 1/2, full
+    home.file."bin/resize-all" = {
+      source = ./umbriel/resize-all.sh;
+      executable = true;
+    };
+
     # Super+scroll screen zoom (steps the zoom_* cursor-effect presets)
     home.file."bin/zoom" = {
       source = ./umbriel/zoom.sh;

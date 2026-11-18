@@ -314,6 +314,10 @@ default_floating = false
 "submap[resize],1" = { action = "spawn ~/bin/bar-toast modal '1 - Full width'; umbriel msg window-set-primary-extent 1.0", submap = "reset", repeat = false }
 "submap[resize],2" = { action = "spawn ~/bin/bar-toast modal '2 - Half width'; umbriel msg window-set-primary-extent 0.5", submap = "reset", repeat = false }
 "submap[resize],3" = { action = "spawn ~/bin/bar-toast modal '3 - Third width'; umbriel msg window-set-primary-extent 0.333", submap = "reset", repeat = false }
+# Shift+1/2/3 (! @ #): every tiled column on the workspace
+"submap[resize],Shift+1" = { action = "spawn ~/bin/bar-toast modal '! - All to third width'; ~/bin/resize-all 0.333", submap = "reset", repeat = false }
+"submap[resize],Shift+2" = { action = "spawn ~/bin/bar-toast modal '@ - All to half width'; ~/bin/resize-all 0.5", submap = "reset", repeat = false }
+"submap[resize],Shift+3" = { action = "spawn ~/bin/bar-toast modal '# - All to full width'; ~/bin/resize-all 1.0", submap = "reset", repeat = false }
 "submap[resize],f" = { action = "spawn ~/bin/bar-toast modal 'f - Fullscreen'; umbriel msg window-toggle-fullscreen", submap = "reset", repeat = false }
 "submap[resize],h" = "window-modify-primary-extent -0.1"
 "submap[resize],l" = "window-modify-primary-extent +0.1"
