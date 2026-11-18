@@ -206,7 +206,7 @@ default_floating = false
 "Mod+Shift+equal" = "window-modify-secondary-extent +0.1"
 
 "Mod+V"       = { action = "window-toggle-floating", repeat = false }
-"Mod+Shift+V" = { action = "window-focus-switch-floating", repeat = false }
+"Mod+Shift+V" = { action = "spawn ~/bin/float-to-region.sh", repeat = false }
 
 # ------------------------------------------------------------------------------
 # submap: modal (vim-like window management; stays active until i / Esc / F1)

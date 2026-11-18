@@ -12,8 +12,10 @@ fi
 win_output=$(jq -r '.output' <<<"$win")
 is_floating=$(jq -r '.floating' <<<"$win")
 
-# Region in global logical coordinates (bail if cancelled)
-read -r bx by bw bh < <(slurp -d -f '%x %y %w %h') || exit 0
+# Region in global logical coordinates (bail if cancelled). slurp prints no
+# trailing newline, so capture first rather than reading from it directly.
+box=$(slurp -d -f '%x %y %w %h') || exit 0
+read -r bx by bw bh <<<"$box"
 [ -n "$bh" ] || exit 0
 
 # Usable area of the window's output
