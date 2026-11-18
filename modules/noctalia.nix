@@ -16,6 +16,21 @@
         };
 
         shell.launch_apps_as_systemd_services = true;
+
+        # Local plugins (read-only path source in the store)
+        plugins = {
+          enabled = [ "willisk/submap-mode" ];
+          source = [{
+            name = "local-nix";
+            kind = "path";
+            location = "${./noctalia/plugins}";
+            enabled = true;
+          }];
+        };
+
+        # Bar text with the active umbriel submap. Add "mode" to a bar section
+        # (Settings → Bar); the bar layout itself is GUI-managed.
+        widget.mode.type = "willisk/submap-mode:mode";
       };
     };
   };

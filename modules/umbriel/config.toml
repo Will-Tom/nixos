@@ -1,0 +1,289 @@
+# umbriel config (translated from niri/niri-config.kdl + wlr-which-key-modal.yaml)
+# Check edits with `umbriel config validate`. Reloads on save.
+
+[general]
+autostart = ["systemctl --user start dashboard.service"]
+show_cheatsheet = false
+
+# ==============================================================================
+# Input
+
+[input.keyboard]
+layout = "us"
+options = "caps:escape"
+
+[input.cursor]
+theme = "Posy_Cursor_Black"
+size = 32
+follows_focus = true            # niri warp-mouse-to-focus
+
+[input.focus]
+follows_mouse = true
+follows_mouse_max_scroll = 0.0  # niri max-scroll-amount="0%"
+
+# ==============================================================================
+# Outputs
+
+[output.DP-2]
+mode = "2560x1080@74.991"
+scale = 1.0
+transform = "normal"
+position = [0, 0]
+
+[output.DP-3]
+mode = "2560x1440@165.002"
+scale = 1.0
+transform = "normal"
+position = [0, 1080]
+
+[output.DP-1]
+mode = "3840x2160@240.000"
+scale = 1.25
+transform = "normal"
+position = [2560, 792]
+
+# ==============================================================================
+# Appearance and layout
+
+[colors]
+background = "#000000ff"
+
+[appearance]
+border_width = 0
+corner_radius = 0
+
+[appearance.shadow]
+enabled = false
+
+[layout]
+gap = 0
+extent_presets = [0.33333, 0.5]
+
+[[workspace]]
+name = "1"
+[[workspace]]
+name = "2"
+[[workspace]]
+name = "3"
+[[workspace]]
+name = "4"
+[[workspace]]
+name = "5"
+[[workspace]]
+name = "6"
+[[workspace]]
+name = "7"
+[[workspace]]
+name = "8"
+[[workspace]]
+name = "9"
+
+# ==============================================================================
+# Animations: fluid dissolve open/close (ported from the niri custom shaders)
+
+[effects.preset.dissolve_in]
+kind = "animation"
+shader = "effects/open.glsl"
+
+[effects.preset.dissolve_out]
+kind = "animation"
+shader = "effects/close.glsl"
+
+[animation.windows_in]
+duration_ms = 750
+curve = "linear"
+effect = "dissolve_in"
+
+[animation.windows_out]
+duration_ms = 750
+curve = "linear"
+effect = "dissolve_out"
+
+# ==============================================================================
+# Window rules
+
+[[window_rule]]
+match.title = ["^dash-updates$", "^dash-filesystem$", "^dash-git$"]
+default_output = "DP-1"
+
+[[window_rule]]
+match.app_id = "^steam_app_.*"
+vrr = "always"
+
+[[window_rule]]
+match.app_id = "^steam$"
+default_focused = false
+default_floating = false
+
+# ==============================================================================
+# Keybinds (defining this table replaces umbriel's built-in binds)
+
+[keybinds]
+# Modal layer. keyd maps the physical Esc key to F1.
+"F1" = { action = "submap modal", repeat = false }
+
+"XF86AudioRaiseVolume" = { action = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0", allow_when_locked = true }
+"XF86AudioLowerVolume" = { action = "spawn wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-", allow_when_locked = true }
+"XF86AudioMute"        = { action = "spawn wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", allow_when_locked = true, repeat = false }
+"XF86AudioMicMute"     = { action = "spawn wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle", allow_when_locked = true, repeat = false }
+"XF86AudioPlay"        = { action = "spawn playerctl play-pause", allow_when_locked = true, repeat = false }
+"XF86AudioStop"        = { action = "spawn playerctl stop", allow_when_locked = true, repeat = false }
+"XF86AudioPrev"        = { action = "spawn playerctl previous", allow_when_locked = true }
+"XF86AudioNext"        = { action = "spawn playerctl next", allow_when_locked = true }
+"XF86MonBrightnessUp"   = { action = "spawn brightnessctl --class=backlight set +10%", allow_when_locked = true }
+"XF86MonBrightnessDown" = { action = "spawn brightnessctl --class=backlight set 10%-", allow_when_locked = true }
+
+"Mod+Space" = { action = "spawn fuzzel", repeat = false }
+"Mod+T"     = { action = "spawn ghostty", repeat = false }
+"Mod+O"     = { action = "overview-toggle", repeat = false }
+"Mod+S"     = { action = "window-close", repeat = false }
+"Mod+Tab"   = { action = "spawn noctalia msg bar-toggle", repeat = false }
+
+# Screenshots: Mod+P → screenshots/tmp, Mod+Shift+P → screenshots
+"Mod+P"       = { action = "spawn mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", repeat = false }
+"Mod+Shift+P" = { action = "spawn mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", repeat = false }
+
+"Mod+Left"  = "output-focus-left"
+"Mod+Down"  = "output-focus-down"
+"Mod+Up"    = "output-focus-up"
+"Mod+Right" = "output-focus-right"
+"Mod+Shift+Left"  = "column-move-to-output-left"
+"Mod+Shift+Down"  = "column-move-to-output-down"
+"Mod+Shift+Up"    = "column-move-to-output-up"
+"Mod+Shift+Right" = "column-move-to-output-right"
+
+"Mod+H" = "window-focus-left"
+"Mod+J" = "window-focus-down"
+"Mod+K" = "window-focus-up"
+"Mod+L" = "window-focus-right"
+"Mod+Shift+H" = "column-move-left"
+"Mod+Shift+J" = "window-move-down"
+"Mod+Shift+K" = "window-move-up"
+"Mod+Shift+L" = "column-move-right"
+
+"Mod+G"               = "column-focus-first"
+"Mod+semicolon"       = "column-focus-last"
+"Mod+Shift+G"         = "column-move-to-first"
+"Mod+Shift+semicolon" = "column-move-to-last"
+
+"Mod+D"       = "workspace-next"
+"Mod+U"       = "workspace-previous"
+"Mod+Shift+D" = "column-move-to-workspace-next"
+"Mod+Shift+U" = "column-move-to-workspace-previous"
+"Mod+Page_Down" = "workspace-move-down"
+"Mod+Page_Up"   = "workspace-move-up"
+
+"Mod+1" = "workspace-switch 1"
+"Mod+2" = "workspace-switch 2"
+"Mod+3" = "workspace-switch 3"
+"Mod+4" = "workspace-switch 4"
+"Mod+5" = "workspace-switch 5"
+"Mod+6" = "workspace-switch 6"
+"Mod+7" = "workspace-switch 7"
+"Mod+8" = "workspace-switch 8"
+"Mod+9" = "workspace-switch 9"
+"Mod+Shift+1" = "column-move-to-workspace 1"
+"Mod+Shift+2" = "column-move-to-workspace 2"
+"Mod+Shift+3" = "column-move-to-workspace 3"
+"Mod+Shift+4" = "column-move-to-workspace 4"
+"Mod+Shift+5" = "column-move-to-workspace 5"
+"Mod+Shift+6" = "column-move-to-workspace 6"
+"Mod+Shift+7" = "column-move-to-workspace 7"
+"Mod+Shift+8" = "column-move-to-workspace 8"
+"Mod+Shift+9" = "column-move-to-workspace 9"
+
+"Mod+bracketleft"  = "window-consume-or-expel-left"
+"Mod+bracketright" = "window-consume-or-expel-right"
+
+"Mod+R"       = "window-cycle-primary-extent"
+"Mod+F"       = { action = "window-toggle-maximize", repeat = false }
+"Mod+Shift+F" = { action = "window-toggle-fullscreen", repeat = false }
+"Mod+C"       = "column-center"
+
+"Mod+minus"       = "window-modify-primary-extent -0.1"
+"Mod+equal"       = "window-modify-primary-extent +0.1"
+"Mod+Shift+minus" = "window-modify-secondary-extent -0.1"
+"Mod+Shift+equal" = "window-modify-secondary-extent +0.1"
+
+"Mod+V"       = { action = "window-toggle-floating", repeat = false }
+"Mod+Shift+V" = { action = "window-focus-switch-floating", repeat = false }
+
+# ------------------------------------------------------------------------------
+# submap: modal (vim-like window management; stays active until i / Esc / F1)
+
+"submap[modal],F1"     = { action = "submap reset", repeat = false }
+"submap[modal],i"      = { action = "submap reset", repeat = false }
+"submap[modal],Escape" = { action = "submap reset", repeat = false }
+"submap[modal],space"  = { action = "spawn fuzzel", submap = "reset", repeat = false }
+
+"submap[modal],h" = "window-focus-left"
+"submap[modal],j" = "window-focus-down"
+"submap[modal],k" = "window-focus-up"
+"submap[modal],l" = "window-focus-right"
+"submap[modal],Shift+h" = "column-move-left"
+"submap[modal],Shift+j" = "window-move-down"
+"submap[modal],Shift+k" = "window-move-up"
+"submap[modal],Shift+l" = "column-move-right"
+
+"submap[modal],bracketleft"  = "window-consume-or-expel-left"
+"submap[modal],bracketright" = "window-consume-or-expel-right"
+
+"submap[modal],g"               = "column-focus-first"
+"submap[modal],semicolon"       = "column-focus-last"
+"submap[modal],Shift+g"         = "column-move-to-first"
+"submap[modal],Shift+semicolon" = "column-move-to-last"
+
+"submap[modal],u"       = "workspace-previous"
+"submap[modal],d"       = "workspace-next"
+"submap[modal],Shift+u" = "column-move-to-workspace-previous"
+"submap[modal],Shift+d" = "column-move-to-workspace-next"
+
+"submap[modal],1" = "workspace-switch 1"
+"submap[modal],2" = "workspace-switch 2"
+"submap[modal],3" = "workspace-switch 3"
+"submap[modal],4" = "workspace-switch 4"
+"submap[modal],5" = "workspace-switch 5"
+"submap[modal],6" = "workspace-switch 6"
+"submap[modal],7" = "workspace-switch 7"
+"submap[modal],8" = "workspace-switch 8"
+"submap[modal],9" = "workspace-switch 9"
+
+"submap[modal],Tab" = { action = "spawn noctalia msg bar-toggle", repeat = false }
+"submap[modal],t"   = { action = "spawn ghostty", repeat = false }
+"submap[modal],F12" = { action = "window-toggle-floating", repeat = false }
+"submap[modal],b"   = { action = "window-focus-last", repeat = false }
+"submap[modal],o"   = { action = "overview-toggle", repeat = false }
+"submap[modal],s"   = { action = "window-close", repeat = false }
+"submap[modal],p"       = { action = "spawn mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
+"submap[modal],Shift+p" = { action = "spawn mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
+
+"submap[modal],r"       = { action = "submap resize", repeat = false }
+"submap[modal],Shift+q" = { action = "submap power", repeat = false }
+
+# ------------------------------------------------------------------------------
+# submap: resize (a / Esc back to modal; F1 leaves both)
+
+"submap[resize],1" = { action = "window-set-primary-extent 1.0", submap = "reset", repeat = false }
+"submap[resize],2" = { action = "window-set-primary-extent 0.5", submap = "reset", repeat = false }
+"submap[resize],3" = { action = "window-set-primary-extent 0.333", submap = "reset", repeat = false }
+"submap[resize],f" = { action = "window-toggle-fullscreen", submap = "reset", repeat = false }
+"submap[resize],h" = "window-modify-primary-extent -0.1"
+"submap[resize],l" = "window-modify-primary-extent +0.1"
+"submap[resize],j" = "window-modify-secondary-extent -0.1"
+"submap[resize],k" = "window-modify-secondary-extent +0.1"
+"submap[resize],a"      = { action = "submap reset", repeat = false }
+"submap[resize],Escape" = { action = "submap reset", repeat = false }
+"submap[resize],F1"     = { action = "spawn umbriel msg submap reset", submap = "reset", repeat = false }
+
+# ------------------------------------------------------------------------------
+# submap: power (a / Esc back to modal; F1 leaves both)
+
+"submap[power],Delete" = { action = "spawn systemctl suspend", repeat = false }
+"submap[power],r"      = { action = "spawn systemctl reboot", repeat = false }
+"submap[power],h"      = { action = "spawn systemctl hibernate", repeat = false }
+"submap[power],u"      = { action = "spawn systemctl reboot --firmware-setup", repeat = false }
+"submap[power],s"      = { action = "spawn systemctl poweroff", repeat = false }
+"submap[power],l"      = { action = "spawn umbriel msg submap reset; noctalia msg session lock", submap = "reset", repeat = false }
+"submap[power],a"      = { action = "submap reset", repeat = false }
+"submap[power],Escape" = { action = "submap reset", repeat = false }
+"submap[power],F1"     = { action = "spawn umbriel msg submap reset", submap = "reset", repeat = false }

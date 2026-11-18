@@ -1,0 +1,10 @@
+id         = "willisk/submap-mode"
+name       = "Submap mode"
+version    = "1.0.0"
+plugin_api = 54
+author     = "willisk"
+
+# Bar text showing the active umbriel keybind submap (NORMAL / MODAL / RESIZE / ...).
+[[widget]]
+id    = "mode"
+entry = "widget.luau"
