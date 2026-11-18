@@ -40,24 +40,37 @@
   };
 
 
-  outputs = inputs@{ self, nixpkgs, home-manager, disko, impermanence, sops-nix, ... }: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      specialArgs = { inherit inputs; };
-      modules = [
-        disko.nixosModules.disko
-        impermanence.nixosModules.impermanence
-        sops-nix.nixosModules.sops
-        ./disko.nix
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = { inherit inputs; };
-          home-manager.users.willisk = import ./home.nix;
-        }
-      ];
+  outputs = inputs@{ self, nixpkgs, home-manager, disko, impermanence, sops-nix, ... }:
+    let
+      # Builds one NixOS system. `modules` holds the host-specific modules;
+      # the shared flake modules (disko, impermanence, sops, home-manager)
+      # are added around them.
+      mkHost = { hostname, modules, system ? "x86_64-linux" }:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = [
+            disko.nixosModules.disko
+            impermanence.nixosModules.impermanence
+            sops-nix.nixosModules.sops
+          ] ++ modules ++ [
+            home-manager.nixosModules.home-manager
+            {
+              networking.hostName = hostname;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.willisk = import ./home.nix;
+            }
+          ];
+        };
+    in {
+      nixosConfigurations.nixos = mkHost {
+        hostname = "nixos";
+        modules = [
+          ./disko.nix
+          ./configuration.nix
+        ];
+      };
     };
-  };
 }
