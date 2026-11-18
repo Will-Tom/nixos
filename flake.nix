@@ -68,7 +68,7 @@
         hostname = "nixos";
         modules = [
           ./disko.nix
-          ./configuration.nix
+          ./hosts/desktop
         ];
       };
     };
