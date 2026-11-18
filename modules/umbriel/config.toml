@@ -41,6 +41,9 @@ mode = "3840x2160@240.000"
 scale = 1.25
 transform = "normal"
 position = [2560, 792]
+# HDR only for fullscreen content that sends HDR metadata (games, video);
+# the desktop stays SDR. Use "on" for always-HDR (e.g. untagged XWayland games).
+hdr = "auto"
 
 # ==============================================================================
 # Appearance and layout
