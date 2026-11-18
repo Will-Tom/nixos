@@ -19,6 +19,12 @@
       executable = true;
     };
 
+    # Super+scroll screen zoom (steps the zoom_* cursor-effect presets)
+    home.file."bin/zoom" = {
+      source = ./umbriel/zoom.sh;
+      executable = true;
+    };
+
     # Modal V: float the focused window into a slurp-drawn region
     home.file."bin/float-to-region.sh" = {
       source = ./umbriel/float-to-region.sh;

@@ -100,6 +100,34 @@ curve = "linear"
 effect = "dissolve_out"
 
 # ==============================================================================
+# Screen zoom: cursor effects covering the output (radius 0), magnifying around
+# the pointer. Stepped by ~/bin/zoom (Super+scroll, Super+middle click resets).
+
+[effects.preset.zoom_1_5]
+kind = "cursor"
+shader = "effects/zoom/zoom_1_5.glsl"
+
+[effects.preset.zoom_2]
+kind = "cursor"
+shader = "effects/zoom/zoom_2.glsl"
+
+[effects.preset.zoom_3]
+kind = "cursor"
+shader = "effects/zoom/zoom_3.glsl"
+
+[effects.preset.zoom_4]
+kind = "cursor"
+shader = "effects/zoom/zoom_4.glsl"
+
+[effects.preset.zoom_6]
+kind = "cursor"
+shader = "effects/zoom/zoom_6.glsl"
+
+[effects.preset.zoom_8]
+kind = "cursor"
+shader = "effects/zoom/zoom_8.glsl"
+
+# ==============================================================================
 # Window rules
 
 [[window_rule]]
@@ -209,6 +237,11 @@ default_floating = false
 
 "Mod+V"       = { action = "spawn ~/bin/bar-toast super 'V - Toggle floating'; umbriel msg window-toggle-floating", repeat = false }
 "Mod+Shift+V" = { action = "spawn ~/bin/bar-toast super 'SHIFT + V - Float to region'; ~/bin/float-to-region.sh", repeat = false }
+
+# Screen zoom around the pointer
+"Mod+WheelUp"     = { action = "spawn ~/bin/zoom in", cooldown_ms = 80 }
+"Mod+WheelDown"   = { action = "spawn ~/bin/zoom out", cooldown_ms = 80 }
+"Mod+MouseMiddle" = { action = "spawn ~/bin/zoom reset", repeat = false }
 
 # ------------------------------------------------------------------------------
 # submap: modal (vim-like window management; stays active until i / Esc / F1)
