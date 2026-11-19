@@ -1,6 +1,17 @@
 # umbriel compositor: session and config. The modal keymap is a native umbriel
 # submap (see umbriel/config.toml); the noctalia bar shows the active mode.
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
+let
+  # Bar glow levels 1-10 (Super+Shift+PgUp/PgDn, ~/bin/bar-glow): the
+  # template with STRENGTH = level * 0.03.
+  barGlowTemplate = builtins.readFile ./umbriel/bar-glow.glsl;
+  barGlowDefault = "const float STRENGTH = 0.12;";
+  barGlow = n:
+    assert lib.hasInfix barGlowDefault barGlowTemplate;
+    builtins.replaceStrings [ barGlowDefault ]
+      [ "const float STRENGTH = 0.${lib.fixedWidthNumber 2 (n * 3)};" ]
+      barGlowTemplate;
+in
 {
   programs.umbriel.enable = true;
 
@@ -10,8 +21,21 @@
   };
 
   home-manager.users.${config.my.username} = {
-    xdg.configFile."umbriel/config.toml".source = ./umbriel/config.toml;
-    xdg.configFile."umbriel/effects".source = ./umbriel/effects;
+    xdg.configFile = {
+      "umbriel/config.toml".source = ./umbriel/config.toml;
+      "umbriel/effects" = {
+        source = ./umbriel/effects;
+        recursive = true;
+      };
+    } // lib.listToAttrs (map (n: lib.nameValuePair
+      "umbriel/effects/bar-glow/${toString n}.glsl" { text = barGlow n; })
+      (lib.range 1 10));
+
+    # Super+Shift+PgUp/PgDn: bar glow level 0-10 (re-applied at login)
+    home.file."bin/bar-glow" = {
+      source = ./umbriel/bar-glow.sh;
+      executable = true;
+    };
 
     # Fading "KEY - action" toast on the noctalia bar, called from keybinds
     home.file."bin/bar-toast" = {

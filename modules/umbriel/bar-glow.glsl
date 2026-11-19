@@ -1,12 +1,13 @@
 // Glow around colored things on the noctalia bar (same idea as kitty's
 // color-glow: white/gray text stays plain). A screen effect limited to the
 // bar strip at the top of each output; everything below is passed through.
-// Toggle: umbriel msg effect-screen-toggle
+// Template: umbriel.nix makes effects/bar-glow/<1-10>.glsl from this with
+// STRENGTH = level * 0.03; ~/bin/bar-glow switches level (Super+Shift+PgUp/PgDn).
 
 const float BAR_HEIGHT = 17.0;   // noctalia bar thickness, logical px
 const float SPREAD = 4.0;        // how far below the bar the halo may reach
 const float RADIUS = 1.4;        // sample spacing, logical px
-const float STRENGTH = 0.12;     // halo strength
+const float STRENGTH = 0.12;     // halo strength (replaced per level)
 const float THRESHOLD = 0.2;     // minimum brightness that glows
 const float SAT_LOW = 0.25;      // saturation where glow starts...
 const float SAT_HIGH = 0.6;      // ...and is full
