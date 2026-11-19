@@ -21,6 +21,8 @@ in
     home.packages = with pkgs; [
       claude-code
       nvd
+      nix-output-monitor
+      nix-diff
       fastfetch
       bitwarden-cli
       uv
