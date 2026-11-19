@@ -6,8 +6,12 @@
 // shape: a block gives the whole cell, a bar its height, left and bottom
 // edges, an underline its width and left edge (its bottom is the font's
 // underline position, not the cell's). Each frame this keeps what the
-// current shape measures exactly and the rest from memory, so the glass's
-// per-letter magnification stays aligned whatever the cursor shape.
+// current shape measures exactly and the rest from memory, so the
+// glass and the reading glass stay the right size whatever the cursor shape.
+//
+// Two passes, because a group can't read the texture it writes (kitty gives
+// it the backbuffer instead): COPY false computes the new values from
+// t.persist into a's corner, COPY true copies them into persist.
 //
 // Layout (12 + 12 bits packed into rgb, alpha 1 or kitty blends it away):
 //   left half of the square:  cell width, cell height (px)
@@ -16,11 +20,21 @@
 import kitty_custom_shader_types;
 import term_cell;
 
+static const bool COPY = false;
+
 public float4
 fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
+    // t.pos is relative to this group's tiny viewport; Sample() takes
+    // whole-window UV, and the viewport sits in the window's corner
+    if (COPY) return float4(t.a.Sample(t.pos * CELL_MEM).rgb, 1.0f);
+
+    // What was remembered last frame; garbage (persist starts uninitialized)
+    // is treated as nothing remembered
     float4 mem_size = mem_read(t, 0.25f);
     float4 mem_org = mem_read(t, 0.75f);
-    float cw = mem_size.x, ch = mem_size.y, ox = mem_org.x, oy = mem_org.y;
+    bool ok = cell_plausible(mem_size.x, mem_size.y);
+    float cw = ok ? mem_size.x : 0.0f, ch = ok ? mem_size.y : 0.0f;
+    float ox = ok ? mem_org.x : 0.0f, oy = ok ? mem_org.y : 0.0f;
 
     if (cursor_known(d)) {
         float2 vs = float2(d.viewport_size_pixels);

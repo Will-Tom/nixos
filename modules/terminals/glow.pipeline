@@ -13,13 +13,21 @@ var float3 SELECTION = float3(61.0, 42.0, 92.0)
 # reading glass can find it; the lens paints it back as ao's sky blue
 var float3 CURSOR_SENTINEL = float3(30.0, 95.0, 59.0)
 
-# Remember the exact cell grid (persist texture) from block/bar cursors, so
+# Remember the exact cell grid (persist texture) from block/bar cursors
+# (computed into a's corner, then copied: a group can't read what it writes), so
 # the glass magnification stays aligned under an underline cursor too.
 # viewport_size must match CELL_MEM in term_cell.
 startgroup
     animation_step 0
+    output_texture a
+    viewport_size 0.004 0.002
+    shaders cell-memory
+endgroup
+startgroup
+    animation_step 0
     output_texture persist
     viewport_size 0.004 0.002
+    var bool COPY = true
     shaders cell-memory
 endgroup
 

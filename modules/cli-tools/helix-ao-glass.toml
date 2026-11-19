@@ -10,3 +10,9 @@ inherits = "ao"
 # glass lens finds it (helix hides the terminal cursor for block cursors) and
 # paints it back as ao's sky blue.
 "ui.cursor.primary.normal" = { fg = "deep_abyss", bg = "#1e5f3b" }
+
+# Select mode: the cursor cell is part of the selection, so it is glass too
+# (otherwise the glass gets a notch or a lone bubble around it); the terminal's
+# underline cursor marks it
+"ui.cursor.primary.select" = { bg = "#3d2a5c" }
+"ui.cursor.select" = { bg = "#3d2a5c" }

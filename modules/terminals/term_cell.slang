@@ -29,6 +29,12 @@ mem_pack(float a, float b) {
                   float(B & 255u) / 255.0f, 1.0f);
 }
 
+// A believable cell size (px): rules out uninitialized memory
+public bool
+cell_plausible(float w, float h) {
+    return w >= 3.0f && h >= 6.0f && h <= 400.0f && h > 1.2f * w && h < 4.0f * w;
+}
+
 // Unpack the value pair stored at fraction fx across cell-memory's square
 public float4
 mem_read(KittyTextures t, float fx) {
@@ -53,14 +59,15 @@ cursor_cell_estimate(KittyCustomShaderData d) {
 // Whether the exact grid is known (cell-memory has seen a block/bar cursor)
 public bool
 grid_known(KittyTextures t) {
-    return mem_read(t, 0.25f).y > 0.0f;
+    float4 s = mem_read(t, 0.25f);
+    return cell_plausible(s.x, s.y);
 }
 
 // The cell grid: (left, bottom) of some cell, and cell (width, height), px
 public float4
 cell_grid(KittyCustomShaderData d, KittyTextures t) {
     float4 s = mem_read(t, 0.25f);
-    if (s.x > 0.0f && s.y > 0.0f) {
+    if (cell_plausible(s.x, s.y)) {
         float4 o = mem_read(t, 0.75f);
         return float4(o.x, o.y, s.x, s.y);
     }
