@@ -22,7 +22,6 @@ in
       claude-code
       nvd
       nix-output-monitor
-      nix-diff
       fastfetch
       bitwarden-cli
       uv

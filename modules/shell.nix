@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
   programs.fish.enable = true;
 
@@ -12,17 +12,21 @@
     programs.fish = {
       enable = true;
       functions = {
-        # Rebuild: build with nix-output-monitor's progress tree, show what
-        # differs from the running system (nix-diff), then switch to it
+        # Rebuild: build with nix-output-monitor's progress tree, list the
+        # package changes against the running system (nvd), then switch
         nrs = ''
           git -C /etc/nixos add -A
           set -l out $XDG_RUNTIME_DIR/nrs-result
-          nom build "/etc/nixos#nixosConfigurations.$(hostname).config.system.build.toplevel" -o $out
-          or return 1
+          nix build "/etc/nixos#nixosConfigurations.$(hostname).config.system.build.toplevel" \
+              -o $out --log-format internal-json &| nom --json
+          # the build's status, not nom's: stop before switching if it failed
+          test $pipestatus[1] -eq 0; or return 1
           if test (readlink -f /run/current-system) = (readlink -f $out)
               echo "No changes from the running system"
           else
-              nix-diff /run/current-system $out
+              # real Nix for nvd's store queries (iets would print a
+              # "falling back" line for each)
+              env PATH="${pkgs.nix}/bin:$PATH" nvd diff /run/current-system $out
           end
           sudo nixos-rebuild switch --flake /etc/nixos $argv
         '';
