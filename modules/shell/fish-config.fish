@@ -7,6 +7,9 @@ if status is-interactive
     abbr -a cat bat
 
     set -g fish_key_bindings fish_vi_key_bindings
+    # Visual-mode selection in kitty's glass sentinel color (#3d2a5c, see
+    # modules/terminals/glow.pipeline) so it is drawn as liquid glass
+    set -g fish_color_selection --background=3d2a5c
 
     function fish_vi_start_normal --on-event fish_prompt
         set fish_bind_mode default

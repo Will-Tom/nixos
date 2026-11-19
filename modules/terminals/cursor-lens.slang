@@ -41,6 +41,36 @@ content(KittyTextures t, float2 uv, float3 cs, float3 fill) {
     return near(c, cs, 0.003f) ? fill : c;
 }
 
+// Catmull-Rom weights for the 4 texels around fraction f
+float4
+cr_weights(float f) {
+    return float4(f * (-0.5f + f * (1.0f - 0.5f * f)),
+                  1.0f + f * f * (-2.5f + 1.5f * f),
+                  f * (0.5f + f * (2.0f - 1.5f * f)),
+                  f * f * (-0.5f + 0.5f * f));
+}
+
+// Content at pixel position p, bicubic (Catmull-Rom) from the 4x4 nearest
+// texels: enlarged text stays crisp instead of going soft as with bilinear
+float3
+content_sharp(KittyTextures t, float2 p, float2 px, float3 cs, float3 fill) {
+    float2 base = floor(p - 0.5f);
+    float2 f = p - 0.5f - base;
+    float4 wx = cr_weights(f.x), wy = cr_weights(f.y);
+    float3 sum = float3(0.0f);
+    [ForceUnroll]
+    for (int j = 0; j < 4; j++) {
+        float3 row = float3(0.0f);
+        [ForceUnroll]
+        for (int i = 0; i < 4; i++) {
+            float2 q = base + float2(float(i - 1), float(j - 1)) + 0.5f;
+            row += wx[i] * content(t, q * px, cs, fill);
+        }
+        sum += wy[j] * row;
+    }
+    return clamp(sum, 0.0f, 1.0f);
+}
+
 public float4
 fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
     float2 vs = float2(d.viewport_size_pixels);
@@ -90,5 +120,5 @@ fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
     float m = 1.0f / MAGNIFY;
     float s = k * m + (1.0f - m) * (3.0f * k * k * k - 2.0f * k * k * k * k);
     float2 src = dist > 1e-3f ? c + v * (s / k) : c;
-    return float4(content(t, src * px, cs, fill), color.a);
+    return float4(content_sharp(t, src, px, cs, fill), color.a);
 }
