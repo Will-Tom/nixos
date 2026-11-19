@@ -14,7 +14,7 @@
 import kitty_custom_shader_types;
 
 // Lens radius in line heights, and magnification at the centre
-static const float SIZE = 2.0f;
+static const float SIZE = 1.5f;
 static const float MAGNIFY = 1.5f;
 // helix cursor: sentinel (sRGB 0-255, the pipeline sets it), what to paint
 // instead (ao's sky_blue), and where cursor-find leaves its result
