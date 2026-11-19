@@ -1,18 +1,68 @@
 # kitty custom shaders. Template: ~/bin/kitty-glow fills in @STRENGTH@ for the
 # current glow level (Super+PageUp / Super+PageDown) and drops the glow group
-# at level 0.
+# at level 0. Every group is static (animation_step 0): it redraws only when
+# the screen changes.
 
-# Selection as colored glass (shaders/glass-selection.slang). kitty.conf gives
-# the selection a sentinel background that this shader finds.
+textures a b
+
+# Sentinel selection background, sRGB 0-255. Must match selection_background
+# in kitty.conf and ui.selection in the helix theme (ao-glass), and be far
+# from every theme color (the palette is black, #1a0f16, #5a3f4d and pinks).
+var float3 SELECTION = float3(61.0, 42.0, 92.0)
+# helix draws its normal-mode block cursor in this (ao-glass theme) so the
+# reading glass can find it; the lens paints it back as ao's sky blue
+var float3 CURSOR_SENTINEL = float3(30.0, 95.0, 59.0)
+
+# Liquid glass selection: find it (-> a), blur it into a capsule-shaped
+# height field (a -> b -> a), then draw the glass
+startgroup
+    animation_step 0
+    output_texture a
+    shaders glass-mask
+endgroup
+startgroup
+    animation_step 0
+    output_texture b
+    var bool VERTICAL = false
+    shaders glass-blur
+endgroup
+startgroup
+    animation_step 0
+    output_texture a
+    var bool VERTICAL = true
+    shaders glass-blur
+endgroup
 startgroup
     animation_step 0
     shaders glass-selection
 endgroup
 
+# Reading glass over the text cursor. First find helix's block cursor, if any:
+# each row of a thin strip scans across (-> b), then a tiny square scans the
+# strip (-> a); viewport sizes must match STRIP in cursor-find/cursor-lens
+startgroup
+    animation_step 0
+    output_texture b
+    viewport_size 0.002 1
+    var bool COLUMN = false
+    shaders cursor-find
+endgroup
+startgroup
+    animation_step 0
+    output_texture a
+    viewport_size 0.002 0.002
+    var bool COLUMN = true
+    shaders cursor-find
+endgroup
+startgroup
+    animation_step 0
+    shaders cursor-lens
+endgroup
+
 # GLOW-BEGIN
 # Glow around colored text (shaders/color-glow.slang, kitty's bloom that skips
 # white and gray). Colored pixels brighter than the threshold bleed their own
-# color outward. Static: redraws only when the screen changes.
+# color outward.
 startgroup
     animation_step 0
     # minimum brightness (linear) that glows; lower = dimmer text glows too

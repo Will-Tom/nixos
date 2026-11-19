@@ -16,6 +16,7 @@ in
       defaultEditor = true;
     };
     xdg.configFile."helix/config.toml".source = ./cli-tools/helix-config.toml;
+    xdg.configFile."helix/themes/ao-glass.toml".source = ./cli-tools/helix-ao-glass.toml;
 
     home.packages = with pkgs; [
       claude-code

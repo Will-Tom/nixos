@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Text glow level for kitty, 0 (off) to 10. Writes kitty's shader pipeline
-# (glass selection + glow) for the level
+# (glass selection, cursor lens, glow) for the level
 # and an include file naming it, then makes every kitty reload its config.
 # kitty only recompiles shaders when the custom_shaders value changes, so
-# each level gets its own pipeline file.
+# each level and shader version gets its own pipeline file.
 # Usage: kitty-glow up|down|init|<level>
 
 TEMPLATE=${XDG_CONFIG_HOME:-$HOME/.config}/kitty/glow.pipeline.in
@@ -28,15 +28,22 @@ esac
 echo "$level" > "$DIR/level"
 
 rm -f "$DIR"/glow-*.pipeline
-# Level 0 keeps the other shaders (glass selection) and drops the glow group
+# The name carries a hash of the template and shaders: kitty only recompiles
+# when the custom_shaders value changes, so an edited shader needs a new name
+SHADERS=${XDG_CONFIG_HOME:-$HOME/.config}/kitty/shaders
+hash=$(cat "$TEMPLATE" "$SHADERS"/*.slang 2>/dev/null | sha1sum | cut -c1-8)
+out="$DIR/glow-$level-$hash.pipeline"
+# Level 0 keeps the other shaders (glass selection, cursor lens) and drops
+# the glow group
 strength=$(printf "0.%03d" $((level * 20)))
 if ((level == 0)); then
   sed '/^# GLOW-BEGIN$/,/^# GLOW-END$/d' "$TEMPLATE"
 else
   sed "s/@STRENGTH@/$strength/" "$TEMPLATE"
-fi > "$DIR/glow-$level.pipeline"
-echo "custom_shaders $DIR/glow-$level.pipeline" > "$DIR/glow.conf"
+fi > "$out"
+echo "custom_shaders $out" > "$DIR/glow.conf"
 
-[ "$1" = init ] || pkill -USR1 -x -u "$UID" kitty
+# Reload every kitty (also on init, so a rebuild reaches open windows)
+pkill -USR1 -x -u "$(id -u)" kitty || true
 [ "$1" = init ] || ~/bin/bar-toast super "PGUP/PGDN - Text glow $level/$MAX" 2>/dev/null
 exit 0

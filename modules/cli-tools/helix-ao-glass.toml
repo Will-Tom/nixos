@@ -1,0 +1,12 @@
+# ao with selections drawn as kitty's liquid glass: the selection background
+# is the sentinel color the kitty glass shaders look for (#3d2a5c, see
+# modules/terminals/glow.pipeline). No fg, so text keeps its syntax colors.
+inherits = "ao"
+
+"ui.selection" = { bg = "#3d2a5c" }
+"ui.selection.primary" = { bg = "#3d2a5c" }
+
+# Normal-mode block cursor in a sentinel color too (#1e5f3b): kitty's reading
+# glass lens finds it (helix hides the terminal cursor for block cursors) and
+# paints it back as ao's sky blue.
+"ui.cursor.primary.normal" = { fg = "deep_abyss", bg = "#1e5f3b" }

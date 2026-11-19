@@ -1,4 +1,4 @@
-theme = "ao"
+theme = "ao-glass"   # ao + liquid glass selections (helix-ao-glass.toml)
 [editor]
 true-color = true
 line-number = "relative"
