@@ -365,9 +365,21 @@ launcher_open() { umbriel layers --json 2>/dev/null | jq -e 'any(.[]; .namespace
 
 # The keybind leaves modal (so typing in the launcher doesn't hit SESSIONS
 # keys); once the launcher closes, go back into SESSIONS mode.
+# SESSIONS t/T: new terminal in the focused session; with no session terminal
+# focused, ask for the session in the launcher first. $1: width fraction or empty
+cmd_session_new() {
+  if [ -n "$(focused_id)" ]; then
+    cmd_new ${1:+--fraction "$1"}
+  else
+    # leave SESSIONS and modal so typing the name doesn't hit their keys
+    umbriel msg submap reset >/dev/null; umbriel msg submap reset >/dev/null
+    cmd_prompt "$( [ -n "${1:-}" ] && echo new3 || echo new )"
+  fi
+}
+
 cmd_prompt() {
   local id; id=$(focused_id)
-  if [ -n "$id" ] || [ "$1" = open ]; then
+  if [ -n "$id" ] || [ "$1" = open ] || [ "$1" = new ] || [ "$1" = new3 ]; then
     echo "$id" > "$TARGET"
     noctalia msg panel-open launcher "/ts $1 " >/dev/null
     for _ in $(seq 1 20); do launcher_open && break; sleep 0.1; done
@@ -420,8 +432,14 @@ cmd_se() {
   id=$(cur_id); s=$(session_of "$id")
   needs_session() { [ -n "$s" ] || { echo "Not in a session shell" >&2; exit 1; }; }
   case $op in
-    t) cmd_new ;;
-    T) if gui; then cmd_new --fraction 0.333; else cmd_new; fi ;;
+    t|T) local args=()
+       # A given name wins; else this shell's session; else ask
+       if [ -z "$name" ] && [ -z "$s" ]; then
+         name=$(ask_session "Session for the new terminal (number or new name): " 1) || return 1
+       fi
+       [ -n "$name" ] && args=(--session "$name")
+       [ "$op" = T ] && gui && args+=(--fraction 0.333)
+       cmd_new "${args[@]}" ;;
     d) needs_session; cmd_detach ;;
     s) needs_session; cmd_close_all ;;
     S) needs_session
@@ -532,6 +550,9 @@ esac
 cmd=${1:-}; shift || true
 case $cmd in
   new) cmd_new "$@" ;;
+  session-new) cmd_session_new "${1:-}" ;;
+  new-in) cmd_new --session "$1" ;;
+  new3-in) cmd_new --session "$1" --fraction 0.333 ;;
   attach) cmd_attach "$@" ;;
   detach) cmd_detach ;;
   end) cmd_end ;;

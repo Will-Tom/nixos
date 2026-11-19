@@ -343,13 +343,14 @@ default_floating = false
 
 # ==============================================================================
 # SESSIONS (modal T): persistent terminal sessions (modules/term-sessions.nix).
-# The mode stays on after each action. m M c C / r open the noctalia launcher
+# The mode stays on after each action. m M c C / r (and t T with no session
+# terminal focused, to pick the session) open the noctalia launcher
 # on /ts and leave modal while it's open (so typing doesn't hit these keys);
 # term-sessions returns to SESSIONS when the launcher closes.
 # The fish command `se` does the same from a shell (also over ssh).
 
-"submap[sessions],t"           = { action = "spawn ~/bin/bar-toast modal 't - Terminal in session'; ~/bin/term", repeat = false }
-"submap[sessions],Shift+t"     = { action = "spawn ~/bin/bar-toast modal 'T - Terminal in session (third)'; ~/bin/term --fraction 0.333", repeat = false }
+"submap[sessions],t"           = { action = "spawn ~/bin/bar-toast modal 't - Terminal in session'; ~/bin/term-sessions session-new", repeat = false }
+"submap[sessions],Shift+t"     = { action = "spawn ~/bin/bar-toast modal 'T - Terminal in session (third)'; ~/bin/term-sessions session-new 0.333", repeat = false }
 "submap[sessions],d"           = { action = "spawn ~/bin/bar-toast modal 'd - Detach'; ~/bin/term-sessions detach", repeat = false }
 "submap[sessions],Shift+d"     = { action = "spawn ~/bin/term-sessions end", repeat = false }
 "submap[sessions],s"           = { action = "spawn ~/bin/term-sessions close-all", repeat = false }

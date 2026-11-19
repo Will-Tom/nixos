@@ -5,6 +5,8 @@
 --   clone   c  name for a copy of the focused session
 --   join    C  copy the focused session's terminals into an existing session
 --   rename  r  new name for the focused session
+--   new     t  session for a new terminal (no session terminal focused)
+--   new3    T  same, at 1/3 width
 -- Activating a result runs `~/bin/term-sessions <verb> <session>`.
 
 local SCRIPT = noctalia.expandPath("~/bin/term-sessions")
@@ -16,6 +18,8 @@ local VERBS = {
   clone  = { title = "Clone as %s",       new = true, nameOnly = true },
   join   = { title = "Clone into %s",     new = false },
   rename = { title = "Rename to %s",      new = true, nameOnly = true },
+  new    = { title = "New terminal in %s", new = true, cmd = "new-in" },
+  new3   = { title = "New 1/3 terminal in %s", new = true, cmd = "new3-in" },
 }
 
 local function trim(s) return (s:gsub("^%s+", ""):gsub("%s+$", "")) end
@@ -28,7 +32,7 @@ local function subtitle(s)
 end
 
 function onQuery(query)
-  local verb, text = query:match("^(%a+)%s*(.*)$")
+  local verb, text = query:match("^(%w+)%s*(.*)$")
   local spec = verb and VERBS[verb]
   if not spec then
     launcher.setResults(query, {
@@ -77,8 +81,8 @@ function onQuery(query)
 end
 
 function onActivate(id)
-  local verb, name = id:match("^(%a+)\t(.+)$")
-  if verb and name then
-    noctalia.runAsync({ SCRIPT, verb, name })
+  local verb, name = id:match("^(%w+)\t(.+)$")
+  if verb and name and VERBS[verb] then
+    noctalia.runAsync({ SCRIPT, VERBS[verb].cmd or verb, name })
   end
 end
