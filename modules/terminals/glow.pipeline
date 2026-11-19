@@ -1,0 +1,12 @@
+# Glow around text: kitty's bundled bloom shader, tuned. Pixels brighter than
+# the threshold bleed their own color outward, so on the black background
+# text gets a soft halo in its own color. Static: redraws only when the
+# screen changes, no periodic frames.
+startgroup
+    animation_step 0
+    # minimum brightness (linear) that glows; lower = dimmer text glows too
+    var float BLOOM_THRESHOLD = 0.15
+    # how strong the halo is
+    var float BLOOM_STRENGTH = 0.3
+    shaders bloom
+endgroup

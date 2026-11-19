@@ -16,8 +16,13 @@
       };
       # Colors from the noctalia palette (its kitty template writes this file
       # and reloads kitty when the theme changes; see noctalia.nix)
-      extraConfig = "include themes/noctalia.conf";
+      extraConfig = ''
+        include themes/noctalia.conf
+        # Soft glow around text (shaders/glow.pipeline)
+        custom_shaders glow
+      '';
     };
+    xdg.configFile."kitty/shaders/glow.pipeline".source = ./terminals/glow.pipeline;
 
     programs.ghostty = {
       enable = true;
