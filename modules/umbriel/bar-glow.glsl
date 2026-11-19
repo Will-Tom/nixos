@@ -9,8 +9,8 @@ const float SPREAD = 4.0;        // how far below the bar the halo may reach
 const float RADIUS = 1.4;        // sample spacing, logical px
 const float STRENGTH = 0.12;     // halo strength (replaced per level)
 const float THRESHOLD = 0.2;     // minimum brightness that glows
-const float SAT_LOW = 0.25;      // saturation where glow starts...
-const float SAT_HIGH = 0.6;      // ...and is full
+const float SAT_LOW = 0.45;      // saturation where glow starts (pale pinks stay plain)
+const float SAT_HIGH = 0.75;     // ...and is full
 
 float lum(vec3 c) { return dot(c, vec3(0.299, 0.587, 0.114)); }
 

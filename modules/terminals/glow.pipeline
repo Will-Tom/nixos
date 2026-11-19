@@ -17,9 +17,10 @@ startgroup
     animation_step 0
     # minimum brightness (linear) that glows; lower = dimmer text glows too
     var float BLOOM_THRESHOLD = 0.15
-    # saturation where glow starts / is full; raise to make only vivid colors glow
-    var float SAT_LOW = 0.25
-    var float SAT_HIGH = 0.6
+    # saturation where glow starts / is full (linear RGB). The theme's pale pinks
+    # (normal text, ~0.25-0.4) stay plain; vivid pinks (#ff99b8, #ff8cb3) glow.
+    var float SAT_LOW = 0.45
+    var float SAT_HIGH = 0.75
     # how strong the halo is
     var float BLOOM_STRENGTH = @STRENGTH@
     shaders color-glow

@@ -22,7 +22,7 @@
         # sentinel background it can find (must match SELECTION there), text
         # keeps its own colors. After the theme include so it wins.
         selection_foreground none
-        selection_background #5a3f4e
+        selection_background #3d2a5c
         # Shader pipeline (glass selection + text glow); glow level set by
         # ~/bin/kitty-glow (Super+PageUp/Down)
         include ${config.xdg.stateHome}/kitty-glow/glow.conf

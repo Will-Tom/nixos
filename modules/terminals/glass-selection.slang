@@ -12,8 +12,9 @@
 import kitty_custom_shader_types;
 
 // The sentinel selection background, sRGB 0-255. Must match
-// selection_background in kitty.conf.
-static const float3 SELECTION = float3(90.0f, 63.0f, 78.0f);
+// selection_background in kitty.conf, and be far from every theme color
+// (#3d2a5c: the palette is black, #1a0f16, #5a3f4d and pinks).
+static const float3 SELECTION = float3(61.0f, 42.0f, 92.0f);
 // Glass color (sRGB 0-1) and how strongly it filters the text behind it
 static const float3 GLASS = float3(1.0f, 0.55f, 0.75f);
 static const float TINT = 0.3f;
@@ -36,7 +37,7 @@ to_linear(float3 c) {
 bool
 is_sel(float3 c, float3 sel) {
     float3 d = abs(c - sel);
-    return max(d.r, max(d.g, d.b)) < 0.004f;
+    return max(d.r, max(d.g, d.b)) < 0.003f;
 }
 
 bool
