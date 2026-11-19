@@ -18,17 +18,24 @@
       # and reloads kitty when the theme changes; see noctalia.nix)
       extraConfig = ''
         include themes/noctalia.conf
-        # Soft glow around text; level set by ~/bin/kitty-glow (Super+PageUp/Down)
+        # Selection drawn as colored glass by shaders/glass-selection.slang: a
+        # sentinel background it can find (must match SELECTION there), text
+        # keeps its own colors. After the theme include so it wins.
+        selection_foreground none
+        selection_background #5a3f4e
+        # Shader pipeline (glass selection + text glow); glow level set by
+        # ~/bin/kitty-glow (Super+PageUp/Down)
         include ${config.xdg.stateHome}/kitty-glow/glow.conf
       '';
     };
     xdg.configFile."kitty/glow.pipeline.in".source = ./terminals/glow.pipeline;
     xdg.configFile."kitty/shaders/color-glow.slang".source = ./terminals/color-glow.slang;
+    xdg.configFile."kitty/shaders/glass-selection.slang".source = ./terminals/glass-selection.slang;
     home.file."bin/kitty-glow" = {
       source = ./terminals/kitty-glow.sh;
       executable = true;
     };
-    # Write the default level on first activation so new kitties glow
+    # Regenerate the pipeline for the saved level (the template may have changed)
     home.activation.kittyGlow = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
       run ${pkgs.bash}/bin/bash $HOME/bin/kitty-glow init
     '';

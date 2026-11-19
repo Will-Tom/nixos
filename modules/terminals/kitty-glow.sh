@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Text glow level for kitty, 0 (off) to 10. Writes a pipeline for the level
+# Text glow level for kitty, 0 (off) to 10. Writes kitty's shader pipeline
+# (glass selection + glow) for the level
 # and an include file naming it, then makes every kitty reload its config.
 # kitty only recompiles shaders when the custom_shaders value changes, so
 # each level gets its own pipeline file.
@@ -18,7 +19,7 @@ level=$(cat "$DIR/level" 2>/dev/null)
 case $1 in
   up) level=$((level + 1)) ;;
   down) level=$((level - 1)) ;;
-  init) [ -f "$DIR/glow.conf" ] && exit 0 ;;
+  init) ;;   # regenerate for the current level (template may have changed)
   [0-9]*) level=$1 ;;
   *) echo "usage: kitty-glow up|down|init|<level 0-$MAX>" >&2; exit 1 ;;
 esac
@@ -27,13 +28,14 @@ esac
 echo "$level" > "$DIR/level"
 
 rm -f "$DIR"/glow-*.pipeline
+# Level 0 keeps the other shaders (glass selection) and drops the glow group
+strength=$(printf "0.%03d" $((level * 20)))
 if ((level == 0)); then
-  echo "custom_shaders" > "$DIR/glow.conf"
+  sed '/^# GLOW-BEGIN$/,/^# GLOW-END$/d' "$TEMPLATE"
 else
-  strength=$(printf "0.%03d" $((level * 20)))
-  sed "s/@STRENGTH@/$strength/" "$TEMPLATE" > "$DIR/glow-$level.pipeline"
-  echo "custom_shaders $DIR/glow-$level.pipeline" > "$DIR/glow.conf"
-fi
+  sed "s/@STRENGTH@/$strength/" "$TEMPLATE"
+fi > "$DIR/glow-$level.pipeline"
+echo "custom_shaders $DIR/glow-$level.pipeline" > "$DIR/glow.conf"
 
 [ "$1" = init ] || pkill -USR1 -x -u "$UID" kitty
 [ "$1" = init ] || ~/bin/bar-toast super "PGUP/PGDN - Text glow $level/$MAX" 2>/dev/null
