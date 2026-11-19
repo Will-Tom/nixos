@@ -37,6 +37,12 @@
       url = "github:degoog-org/degoog";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Faster Nix evaluator (Rust); fronts the nix CLI, see modules/nix-settings.nix
+    iets = {
+      url = "github:numtide/iets";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
 
