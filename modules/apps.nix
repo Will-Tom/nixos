@@ -11,5 +11,6 @@
     mission-center
     hardinfo2
     discord
+    drawy
   ];
 }
