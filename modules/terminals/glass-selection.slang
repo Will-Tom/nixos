@@ -9,6 +9,7 @@
 // height field instead of a rounded-rectangle SDF.
 
 import kitty_custom_shader_types;
+import term_cell;
 
 // Sentinel selection background, sRGB 0-255 (the pipeline sets it)
 static const float3 SELECTION = float3(61.0f, 42.0f, 92.0f);
@@ -30,6 +31,10 @@ static const float RIM = 0.75f;
 static const float SPECULAR = 0.18f;
 // Light caught inside the glass along its edge (in the glass color)
 static const float EDGE_LIGHT = 0.18f;
+// Text under the glass is enlarged, each letter about its own cell (so a
+// long selection doesn't slide), fading to 1 across the bevel. Letters may
+// spill into neighbouring cells rather than be clipped.
+static const float MAGNIFY = 1.3f;
 
 float3
 to_linear(float3 s) {
@@ -86,10 +91,38 @@ fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
     float2 dir = length(ray.xy) > 1e-4f ? normalize(ray.xy) : float2(0.0f);
     float shift = bevel * MAX_SHIFT;
     float2 off = dir * shift * px;
+    // Magnify: for this cell and its 8 neighbours, where would this pixel
+    // come from if that cell's letter were enlarged about its centre? Keep
+    // the candidate with the most ink (furthest from the background).
+    float2 vs = float2(d.viewport_size_pixels);
+    float2 p = uv * vs;
+    float2 src = p;
+    float m = 1.0f / lerp(MAGNIFY, 1.0f, bevel);
+    if ((grid_known(t) || cursor_known(d)) && m < 0.999f) {
+        float4 kc = cell_grid(d, t);
+        float2 cs = kc.zw;
+        float2 i = floor((p - kc.xy) / cs);
+        float best = -1.0f;
+        [ForceUnroll]
+        for (int dy = -1; dy <= 1; dy++) {
+            [ForceUnroll]
+            for (int dx = -1; dx <= 1; dx++) {
+                float2 ctr = kc.xy + (i + float2(float(dx), float(dy)) + 0.5f) * cs;
+                float2 q = ctr + (p - ctr) * m;
+                float2 o = abs(q - ctr);
+                if (o.x > cs.x * 0.5f || o.y > cs.y * 0.5f) continue;
+                float3 c = behind(t, d, q * px, sel);
+                float3 dc = abs(c - d.background.rgb);
+                float ink = dc.r + dc.g + dc.b;
+                if (ink > best) { best = ink; src = q; }
+            }
+        }
+    }
+    float2 suv = src * px;
     float3 seen;
-    seen.r = behind(t, d, uv + off * (1.0f + DISPERSION), sel).r;
-    seen.g = behind(t, d, uv + off, sel).g;
-    seen.b = behind(t, d, uv + off * (1.0f - DISPERSION), sel).b;
+    seen.r = behind(t, d, suv + off * (1.0f + DISPERSION), sel).r;
+    seen.g = behind(t, d, suv + off, sel).g;
+    seen.b = behind(t, d, suv + off * (1.0f - DISPERSION), sel).b;
 
     // Tinted glass, thicker (more color) toward the edge
     float3 glass = to_linear(GLASS);

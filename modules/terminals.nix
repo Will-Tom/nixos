@@ -40,7 +40,7 @@
       "kitty/glow.pipeline.in".source = ./terminals/glow.pipeline;
     } // lib.genAttrs
       (map (s: "kitty/shaders/${s}.slang")
-        [ "color-glow" "glass-mask" "glass-blur" "glass-selection" "cursor-find" "cursor-lens" ])
+        [ "term_cell" "cell-memory" "color-glow" "glass-mask" "glass-blur" "glass-selection" "cursor-find" "cursor-lens" ])
       (f: { source = ./terminals + "/${baseNameOf f}"; });
     home.file."bin/kitty-glow" = {
       source = ./terminals/kitty-glow.sh;

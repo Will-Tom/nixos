@@ -3,7 +3,7 @@
 # at level 0. Every group is static (animation_step 0): it redraws only when
 # the screen changes.
 
-textures a b
+textures a b persist
 
 # Sentinel selection background, sRGB 0-255. Must match selection_background
 # in kitty.conf and ui.selection in the helix theme (ao-glass), and be far
@@ -12,6 +12,16 @@ var float3 SELECTION = float3(61.0, 42.0, 92.0)
 # helix draws its normal-mode block cursor in this (ao-glass theme) so the
 # reading glass can find it; the lens paints it back as ao's sky blue
 var float3 CURSOR_SENTINEL = float3(30.0, 95.0, 59.0)
+
+# Remember the exact cell grid (persist texture) from block/bar cursors, so
+# the glass magnification stays aligned under an underline cursor too.
+# viewport_size must match CELL_MEM in term_cell.
+startgroup
+    animation_step 0
+    output_texture persist
+    viewport_size 0.004 0.002
+    shaders cell-memory
+endgroup
 
 # Liquid glass selection: find it (-> a), blur it into a capsule-shaped
 # height field (a -> b -> a), then draw the glass

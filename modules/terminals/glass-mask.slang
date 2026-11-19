@@ -7,14 +7,13 @@
 // set in the pipeline) and keep text in its own colors.
 
 import kitty_custom_shader_types;
+import term_cell;
 
 // Sentinel selection background, sRGB 0-255 (the pipeline sets it)
 static const float3 SELECTION = float3(61.0f, 42.0f, 92.0f);
 // How far past the selection the glass extends, in line heights
 static const float PAD = 0.4f;
 static const int TAPS = 12;  // samples on each side
-// Line height (px) to assume before the cursor has been seen
-static const float FALLBACK_LINE = 24.0f;
 
 float3
 to_linear(float3 s) {
@@ -31,9 +30,7 @@ public float4
 fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
     float3 sel = to_linear(SELECTION / 255.0f);
     float2 vs = float2(d.viewport_size_pixels);
-    float4 cur = d.cursor_trail_history_to[0];
-    float line = (d.cursor_trail_history_age[0].x >= 0.0f && cur.z > cur.w)
-        ? (cur.z - cur.w) * vs.y : FALLBACK_LINE;
+    float line = cell_grid(d, t).w;
     // Inside when the selection color is within PAD px to the left or right:
     // covers glyph strokes inside selected cells, and extends the glass past
     // both ends so the capsule's round caps don't cut into the first and

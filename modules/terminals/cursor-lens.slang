@@ -12,6 +12,7 @@
 //   is drawn (apps can hide it), checked by finding its color in its cell.
 
 import kitty_custom_shader_types;
+import term_cell;
 
 // Lens radius in line heights, and magnification at the centre
 static const float SIZE = 1.5f;
@@ -21,8 +22,6 @@ static const float MAGNIFY = 1.5f;
 static const float3 CURSOR_SENTINEL = float3(30.0f, 95.0f, 59.0f);
 static const float3 CURSOR_FILL = float3(69.0f, 177.0f, 232.0f);
 static const float STRIP = 0.002f;
-// Line height / cell width (px) to assume before kitty's cursor is seen
-static const float FALLBACK_LINE = 24.0f;
 
 float3
 to_linear(float3 s) {
@@ -49,12 +48,12 @@ fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
     float3 cs = to_linear(CURSOR_SENTINEL / 255.0f);
     float3 fill = to_linear(CURSOR_FILL / 255.0f);
 
-    // Cell size from kitty's cursor rectangle (also valid while hidden)
-    bool have_kitty = d.cursor_trail_history_age[0].x >= 0.0f;
+    // The cursor's cell (term_cell: whatever the cursor shape), also valid
+    // while the cursor is hidden
+    bool have_kitty = cursor_known(d);
     float4 r = d.cursor_trail_history_to[0];  // x left, y right, z top, w bottom
-    have_kitty = have_kitty && r.z > r.w && r.y > r.x;
-    float2 cell = have_kitty ? float2(r.y - r.x, r.z - r.w) * vs
-                             : float2(FALLBACK_LINE * 0.5f, FALLBACK_LINE);
+    float4 kc = cursor_cell(d, t);            // left, bottom, width, height (px)
+    float2 cell = kc.zw;
 
     float2 c;
     // cursor-find packs x, y (px, 12 bits each) into rgb; 0, 0 = not found
@@ -66,7 +65,7 @@ fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
         c = float2(fx + cell.x * 0.5f, fy - cell.y * 0.5f);
     } else {
         if (!have_kitty) return color;
-        c = float2(r.x + r.y, r.z + r.w) * 0.5f * vs;
+        c = kc.xy + cell * 0.5f;
         // Only while kitty draws it: block (centre), bar (left edge),
         // underline (bottom edge), hollow (edges)
         float3 cc = d.cursor_color.rgb;

@@ -8,20 +8,17 @@
 // one-line selection becomes a pill with fully round ends.
 
 import kitty_custom_shader_types;
+import term_cell;
 
 static const bool VERTICAL = false;
 // Corner radius as a fraction of the line height (0.5 = round ends)
 static const float ROUNDNESS = 0.5f;
-// Line height (px) to assume before the cursor has been seen
-static const float FALLBACK_LINE = 24.0f;
 static const int TAPS = 12;  // samples on each side
 
 public float4
 fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
     float2 vs = float2(d.viewport_size_pixels);
-    float4 cur = d.cursor_trail_history_to[0];
-    float line = (d.cursor_trail_history_age[0].x >= 0.0f && cur.z > cur.w)
-        ? (cur.z - cur.w) * vs.y : FALLBACK_LINE;
+    float line = cell_grid(d, t).w;
     float radius = clamp(line * ROUNDNESS, 3.0f, 40.0f);
     float sigma = radius / 2.0f;
 
