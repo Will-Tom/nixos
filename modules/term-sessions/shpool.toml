@@ -3,6 +3,16 @@
 # No "[session-name]" prompt prefix; the shell prompt stays as it is
 prompt_prefix = ""
 
+# Desktop session variables, copied from the kitty window into each new shell
+# (the shpool daemon runs as a service, so shells don't inherit them). Without
+# these, umbriel msg, notify-send, wl-copy and GUI apps can't reach the
+# desktop from a session shell. The attaching client reads this list.
+forward_env = [
+  "WAYLAND_DISPLAY", "UMBRIEL_SOCKET", "DBUS_SESSION_BUS_ADDRESS",
+  "XDG_CURRENT_DESKTOP", "XDG_SESSION_DESKTOP", "XDG_SESSION_TYPE",
+  "XCURSOR_THEME", "XCURSOR_SIZE",
+]
+
 # On reattach, replay the last 5000 lines instead of only one screen
 session_restore_mode = { lines = 5000 }
 
