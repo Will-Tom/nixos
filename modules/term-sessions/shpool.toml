@@ -11,3 +11,10 @@ session_restore_mode = { lines = 5000 }
 [[keybinding]]
 binding = "Ctrl-] Ctrl-] Ctrl-q"
 action = "detach"
+
+# shpool starts shells without kitty's environment, so without this fish and
+# helix think the terminal has only 256 colors and round the glass sentinel
+# colors (selection #3d2a5c, helix cursor) to the palette, and kitty's glass
+# and reading-glass shaders never find them
+[env]
+COLORTERM = "truecolor"
