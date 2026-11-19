@@ -7,6 +7,12 @@
         font_family = "JetBrainsMono Nerd Font";
         font_size = 11;
         confirm_os_window_close = 0;
+        # Window management is umbriel's job: no kitty tabs/splits/shortcuts
+        clear_all_shortcuts = "yes";
+      };
+      keybindings = {
+        "ctrl+shift+c" = "copy_to_clipboard";
+        "ctrl+shift+v" = "paste_from_clipboard";
       };
     };
 

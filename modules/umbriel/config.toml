@@ -140,7 +140,7 @@ shader = "effects/zoom/zoom_8.glsl"
 # Window rules
 
 [[window_rule]]
-match.app_id = "^com\\.mitchellh\\.ghostty$"
+match.app_id = ["^com\\.mitchellh\\.ghostty$", "^kitty$"]
 default_scrolling_extent = 0.5
 
 [[window_rule]]
@@ -172,10 +172,10 @@ default_floating = false
 
 # Launchers and one-shot actions show a fading "KEY - action" toast on the bar
 # via ~/bin/bar-toast; repeatable focus/move/resize binds stay native (instant).
-"Mod+Space" = { action = "spawn ~/bin/bar-toast super 'SPACE - Launcher'; fuzzel", repeat = false }
+"Mod+Space" = { action = "spawn ~/bin/bar-toast super 'SPACE - Launcher'; noctalia msg panel-toggle launcher", repeat = false }
 "Mod+Shift+Space" = { action = "spawn ~/bin/bar-toast super 'SHIFT + SPACE - Launcher (half)'; ~/bin/launch-sized 0.5", repeat = false }
-"Mod+T"     = { action = "spawn ~/bin/bar-toast super 'T - Terminal'; ghostty", repeat = false }
-"Mod+Shift+T" = { action = "spawn ~/bin/bar-toast super 'SHIFT + T - Terminal (third)'; ~/bin/launch-sized 0.333 ghostty", repeat = false }
+"Mod+T"     = { action = "spawn ~/bin/bar-toast super 'T - Terminal'; ~/bin/term", repeat = false }
+"Mod+Shift+T" = { action = "spawn ~/bin/bar-toast super 'SHIFT + T - Terminal (third)'; ~/bin/term --fraction 0.333", repeat = false }
 "Mod+O"     = { action = "spawn ~/bin/bar-toast super 'O - Overview'; umbriel msg overview-toggle", repeat = false }
 "Mod+S"     = { action = "spawn ~/bin/bar-toast super 'S - Close window'; umbriel msg window-close", repeat = false }
 "Mod+Tab"   = { action = "spawn ~/bin/bar-toast super 'TAB - Toggle bar'; noctalia msg bar-toggle", repeat = false }
@@ -260,7 +260,7 @@ default_floating = false
 "submap[modal],F1"     = { action = "submap reset", repeat = false }
 "submap[modal],i"      = { action = "submap reset", repeat = false }
 "submap[modal],Escape" = { action = "submap reset", repeat = false }
-"submap[modal],space"  = { action = "spawn ~/bin/bar-toast modal 'SPACE - Launcher'; fuzzel", submap = "reset", repeat = false }
+"submap[modal],space"  = { action = "spawn ~/bin/bar-toast modal 'SPACE - Launcher'; noctalia msg panel-toggle launcher", submap = "reset", repeat = false }
 "submap[modal],Shift+space" = { action = "spawn ~/bin/bar-toast modal 'SHIFT + SPACE - Launcher (half)'; ~/bin/launch-sized 0.5", submap = "reset", repeat = false }
 
 "submap[modal],h" = "window-focus-left"
@@ -296,8 +296,8 @@ default_floating = false
 "submap[modal],9" = "spawn ~/bin/bar-toast modal '9 - Workspace 9'; umbriel msg workspace-switch 9"
 
 "submap[modal],Tab" = { action = "spawn ~/bin/bar-toast modal 'TAB - Toggle bar'; noctalia msg bar-toggle", repeat = false }
-"submap[modal],t"   = { action = "spawn ~/bin/bar-toast modal 't - Terminal'; ghostty", repeat = false }
-"submap[modal],Shift+t" = { action = "spawn ~/bin/bar-toast modal 'T - Terminal (third)'; ~/bin/launch-sized 0.333 ghostty", repeat = false }
+"submap[modal],t"   = { action = "spawn ~/bin/bar-toast modal 't - Terminal'; ~/bin/term", repeat = false }
+"submap[modal],Shift+t" = { action = "submap sessions", repeat = false }
 "submap[modal],v"       = { action = "spawn ~/bin/bar-toast modal 'v - Toggle floating'; umbriel msg window-toggle-floating", repeat = false }
 "submap[modal],Shift+v" = { action = "spawn ~/bin/bar-toast modal 'V - Float to region'; ~/bin/float-to-region.sh", repeat = false }
 "submap[modal],b"   = { action = "spawn ~/bin/bar-toast modal 'b - Previous window'; umbriel msg window-focus-last", repeat = false }
@@ -340,3 +340,21 @@ default_floating = false
 "submap[power],a"      = { action = "submap reset", repeat = false }
 "submap[power],Escape" = { action = "submap reset", repeat = false }
 "submap[power],F1"     = { action = "spawn umbriel msg submap reset", submap = "reset", repeat = false }
+
+# ==============================================================================
+# SESSIONS (modal T): persistent terminal sessions (modules/term-sessions.nix).
+# n N c s r open the noctalia launcher on /ts and leave modal entirely, so the
+# name you type doesn't hit modal keys.
+
+"submap[sessions],t"       = { action = "spawn ~/bin/bar-toast modal 't - Terminal in session'; ~/bin/term", submap = "reset", repeat = false }
+"submap[sessions],Shift+t" = { action = "spawn ~/bin/bar-toast modal 'T - Terminal in session (third)'; ~/bin/term --fraction 0.333", submap = "reset", repeat = false }
+"submap[sessions],d"       = { action = "spawn ~/bin/bar-toast modal 'd - Detach'; ~/bin/term-sessions detach", submap = "reset", repeat = false }
+"submap[sessions],Shift+d" = { action = "spawn ~/bin/term-sessions end", submap = "reset", repeat = false }
+"submap[sessions],n"       = { action = "spawn ~/bin/bar-toast modal 'n - Move to session'; umbriel msg submap reset; ~/bin/term-sessions prompt move", submap = "reset", repeat = false }
+"submap[sessions],Shift+n" = { action = "spawn ~/bin/bar-toast modal 'N - Merge session'; umbriel msg submap reset; ~/bin/term-sessions prompt merge", submap = "reset", repeat = false }
+"submap[sessions],c"       = { action = "spawn ~/bin/bar-toast modal 'c - Clone session'; umbriel msg submap reset; ~/bin/term-sessions prompt clone", submap = "reset", repeat = false }
+"submap[sessions],s"       = { action = "spawn ~/bin/bar-toast modal 's - Sessions'; umbriel msg submap reset; ~/bin/term-sessions prompt open", submap = "reset", repeat = false }
+"submap[sessions],r"       = { action = "spawn ~/bin/bar-toast modal 'r - Rename session'; umbriel msg submap reset; ~/bin/term-sessions prompt rename", submap = "reset", repeat = false }
+"submap[sessions],a"       = { action = "submap reset", repeat = false }
+"submap[sessions],Escape"  = { action = "submap reset", repeat = false }
+"submap[sessions],F1"      = { action = "spawn umbriel msg submap reset", submap = "reset", repeat = false }

@@ -1,0 +1,14 @@
+id = "willisk/term-sessions"
+name = "Terminal sessions"
+version = "1.0.0"
+author = "willisk"
+description = "Pick, name and reopen persistent terminal sessions from the launcher."
+plugin_api = 54
+
+# SESSIONS-mode keybinds run `term-sessions prompt <verb>`, which remembers
+# the focused terminal and opens the launcher on "/ts <verb> ".
+[[launcher_provider]]
+id = "sessions"
+entry = "provider.luau"
+prefix = "ts"
+glyph = "terminal-2"

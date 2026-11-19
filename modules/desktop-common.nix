@@ -62,7 +62,6 @@ in
     home.packages = with pkgs; [
       seahorse
       wl-screenrec
-      fuzzel
       brightnessctl
       slurp
     ];

@@ -21,7 +21,7 @@
 
         # Local plugins (read-only path source in the store)
         plugins = {
-          enabled = [ "willisk/submap-mode" "willisk/dashboard" ];
+          enabled = [ "willisk/submap-mode" "willisk/dashboard" "willisk/term-sessions" ];
           source = [{
             name = "local-nix";
             kind = "path";

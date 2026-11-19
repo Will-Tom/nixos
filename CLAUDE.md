@@ -13,7 +13,7 @@ impermanence (tmpfs root, state under /persist), sops-nix, disko.
 - `modules/`: one file per feature. NixOS settings at the top level, the
   home-manager part under `home-manager.users.${config.my.username}`
   (`my.username` is defined in `modules/user.nix`).
-  - Compositor-neutral desktop parts (keyd, portal, keyring, fuzzel)
+  - Compositor-neutral desktop parts (keyd, portal, keyring)
     are in `desktop-common.nix`; umbriel parts are in `umbriel.nix`.
   - Noctalia plugins (bar mode badge, dashboard widgets) are in
     `modules/noctalia/plugins/`. Saved state in

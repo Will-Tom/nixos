@@ -1,0 +1,13 @@
+# shpool: holds the shells of persistent terminal sessions (see term-sessions.nix)
+
+# No "[session-name]" prompt prefix; the shell prompt stays as it is
+prompt_prefix = ""
+
+# On reattach, replay the last 5000 lines instead of only one screen
+session_restore_mode = { lines = 5000 }
+
+# Detaching is done with SESSIONS-mode d (umbriel), not a key in the terminal.
+# shpool always has a detach binding, so put it somewhere nobody presses.
+[[keybinding]]
+binding = "Ctrl-] Ctrl-] Ctrl-q"
+action = "detach"

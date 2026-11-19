@@ -11,6 +11,7 @@
     ../modules/umbriel.nix
     ../modules/noctalia.nix
     ../modules/terminals.nix
+    ../modules/term-sessions.nix
     ../modules/dashboard.nix
     ../modules/git-backup.nix
     ../modules/apps.nix

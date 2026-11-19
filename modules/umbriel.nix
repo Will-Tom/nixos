@@ -19,7 +19,7 @@
       executable = true;
     };
 
-    # Launch at a given width: Super+Shift+Space (fuzzel, 1/2), Super+Shift+T (terminal, 1/3)
+    # Launch at a given width: Super+Shift+Space (launcher, 1/2), Super+Shift+T (terminal, 1/3)
     home.file."bin/launch-sized" = {
       source = ./umbriel/launch-sized.sh;
       executable = true;
