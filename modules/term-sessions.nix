@@ -2,8 +2,9 @@
 # shell, grouped into named sessions. Shells keep running when their window
 # closes, and after a reboot every window that was open comes back on its
 # workspace with its directory and scrollback (programs are not rerun).
-# Managed from umbriel's SESSIONS mode (modal T) and the noctalia launcher
-# (/ts, plugin noctalia/plugins/term-sessions). State lives in
+# Managed from umbriel's SESSIONS mode (modal T), the noctalia launcher
+# (/ts, plugin noctalia/plugins/term-sessions) and the fish command `se`
+# (also over ssh, where it works in the current terminal). State lives in
 # ~/.local/state/term-sessions.
 { config, pkgs, ... }:
 let
@@ -20,6 +21,9 @@ in
     home.file."bin/term" = script;
     home.file."bin/term-attach" = script;
     home.file."bin/term-sessions" = script;
+
+    # `se t`, `se c name`, ...: the SESSIONS actions from a shell
+    xdg.configFile."fish/functions/se.fish".source = ./term-sessions/se.fish;
 
     # shpool daemon, socket-activated (from shpool's own units)
     systemd.user.sockets.shpool = {

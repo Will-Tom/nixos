@@ -343,18 +343,21 @@ default_floating = false
 
 # ==============================================================================
 # SESSIONS (modal T): persistent terminal sessions (modules/term-sessions.nix).
-# n N c s r open the noctalia launcher on /ts and leave modal entirely, so the
-# name you type doesn't hit modal keys.
+# The mode stays on after each action. m M c C / r open the noctalia launcher
+# on /ts and leave modal while it's open (so typing doesn't hit these keys);
+# term-sessions returns to SESSIONS when the launcher closes.
+# The fish command `se` does the same from a shell (also over ssh).
 
-"submap[sessions],t"       = { action = "spawn ~/bin/bar-toast modal 't - Terminal in session'; ~/bin/term", submap = "reset", repeat = false }
-"submap[sessions],Shift+t" = { action = "spawn ~/bin/bar-toast modal 'T - Terminal in session (third)'; ~/bin/term --fraction 0.333", submap = "reset", repeat = false }
-"submap[sessions],d"       = { action = "spawn ~/bin/bar-toast modal 'd - Detach'; ~/bin/term-sessions detach", submap = "reset", repeat = false }
-"submap[sessions],Shift+d" = { action = "spawn ~/bin/term-sessions end", submap = "reset", repeat = false }
-"submap[sessions],n"       = { action = "spawn ~/bin/bar-toast modal 'n - Move to session'; umbriel msg submap reset; ~/bin/term-sessions prompt move", submap = "reset", repeat = false }
-"submap[sessions],Shift+n" = { action = "spawn ~/bin/bar-toast modal 'N - Merge session'; umbriel msg submap reset; ~/bin/term-sessions prompt merge", submap = "reset", repeat = false }
-"submap[sessions],c"       = { action = "spawn ~/bin/bar-toast modal 'c - Clone session'; umbriel msg submap reset; ~/bin/term-sessions prompt clone", submap = "reset", repeat = false }
-"submap[sessions],s"       = { action = "spawn ~/bin/bar-toast modal 's - Sessions'; umbriel msg submap reset; ~/bin/term-sessions prompt open", submap = "reset", repeat = false }
-"submap[sessions],r"       = { action = "spawn ~/bin/bar-toast modal 'r - Rename session'; umbriel msg submap reset; ~/bin/term-sessions prompt rename", submap = "reset", repeat = false }
-"submap[sessions],a"       = { action = "submap reset", repeat = false }
-"submap[sessions],Escape"  = { action = "submap reset", repeat = false }
-"submap[sessions],F1"      = { action = "spawn umbriel msg submap reset", submap = "reset", repeat = false }
+"submap[sessions],t"           = { action = "spawn ~/bin/bar-toast modal 't - Terminal in session'; ~/bin/term", repeat = false }
+"submap[sessions],Shift+t"     = { action = "spawn ~/bin/bar-toast modal 'T - Terminal in session (third)'; ~/bin/term --fraction 0.333", repeat = false }
+"submap[sessions],d"           = { action = "spawn ~/bin/bar-toast modal 'd - Detach'; ~/bin/term-sessions detach", repeat = false }
+"submap[sessions],Shift+d"     = { action = "spawn ~/bin/term-sessions end", repeat = false }
+"submap[sessions],m"           = { action = "spawn ~/bin/bar-toast modal 'm - Move to session'; umbriel msg submap reset; ~/bin/term-sessions prompt move", submap = "reset", repeat = false }
+"submap[sessions],Shift+m"     = { action = "spawn ~/bin/bar-toast modal 'M - Merge session'; umbriel msg submap reset; ~/bin/term-sessions prompt merge", submap = "reset", repeat = false }
+"submap[sessions],c"           = { action = "spawn ~/bin/bar-toast modal 'c - Clone session'; umbriel msg submap reset; ~/bin/term-sessions prompt clone", submap = "reset", repeat = false }
+"submap[sessions],Shift+c"     = { action = "spawn ~/bin/bar-toast modal 'C - Clone into session'; umbriel msg submap reset; ~/bin/term-sessions prompt join", submap = "reset", repeat = false }
+"submap[sessions],slash"       = { action = "spawn ~/bin/bar-toast modal '/ - Open session'; umbriel msg submap reset; ~/bin/term-sessions prompt open", submap = "reset", repeat = false }
+"submap[sessions],r"           = { action = "spawn ~/bin/bar-toast modal 'r - Rename session'; umbriel msg submap reset; ~/bin/term-sessions prompt rename", submap = "reset", repeat = false }
+"submap[sessions],a"           = { action = "submap reset", repeat = false }
+"submap[sessions],Escape"      = { action = "submap reset", repeat = false }
+"submap[sessions],F1"          = { action = "spawn umbriel msg submap reset", submap = "reset", repeat = false }

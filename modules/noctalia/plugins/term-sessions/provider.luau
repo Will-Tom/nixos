@@ -1,8 +1,9 @@
 -- Launcher provider behind "/ts". The query is "<verb> <text>":
---   open    s  pick a session to reopen its windows
---   move    n  put the focused terminal in a session (existing or new)
---   merge   N  move the focused session's terminals into another session
+--   open    /  pick a session to reopen its windows
+--   move    m  put the focused terminal in a session (existing or new)
+--   merge   M  move the focused session's terminals into another session
 --   clone   c  name for a copy of the focused session
+--   join    C  copy the focused session's terminals into an existing session
 --   rename  r  new name for the focused session
 -- Activating a result runs `~/bin/term-sessions <verb> <session>`.
 
@@ -13,6 +14,7 @@ local VERBS = {
   move   = { title = "Move terminal to %s", new = true },
   merge  = { title = "Merge into %s",     new = false },
   clone  = { title = "Clone as %s",       new = true, nameOnly = true },
+  join   = { title = "Clone into %s",     new = false },
   rename = { title = "Rename to %s",      new = true, nameOnly = true },
 }
 
@@ -30,7 +32,7 @@ function onQuery(query)
   local spec = verb and VERBS[verb]
   if not spec then
     launcher.setResults(query, {
-      { id = "", title = "Sessions: open · move · merge · clone · rename", query = "/ts open ", glyph = "terminal-2" },
+      { id = "", title = "Sessions: open · move · merge · clone · join · rename", query = "/ts open ", glyph = "terminal-2" },
     })
     return
   end
@@ -42,7 +44,7 @@ function onQuery(query)
     local exact = false
     if not spec.nameOnly then
       for _, s in ipairs(sessions) do
-        local skip = (verb == "merge" and s.focused)
+        local skip = ((verb == "merge" or verb == "join") and s.focused)
         local score = text == "" and 1 or noctalia.fuzzyScore(text, s.name)
         if not skip and score then
           if s.name == text then exact = true end

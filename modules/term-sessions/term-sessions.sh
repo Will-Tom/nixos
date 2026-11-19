@@ -11,17 +11,23 @@
 #
 #   term [--session S] [--fraction F] [--dir D]   open a new terminal
 #   term-attach <id>        run inside kitty: attach, or recreate after reboot
-#   term-sessions detach    close the focused window, keep its shell running
+#   term-sessions detach    close the focused window, keep its shell running (d)
 #   term-sessions end       stop persisting the focused session (D)
-#   term-sessions move S    put the focused shell in session S (n)
-#   term-sessions merge S   move the focused session's shells into S (N)
+#   term-sessions move S    put the focused shell in session S (m)
+#   term-sessions merge S   move the focused session's shells into S (M)
 #   term-sessions rename S  rename the focused session (r)
-#   term-sessions clone S   new session S with a fresh shell per shell (c)
-#   term-sessions open S    reopen session S's windows (s)
+#   term-sessions clone S   copy the focused session's shells into S, new or
+#                           existing (c new name, C existing session)
+#   term-sessions open S    reopen session S's windows (/)
 #   term-sessions list      sessions as JSON (for the launcher)
-#   term-sessions prompt V  remember the focused shell, open the launcher on /ts V
+#   term-sessions prompt V  remember the focused shell, open the launcher on
+#                           /ts V, return to SESSIONS mode when it closes
+#   term-sessions se ...    the same actions from a shell (fish `se`), see se_help
 #   term-sessions save      snapshot cwd, scrollback and placement (timer)
 #   term-sessions restore   reopen every shell that was open (login)
+#
+# "Focused" means the shell you're typing in when run from a session shell
+# ($SHPOOL_SESSION_NAME), else the focused umbriel window.
 
 set -uo pipefail
 STATE=${XDG_STATE_HOME:-$HOME/.local/state}/term-sessions
@@ -53,16 +59,37 @@ shpool_attached() { shpool list --json 2>/dev/null | jq -r '.sessions[]? | selec
 focused_id() {
   umbriel focused-window --json 2>/dev/null | jq -r '.xdg_tag // "" | select(startswith("term:")) | ltrimstr("term:")'
 }
-# The shell to act on: the one recorded by `prompt`, else the focused one.
+# The shell this command acts on: the one it's typed in, else the focused window
+cur_id() {
+  if [ -n "${SHPOOL_SESSION_NAME:-}" ]; then echo "$SHPOOL_SESSION_NAME"; else focused_id; fi
+}
+# Same, but launcher actions use the shell recorded by `prompt`
 target_id() {
   local id=""
+  [ -n "${SHPOOL_SESSION_NAME:-}" ] && { echo "$SHPOOL_SESSION_NAME"; return; }
   [ -s "$TARGET" ] && id=$(cat "$TARGET")
   [ -n "$id" ] || id=$(focused_id)
   echo "$id"
 }
 session_of() { db -r --arg id "$1" '.shells[$id].session // empty'; }
 
-toast() { ~/bin/bar-toast modal "$1" 2>/dev/null; }
+# Open windows on this desktop, or work in the current terminal (ssh)?
+# A session shell is local when it's shown in a kitty window here.
+gui() {
+  [ "${TERM_SESSIONS_TTY:-}" = 1 ] && return 1
+  if [ -n "${SHPOOL_SESSION_NAME:-}" ]; then
+    [ -n "$(window_of "$SHPOOL_SESSION_NAME" 2>/dev/null)" ]
+  else
+    [ -z "${SSH_CONNECTION:-}" ] && umbriel outputs >/dev/null 2>&1
+  fi
+}
+
+# Bar toast for keybinds; also printed when run from a terminal
+toast() {
+  ~/bin/bar-toast modal "$1" 2>/dev/null
+  [ -t 2 ] && echo "$1" >&2
+  return 0
+}
 
 # cwd of a shpool shell: the oldest non-shpool process carrying SHPOOL_SESSION_NAME=<id>
 # is the shell itself (anything it runs inherits the variable).
@@ -124,13 +151,19 @@ cmd_new() {
     esac
   done
   if [ -z "$session" ]; then
-    focus=$(focused_id)
+    focus=$(cur_id)
     [ -n "$focus" ] && session=$(session_of "$focus")
     [ -n "$session" ] || session=main
   fi
   id=$(new_id)
   db_update --arg id "$id" --arg s "$session" --arg d "$dir" \
     '.shells[$id] = {session: $s, cwd: $d, open: true}'
+  if ! gui; then
+    # Over ssh: the new shell takes over this terminal until detached
+    echo "New shell $id in session $session (detach with: se d)" >&2
+    cmd_attach "$id"
+    return
+  fi
   spawn_window "$id"
   if [ -n "$fraction" ] && w=$(wait_window "$id"); then
     umbriel msg window-focus "$w" >/dev/null
@@ -166,14 +199,14 @@ cmd_attach() {
 }
 
 cmd_detach() {
-  local id; id=$(focused_id)
+  local id; id=$(cur_id)
   [ -n "$id" ] || { toast "d - Not a session terminal"; return 1; }
   shpool detach "$id" >/dev/null
 }
 
 cmd_end() {
   local id s
-  id=$(focused_id); s=$(session_of "$id")
+  id=$(cur_id); s=$(session_of "$id")
   [ -n "$s" ] || { toast "D - Not a session terminal"; return 1; }
   # Detached shells of the session die now; open windows stay as plain
   # terminals (term-attach kills their shell when they close).
@@ -189,7 +222,7 @@ cmd_move() {
   local id; id=$(target_id)
   [ -n "$id" ] || return 1
   db_update --arg id "$id" --arg s "$1" '.shells[$id].session = $s'
-  toast "n - Moved to $1"
+  toast "m - Moved to $1"
 }
 
 cmd_merge() {   # also rename: every shell of the target's session goes to $1
@@ -200,26 +233,54 @@ cmd_merge() {   # also rename: every shell of the target's session goes to $1
   toast "${2:-N} - $s → $1"
 }
 
-cmd_clone() {
-  local id s new w
+cmd_clone() {   # $2: key for the toast (c new session, C existing session)
+  local id s new w cwd win=1
   id=$(target_id); s=$(session_of "$id")
   [ -n "$s" ] || return 1
-  cmd_save_quiet
+  gui || win=0
+  TERM_SESSIONS_FORCE=1 cmd_save_quiet   # fresh cwds
   db -c --arg s "$s" '[.shells | to_entries[] | select(.value.session == $s)] | sort_by(.value.workspace // "", .value.column // 0)[] | .value' |
   while read -r sh; do
     new=$(new_id)
-    db_update --arg id "$new" --arg to "$1" --argjson sh "$sh" \
-      '.shells[$id] = {session: $to, cwd: $sh.cwd, open: true}'
-    spawn_window "$new"
-    if w=$(wait_window "$new"); then
-      place_window "$w" "$(jq -r '.workspace // empty' <<<"$sh")" "$(jq -r '.output // empty' <<<"$sh")" "$(jq -r '.extent // empty' <<<"$sh")"
+    cwd=$(jq -r '.cwd // empty' <<<"$sh"); [ -d "$cwd" ] || cwd=$HOME
+    if [ $win = 1 ]; then
+      db_update --arg id "$new" --arg to "$1" --arg c "$cwd" '.shells[$id] = {session: $to, cwd: $c, open: true}'
+      spawn_window "$new"
+      if w=$(wait_window "$new"); then
+        place_window "$w" "$(jq -r '.workspace // empty' <<<"$sh")" "$(jq -r '.output // empty' <<<"$sh")" "$(jq -r '.extent // empty' <<<"$sh")"
+      fi
+    else
+      # Over ssh: start the shells in the background; reopen them with se /
+      db_update --arg id "$new" --arg to "$1" --arg c "$cwd" '.shells[$id] = {session: $to, cwd: $c, open: false}'
+      shpool attach -b -d "$cwd" "$new" >/dev/null 2>&1
     fi
   done
-  toast "c - Cloned $s as $1"
+  toast "${2:-c} - Cloned $s into $1"
+}
+
+# Over ssh: pick one of the session's shells and attach it in this terminal
+open_here() {
+  local s=$1 ids n i=1 choice
+  mapfile -t ids < <(db -r --arg s "$s" '.shells | to_entries[] | select(.value.session == $s) | .key')
+  n=${#ids[@]}
+  [ "$n" -gt 0 ] || { echo "Session $s has no shells" >&2; return 1; }
+  if [ "$n" -gt 1 ]; then
+    for id in "${ids[@]}"; do
+      printf '  %d) %s  %s%s\n' "$i" "$id" "$(db -r --arg id "$id" '.shells[$id].cwd // ""')" \
+        "$(shpool_attached | grep -qx "$id" && echo '  (attached elsewhere)')" > /dev/tty
+      i=$((i + 1))
+    done
+    read -r -p "Shell [1-$n]: " choice < /dev/tty || return 1
+    [[ "$choice" =~ ^[0-9]+$ ]] && [ "$choice" -ge 1 ] && [ "$choice" -le "$n" ] || return 1
+  else
+    choice=1
+  fi
+  cmd_attach "${ids[$((choice - 1))]}"
 }
 
 cmd_open() {
   local s=$1 w sid
+  gui || { open_here "$s"; return; }
   db -c --arg s "$s" '[.shells | to_entries[] | select(.value.session == $s)] | sort_by(.value.workspace // "", .value.column // 0)[]' |
   while read -r e; do
     sid=$(jq -r .key <<<"$e")
@@ -243,11 +304,88 @@ cmd_list() {
        open: (map(select(.value.open == true)) | length), focused: (.[0].value.session == $f)}]'
 }
 
+launcher_open() { umbriel layers --json 2>/dev/null | jq -e 'any(.[]; .namespace | test("^noctalia-(attached-)?panel"))' >/dev/null; }
+
+# The keybind leaves modal (so typing in the launcher doesn't hit SESSIONS
+# keys); once the launcher closes, go back into SESSIONS mode.
 cmd_prompt() {
   local id; id=$(focused_id)
-  if [ -z "$id" ] && [ "$1" != open ]; then toast "Not a session terminal"; return 1; fi
-  echo "$id" > "$TARGET"
-  noctalia msg panel-open launcher "/ts $1 " >/dev/null
+  if [ -n "$id" ] || [ "$1" = open ]; then
+    echo "$id" > "$TARGET"
+    noctalia msg panel-open launcher "/ts $1 " >/dev/null
+    for _ in $(seq 1 20); do launcher_open && break; sleep 0.1; done
+    while launcher_open; do sleep 0.1; done
+  else
+    toast "Not a session terminal"
+  fi
+  umbriel msg submap modal >/dev/null
+  umbriel msg submap sessions >/dev/null
+}
+
+# ---- se: the SESSIONS actions from a shell ---------------------------------
+
+se_help() {
+  cat >&2 <<'EOF'
+se t        new terminal in this session      se T   same, at 1/3 width
+se d        detach this shell                  se D   end this session
+se m [S]    move this shell to session S       se M [S]  merge this session into S
+se c [S]    clone this session as new S        se C [S]  clone into existing S
+se / [S]    open session S (over ssh: attach one of its shells here)
+se r [S]    rename this session                se ls  list sessions
+Without S you're prompted. Over ssh, new shells take over this terminal.
+EOF
+}
+
+# Prompt for a session: number from the list, or a name.
+#   $1 prompt  $2 allow new names (1/0)  $3 session to leave out of the list
+ask_session() {
+  local prompt=$1 allow_new=$2 skip=${3:-} names n i=1 ans
+  mapfile -t names < <(db -r --arg k "$skip" '[.shells[].session] | unique | map(select(. != $k))[]')
+  for s in "${names[@]}"; do
+    printf '  %d) %s  (%s)\n' "$i" "$s" "$(db -r --arg s "$s" '[.shells[] | select(.session == $s)] | "\(length) shells, \(map(select(.open == true)) | length) open"')" > /dev/tty
+    i=$((i + 1))
+  done
+  n=${#names[@]}
+  read -r -p "$prompt" ans < /dev/tty || return 1
+  [ -n "$ans" ] || return 1
+  if [[ "$ans" =~ ^[0-9]+$ ]] && [ "$ans" -ge 1 ] && [ "$ans" -le "$n" ]; then
+    echo "${names[$((ans - 1))]}"
+  elif printf '%s\n' "${names[@]}" | grep -qx -- "$ans" || [ "$allow_new" = 1 ]; then
+    [[ "$ans" =~ [[:space:]] ]] && { echo "No spaces in session names" >&2; return 1; }
+    echo "$ans"
+  else
+    echo "No session $ans" >&2; return 1
+  fi
+}
+
+cmd_se() {
+  local op=${1:-} name=${2:-} id s
+  id=$(cur_id); s=$(session_of "$id")
+  needs_session() { [ -n "$s" ] || { echo "Not in a session shell" >&2; exit 1; }; }
+  case $op in
+    t) cmd_new ;;
+    T) if gui; then cmd_new --fraction 0.333; else cmd_new; fi ;;
+    d) needs_session; cmd_detach ;;
+    D) needs_session
+       read -r -p "End session $s? Its background shells are killed. [y/N] " a < /dev/tty
+       [ "${a,,}" = y ] && cmd_end ;;
+    m) needs_session; [ -n "$name" ] || name=$(ask_session "Move to (number or new name): " 1 "$s") || return 1
+       cmd_move "$name" ;;
+    M) needs_session; [ -n "$name" ] || name=$(ask_session "Merge $s into: " 0 "$s") || return 1
+       cmd_merge "$name" M ;;
+    c) needs_session; [ -n "$name" ] || { read -r -p "Clone $s as: " name < /dev/tty && [ -n "$name" ]; } || return 1
+       cmd_clone "$name" c ;;
+    C) needs_session; [ -n "$name" ] || name=$(ask_session "Clone $s into: " 0 "$s") || return 1
+       cmd_clone "$name" C ;;
+    /|o|open) [ -n "$name" ] || name=$(ask_session "Open session: " 0) || return 1
+       cmd_open "$name" ;;
+    r) needs_session; [ -n "$name" ] || { read -r -p "Rename $s to: " name < /dev/tty && [ -n "$name" ]; } || return 1
+       cmd_merge "$name" r ;;
+    ls) db -r '.shells | to_entries | group_by(.value.session)[] |
+          "\(.[0].value.session)\n" + (map("  \(.key)  \(.value.cwd)\(if .value.open then "" else "  (background)" end)") | join("\n"))'
+        [ -n "$s" ] && echo "this shell: $id in $s" ;;
+    *) se_help ;;
+  esac
 }
 
 cmd_save_quiet() { cmd_save >/dev/null 2>&1; }
@@ -337,9 +475,11 @@ case $cmd in
   detach) cmd_detach ;;
   end) cmd_end ;;
   move) cmd_move "$1" ;;
-  merge) cmd_merge "$1" N ;;
+  merge) cmd_merge "$1" M ;;
   rename) cmd_merge "$1" r ;;
-  clone) cmd_clone "$1" ;;
+  clone) cmd_clone "$1" c ;;
+  join) cmd_clone "$1" C ;;
+  se) cmd_se "$@" ;;
   open) cmd_open "$1" ;;
   list) cmd_list ;;
   prompt) cmd_prompt "$1" ;;
