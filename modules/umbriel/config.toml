@@ -3,8 +3,6 @@
 
 [general]
 show_cheatsheet = false
-# Re-apply the saved bar glow level (Super+Shift+PgUp/PgDn)
-autostart = ["~/bin/bar-glow apply"]
 
 # ==============================================================================
 # Input
@@ -113,7 +111,8 @@ effect = "dissolve_out"
 # ==============================================================================
 # Bar glow: colored things on the noctalia bar glow (white/gray don't). A screen
 # effect clipped to the bar strip, one preset per level (shaders made by
-# umbriel.nix from bar-glow.glsl). Super+Shift+PgUp/PgDn step it via ~/bin/bar-glow.
+# umbriel.nix from bar-glow.glsl). Super+Shift+PgUp/PgDn step it via ~/bin/bar-glow;
+# bar-glow.service turns it off on outputs that are fullscreen or have no bar.
 
 [effects.preset.bar_glow_1]
 kind = "screen"

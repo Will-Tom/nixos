@@ -28,10 +28,27 @@ in
       "umbriel/bar-glow/${toString n}.glsl" { text = barGlow n; })
       (lib.range 1 10));
 
-    # Super+Shift+PgUp/PgDn: bar glow level 0-10 (re-applied at login)
+    # Super+Shift+PgUp/PgDn: bar glow level 0-10
     home.file."bin/bar-glow" = {
       source = ./umbriel/bar-glow.sh;
       executable = true;
+    };
+    # Applies the saved level and turns the glow off on outputs that show a
+    # fullscreen window or have no bar
+    systemd.user.services.bar-glow = {
+      Unit = {
+        Description = "Bar glow: follow fullscreen and bar visibility";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+        X-Restart-Triggers = [ "${./umbriel/bar-glow.sh}" ];
+      };
+      Service = {
+        Environment = [ "PATH=/etc/profiles/per-user/${config.my.username}/bin:/run/current-system/sw/bin" ];
+        ExecStart = "%h/bin/bar-glow watch";
+        Restart = "always";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
     };
 
     # Fading "KEY - action" toast on the noctalia bar, called from keybinds
