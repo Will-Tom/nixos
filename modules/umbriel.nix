@@ -23,12 +23,9 @@ in
   home-manager.users.${config.my.username} = {
     xdg.configFile = {
       "umbriel/config.toml".source = ./umbriel/config.toml;
-      "umbriel/effects" = {
-        source = ./umbriel/effects;
-        recursive = true;
-      };
+      "umbriel/effects".source = ./umbriel/effects;
     } // lib.listToAttrs (map (n: lib.nameValuePair
-      "umbriel/effects/bar-glow/${toString n}.glsl" { text = barGlow n; })
+      "umbriel/bar-glow/${toString n}.glsl" { text = barGlow n; })
       (lib.range 1 10));
 
     # Super+Shift+PgUp/PgDn: bar glow level 0-10 (re-applied at login)

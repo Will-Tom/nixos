@@ -1,7 +1,7 @@
 // Glow around colored things on the noctalia bar (same idea as kitty's
 // color-glow: white/gray text stays plain). A screen effect limited to the
 // bar strip at the top of each output; everything below is passed through.
-// Template: umbriel.nix makes effects/bar-glow/<1-10>.glsl from this with
+// Template: umbriel.nix makes bar-glow/<1-10>.glsl from this with
 // STRENGTH = level * 0.03; ~/bin/bar-glow switches level (Super+Shift+PgUp/PgDn).
 
 const float BAR_HEIGHT = 17.0;   // noctalia bar thickness, logical px

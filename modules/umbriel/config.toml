@@ -117,43 +117,43 @@ effect = "dissolve_out"
 
 [effects.preset.bar_glow_1]
 kind = "screen"
-shader = "effects/bar-glow/1.glsl"
+shader = "bar-glow/1.glsl"
 
 [effects.preset.bar_glow_2]
 kind = "screen"
-shader = "effects/bar-glow/2.glsl"
+shader = "bar-glow/2.glsl"
 
 [effects.preset.bar_glow_3]
 kind = "screen"
-shader = "effects/bar-glow/3.glsl"
+shader = "bar-glow/3.glsl"
 
 [effects.preset.bar_glow_4]
 kind = "screen"
-shader = "effects/bar-glow/4.glsl"
+shader = "bar-glow/4.glsl"
 
 [effects.preset.bar_glow_5]
 kind = "screen"
-shader = "effects/bar-glow/5.glsl"
+shader = "bar-glow/5.glsl"
 
 [effects.preset.bar_glow_6]
 kind = "screen"
-shader = "effects/bar-glow/6.glsl"
+shader = "bar-glow/6.glsl"
 
 [effects.preset.bar_glow_7]
 kind = "screen"
-shader = "effects/bar-glow/7.glsl"
+shader = "bar-glow/7.glsl"
 
 [effects.preset.bar_glow_8]
 kind = "screen"
-shader = "effects/bar-glow/8.glsl"
+shader = "bar-glow/8.glsl"
 
 [effects.preset.bar_glow_9]
 kind = "screen"
-shader = "effects/bar-glow/9.glsl"
+shader = "bar-glow/9.glsl"
 
 [effects.preset.bar_glow_10]
 kind = "screen"
-shader = "effects/bar-glow/10.glsl"
+shader = "bar-glow/10.glsl"
 
 [effects]
 screen = "bar_glow_4"
