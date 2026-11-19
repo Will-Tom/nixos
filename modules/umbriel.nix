@@ -15,6 +15,14 @@ in
 {
   programs.umbriel.enable = true;
 
+  # Mice (not keyboards) readable by the seat's user, for ~/bin/modal-click.
+  # A package so it lands before 73-seat-late.rules, which applies uaccess.
+  services.udev.packages = [
+    (pkgs.writeTextDir "lib/udev/rules.d/70-mouse-uaccess.rules" ''
+      SUBSYSTEM=="input", KERNEL=="event*", ENV{ID_INPUT_MOUSE}=="1", ENV{ID_INPUT_KEYBOARD}!="1", ENV{ID_INPUT_KEY}!="1", TAG+="uaccess"
+    '')
+  ];
+
   services.greetd.settings = {
     initial_session.command = "${config.programs.umbriel.package}/bin/start-umbriel";
     default_session.command = "${config.programs.umbriel.package}/bin/start-umbriel";
@@ -45,6 +53,27 @@ in
       Service = {
         Environment = [ "PATH=/etc/profiles/per-user/${config.my.username}/bin:/run/current-system/sw/bin" ];
         ExecStart = "%h/bin/bar-glow watch";
+        Restart = "always";
+        RestartSec = 2;
+      };
+      Install.WantedBy = [ "graphical-session.target" ];
+    };
+
+    # Any mouse click leaves the modal submap
+    home.file."bin/modal-click" = {
+      source = ./umbriel/modal-click.sh;
+      executable = true;
+    };
+    systemd.user.services.modal-click = {
+      Unit = {
+        Description = "Leave umbriel's modal mode on mouse click";
+        After = [ "graphical-session.target" ];
+        PartOf = [ "graphical-session.target" ];
+        X-Restart-Triggers = [ "${./umbriel/modal-click.sh}" ];
+      };
+      Service = {
+        Environment = [ "PATH=${lib.makeBinPath [ pkgs.evtest pkgs.systemd pkgs.util-linux pkgs.gnugrep pkgs.coreutils pkgs.bash ]}:/etc/profiles/per-user/${config.my.username}/bin:/run/current-system/sw/bin" ];
+        ExecStart = "%h/bin/modal-click";
         Restart = "always";
         RestartSec = 2;
       };
