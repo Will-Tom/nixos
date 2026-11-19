@@ -10,5 +10,6 @@
     godot_4
     mission-center
     hardinfo2
+    discord
   ];
 }
