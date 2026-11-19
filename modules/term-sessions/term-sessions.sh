@@ -276,11 +276,23 @@ cmd_kill_all() {
 
 # For the bar widget: session, cwd and foreground command of the focused terminal
 cmd_focus() {
-  local id s p cwd fg
-  id=$(focused_id)
-  [ -n "$id" ] || { echo '{}'; return; }
-  s=$(session_of "$id")
-  p=$(shell_pid "$id")
+  local id s="" p="" cwd fg win kp c
+  win=$(umbriel focused-window --json 2>/dev/null)
+  id=$(jq -r '.xdg_tag // "" | select(startswith("term:")) | ltrimstr("term:")' <<<"$win")
+  if [ -n "$id" ]; then
+    s=$(session_of "$id")
+    p=$(shell_pid "$id")
+  elif [ "$(jq -r '.app_id // ""' <<<"$win")" = kitty ]; then
+    # Plain terminal (no session): its shell is the kitty process's child
+    # on a terminal (kitty starts one kitty per window)
+    kp=$(jq -r '.pid // empty' <<<"$win")
+    for c in $(pgrep -P "${kp:-0}"); do
+      [ "$(awk '{ sub(/^.*\) /, ""); print $5 }' "/proc/$c/stat" 2>/dev/null)" != 0 ] && { p=$c; break; }
+    done
+    [ -n "$p" ] || { echo '{}'; return; }
+  else
+    echo '{}'; return
+  fi
   if [ -n "$p" ]; then
     cwd=$(readlink "/proc/$p/cwd" 2>/dev/null)
     fg=$(shell_fg "$p")
