@@ -1,8 +1,7 @@
 #language slang 2026
-// Reading glass over the text cursor: a round lens centred on the cursor
-// that enlarges the text under it (most in the middle, none at the rim, so
-// the text bends smoothly into the lens), with slight color fringing toward
-// the rim, a rim highlight on the top-left and a soft shadow ring outside.
+// Reading glass over the text cursor: the text around the cursor is enlarged
+// (most in the middle) and bends smoothly back to normal size toward the
+// edge. No rim or shadow: only the distortion shows.
 //
 // Where the cursor is:
 // - helix's block cursor (normal mode): drawn by helix in CURSOR_SENTINEL
@@ -15,12 +14,8 @@
 import kitty_custom_shader_types;
 
 // Lens radius in line heights, and magnification at the centre
-static const float SIZE = 1.25f;
+static const float SIZE = 1.0f;
 static const float MAGNIFY = 1.4f;
-// Red/blue split at the rim, as a fraction of the distance from the centre
-static const float FRINGE = 0.025f;
-static const float RIM = 0.55f;
-static const float SHADOW = 0.35f;
 // helix cursor: sentinel (sRGB 0-255, the pipeline sets it), what to paint
 // instead (ao's sky_blue), and where cursor-find leaves its result
 static const float3 CURSOR_SENTINEL = float3(30.0f, 95.0f, 59.0f);
@@ -87,32 +82,14 @@ fragment_main(float4 color, KittyTextures t, KittyCustomShaderData d) {
     float radius = SIZE * cell.y;
     float2 v = p - c;
     float dist = length(v);
-    if (dist > radius + 4.0f) return color;
+    if (dist >= radius) return color;
 
-    if (dist > radius) {
-        // Soft shadow ring just outside the rim
-        float s = 1.0f - smoothstep(radius, radius + 4.0f, dist);
-        return float4(color.rgb * (1.0f - SHADOW * s), color.a);
-    }
-
-    // Magnify: sample closer to the centre, most in the middle; k*f(k) stays
-    // increasing so the image is continuous and meets the rim unchanged
+    // Magnify: sample at s(k) of the distance, with s = k/M in the middle
+    // and s(1) = 1, s'(1) = 1 at the edge, so the warp fades out with no
+    // visible boundary (s stays increasing, so the image is continuous)
     float k = dist / radius;
-    float f = 1.0f / MAGNIFY + (1.0f - 1.0f / MAGNIFY) * k * k;
-    float fr = FRINGE * k * k * k;
-    float3 seen;
-    seen.r = content(t, (c + v * f * (1.0f + fr)) * px, cs, fill).r;
-    seen.g = content(t, (c + v * f) * px, cs, fill).g;
-    seen.b = content(t, (c + v * f * (1.0f - fr)) * px, cs, fill).b;
-
-    // Rim light from the top-left (y up), weaker reflection opposite
-    float2 n = dist > 1e-3f ? v / dist : float2(0.0f);
-    float2 light = normalize(float2(-1.0f, 1.0f));
-    float band = smoothstep(0.82f, 0.95f, k) * (1.0f - smoothstep(0.97f, 1.0f, k));
-    float lit = max(dot(n, light), 0.0f) + 0.35f * max(dot(n, -light), 0.0f);
-    seen = lerp(seen, float3(1.0f), clamp(band * RIM * lit, 0.0f, 1.0f));
-
-    // Anti-aliased rim
-    float a = 1.0f - smoothstep(radius - 1.0f, radius, dist);
-    return float4(lerp(color.rgb, seen, a), color.a);
+    float m = 1.0f / MAGNIFY;
+    float s = k * m + (1.0f - m) * (3.0f * k * k * k - 2.0f * k * k * k * k);
+    float2 src = dist > 1e-3f ? c + v * (s / k) : c;
+    return float4(content(t, src * px, cs, fill), color.a);
 }
