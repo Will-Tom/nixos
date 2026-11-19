@@ -109,6 +109,17 @@ curve = "linear"
 effect = "dissolve_out"
 
 # ==============================================================================
+# Bar glow: colored things on the noctalia bar glow (white/gray don't). A screen
+# effect clipped to the bar strip. Toggle: umbriel msg effect-screen-toggle
+
+[effects.preset.bar_glow]
+kind = "screen"
+shader = "effects/bar-glow.glsl"
+
+[effects]
+screen = "bar_glow"
+
+# ==============================================================================
 # Screen zoom: cursor effects covering the output (radius 0), magnifying around
 # the pointer. Stepped by ~/bin/zoom (Super+scroll, Super+middle click resets).
 
