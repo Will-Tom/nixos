@@ -352,6 +352,8 @@ default_floating = false
 "submap[sessions],Shift+t"     = { action = "spawn ~/bin/bar-toast modal 'T - Terminal in session (third)'; ~/bin/term --fraction 0.333", repeat = false }
 "submap[sessions],d"           = { action = "spawn ~/bin/bar-toast modal 'd - Detach'; ~/bin/term-sessions detach", repeat = false }
 "submap[sessions],Shift+d"     = { action = "spawn ~/bin/term-sessions end", repeat = false }
+"submap[sessions],s"           = { action = "spawn ~/bin/term-sessions close-all", repeat = false }
+"submap[sessions],Shift+s"     = { action = "spawn ~/bin/term-sessions kill-all", repeat = false }
 "submap[sessions],m"           = { action = "spawn ~/bin/bar-toast modal 'm - Move to session'; umbriel msg submap reset; ~/bin/term-sessions prompt move", submap = "reset", repeat = false }
 "submap[sessions],Shift+m"     = { action = "spawn ~/bin/bar-toast modal 'M - Merge session'; umbriel msg submap reset; ~/bin/term-sessions prompt merge", submap = "reset", repeat = false }
 "submap[sessions],c"           = { action = "spawn ~/bin/bar-toast modal 'c - Clone session'; umbriel msg submap reset; ~/bin/term-sessions prompt clone", submap = "reset", repeat = false }

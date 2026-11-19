@@ -12,3 +12,8 @@ id = "sessions"
 entry = "provider.luau"
 prefix = "ts"
 glyph = "terminal-2"
+
+# Bar text: focused session terminal's session - directory - command
+[[widget]]
+id = "current"
+entry = "current-widget.luau"

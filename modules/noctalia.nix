@@ -44,6 +44,9 @@
         widget.updates.type = "willisk/dashboard:updates";
         widget.filesystem.type = "willisk/dashboard:filesystem";
         widget.git.type = "willisk/dashboard:git";
+
+        # Focused session terminal: "session - directory - command"
+        widget.session.type = "willisk/term-sessions:current";
       };
     };
   };

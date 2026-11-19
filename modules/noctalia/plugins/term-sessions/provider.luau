@@ -58,7 +58,7 @@ function onQuery(query)
         end
       end
     end
-    if spec.new and text ~= "" and not exact and not text:find("%s") then
+    if spec.new and text ~= "" and not exact then
       table.insert(results, {
         id = verb .. "\t" .. text,
         title = string.format(spec.title, text),

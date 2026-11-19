@@ -13,6 +13,9 @@
 #   term-attach <id>        run inside kitty: attach, or recreate after reboot
 #   term-sessions detach    close the focused window, keep its shell running (d)
 #   term-sessions end       stop persisting the focused session (D)
+#   term-sessions close-all close the focused session's windows, shells keep running (s)
+#   term-sessions kill-all  close them and kill the session's shells (S)
+#   term-sessions focus     session, cwd and command of the focused terminal (bar)
 #   term-sessions move S    put the focused shell in session S (m)
 #   term-sessions merge S   move the focused session's shells into S (M)
 #   term-sessions rename S  rename the focused session (r)
@@ -91,16 +94,30 @@ toast() {
   return 0
 }
 
-# cwd of a shpool shell: the oldest non-shpool process carrying SHPOOL_SESSION_NAME=<id>
-# is the shell itself (anything it runs inherits the variable).
-shell_cwd() {
-  local id=$1 p
+# pid of a shpool shell. Shells are direct children of the shpool daemon and
+# carry SHPOOL_SESSION_NAME=<id>; fall back to scanning all of our processes.
+shell_pid() {
+  local id=$1 daemon p
+  daemon=$(systemctl --user show -p MainPID --value shpool 2>/dev/null)
+  if [ -n "$daemon" ] && [ "$daemon" != 0 ]; then
+    for p in $(pgrep -P "$daemon"); do
+      tr "\\0" "\\n" 2>/dev/null < "/proc/$p/environ" | grep -qx "SHPOOL_SESSION_NAME=$id" && { echo "$p"; return; }
+    done
+  fi
   for p in $(pgrep -u "$UID" | sort -n); do
     case $(readlink "/proc/$p/exe" 2>/dev/null) in */shpool) continue ;; esac  # shpool's own helpers
-    if tr "\\0" "\\n" 2>/dev/null < "/proc/$p/environ" | grep -qx "SHPOOL_SESSION_NAME=$id"; then
-      readlink "/proc/$p/cwd" 2>/dev/null && return
-    fi
+    tr "\\0" "\\n" 2>/dev/null < "/proc/$p/environ" | grep -qx "SHPOOL_SESSION_NAME=$id" && { echo "$p"; return; }
   done
+}
+shell_cwd() { local p; p=$(shell_pid "$1") && [ -n "$p" ] && readlink "/proc/$p/cwd" 2>/dev/null; }
+
+# Command running in the foreground of a shell (empty at the prompt)
+shell_fg() {
+  local p=$1 tpgid
+  tpgid=$(awk '{ sub(/^.*\) /, ""); print $6 }' "/proc/$p/stat" 2>/dev/null)
+  [ -n "$tpgid" ] && [ "$tpgid" != "$p" ] && [ "$tpgid" -gt 0 ] || return 0
+  # "/nix/store/…-helix/bin/hx file" -> "hx file"
+  tr '\0' ' ' < "/proc/$tpgid/cmdline" 2>/dev/null | sed -e 's/ $//' -e 's|^[^ ]*/||'
 }
 
 window_of() { umbriel windows --json | jq -r --arg t "term:$1" '.[] | select(.xdg_tag == $t) | .id' | head -1; }
@@ -218,6 +235,46 @@ cmd_end() {
   toast "D - Ended session $s"
 }
 
+# s: close every window of the focused session; the shells keep running
+cmd_close_all() {
+  local id s sid
+  id=$(cur_id); s=$(session_of "$id")
+  [ -n "$s" ] || { toast "s - Not a session terminal"; return 1; }
+  toast "s - Closed $s (still running)"
+  for sid in $(db -r --arg s "$s" '.shells | to_entries[] | select(.value.session == $s and .value.open == true) | .key'); do
+    shpool detach "$sid" >/dev/null 2>&1
+  done
+}
+
+# S: close every window of the focused session and kill all its shells
+cmd_kill_all() {
+  local id s sid ids
+  id=$(cur_id); s=$(session_of "$id")
+  [ -n "$s" ] || { toast "S - Not a session terminal"; return 1; }
+  ids=$(db -r --arg s "$s" '.shells | to_entries[] | select(.value.session == $s) | .key')
+  db_update --arg s "$s" '.shells |= with_entries(select(.value.session != $s))'
+  toast "S - Killed session $s"
+  for sid in $ids; do
+    shpool kill "$sid" >/dev/null 2>&1
+    rm -f "$SCROLL/$sid.ansi"
+  done
+}
+
+# For the bar widget: session, cwd and foreground command of the focused terminal
+cmd_focus() {
+  local id s p cwd fg
+  id=$(focused_id)
+  [ -n "$id" ] || { echo '{}'; return; }
+  s=$(session_of "$id")
+  p=$(shell_pid "$id")
+  if [ -n "$p" ]; then
+    cwd=$(readlink "/proc/$p/cwd" 2>/dev/null)
+    fg=$(shell_fg "$p")
+  fi
+  jq -nc --arg s "$s" --arg c "${cwd:-}" --arg f "${fg:-}" --arg h "$HOME" \
+    '{session: $s, cwd: (if $c | startswith($h) then "~" + ($c | ltrimstr($h)) else $c end), cmd: $f}'
+}
+
 cmd_move() {
   local id; id=$(target_id)
   [ -n "$id" ] || return 1
@@ -327,7 +384,8 @@ cmd_prompt() {
 se_help() {
   cat >&2 <<'EOF'
 se t        new terminal in this session      se T   same, at 1/3 width
-se d        detach this shell                  se D   end this session
+se d        detach this shell                  se D   end this session (windows stay)
+se s        close all of this session's windows  se S   close them and kill the session
 se m [S]    move this shell to session S       se M [S]  merge this session into S
 se c [S]    clone this session as new S        se C [S]  clone into existing S
 se / [S]    open session S (over ssh: attach one of its shells here)
@@ -351,7 +409,6 @@ ask_session() {
   if [[ "$ans" =~ ^[0-9]+$ ]] && [ "$ans" -ge 1 ] && [ "$ans" -le "$n" ]; then
     echo "${names[$((ans - 1))]}"
   elif printf '%s\n' "${names[@]}" | grep -qx -- "$ans" || [ "$allow_new" = 1 ]; then
-    [[ "$ans" =~ [[:space:]] ]] && { echo "No spaces in session names" >&2; return 1; }
     echo "$ans"
   else
     echo "No session $ans" >&2; return 1
@@ -359,13 +416,17 @@ ask_session() {
 }
 
 cmd_se() {
-  local op=${1:-} name=${2:-} id s
+  local op=${1:-} name="${*:2}" id s
   id=$(cur_id); s=$(session_of "$id")
   needs_session() { [ -n "$s" ] || { echo "Not in a session shell" >&2; exit 1; }; }
   case $op in
     t) cmd_new ;;
     T) if gui; then cmd_new --fraction 0.333; else cmd_new; fi ;;
     d) needs_session; cmd_detach ;;
+    s) needs_session; cmd_close_all ;;
+    S) needs_session
+       read -r -p "Close and kill every shell in $s? [y/N] " a < /dev/tty
+       [ "${a,,}" = y ] && cmd_kill_all ;;
     D) needs_session
        read -r -p "End session $s? Its background shells are killed. [y/N] " a < /dev/tty
        [ "${a,,}" = y ] && cmd_end ;;
@@ -474,6 +535,9 @@ case $cmd in
   attach) cmd_attach "$@" ;;
   detach) cmd_detach ;;
   end) cmd_end ;;
+  close-all) cmd_close_all ;;
+  kill-all) cmd_kill_all ;;
+  focus) cmd_focus ;;
   move) cmd_move "$1" ;;
   merge) cmd_merge "$1" M ;;
   rename) cmd_merge "$1" r ;;
