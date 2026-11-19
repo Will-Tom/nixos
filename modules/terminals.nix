@@ -23,6 +23,7 @@
       '';
     };
     xdg.configFile."kitty/glow.pipeline.in".source = ./terminals/glow.pipeline;
+    xdg.configFile."kitty/shaders/color-glow.slang".source = ./terminals/color-glow.slang;
     home.file."bin/kitty-glow" = {
       source = ./terminals/kitty-glow.sh;
       executable = true;
