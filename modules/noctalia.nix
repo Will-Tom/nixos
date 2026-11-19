@@ -13,6 +13,12 @@
           mode = "dark";
           source = "community";
           community_palette = "Rosey AMOLED";
+          # Render the palette into app themes (kitty: ~/.config/kitty/themes/noctalia.conf,
+          # included from terminals.nix) and live-reload them on palette changes
+          templates = {
+            enable_builtin_templates = true;
+            builtin_ids = [ "kitty" ];
+          };
         };
 
         shell.launch_apps_as_systemd_services = true;

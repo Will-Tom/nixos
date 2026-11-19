@@ -14,6 +14,9 @@
         "ctrl+shift+c" = "copy_to_clipboard";
         "ctrl+shift+v" = "paste_from_clipboard";
       };
+      # Colors from the noctalia palette (its kitty template writes this file
+      # and reloads kitty when the theme changes; see noctalia.nix)
+      extraConfig = "include themes/noctalia.conf";
     };
 
     programs.ghostty = {
