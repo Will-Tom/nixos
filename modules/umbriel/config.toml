@@ -230,9 +230,9 @@ default_floating = false
 "Mod+Shift+S" = { action = "spawn ~/bin/bar-toast super 'SHIFT + S - Close workspace'; ~/bin/close-workspace", repeat = false }
 "Mod+Tab"   = { action = "spawn ~/bin/bar-toast super 'TAB - Toggle bar'; noctalia msg bar-toggle", repeat = false }
 
-# Screenshots: Mod+P → screenshots/tmp, Mod+Shift+P → screenshots
-"Mod+P"       = { action = "spawn ~/bin/bar-toast super 'P - Screenshot (tmp)'; mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", repeat = false }
-"Mod+Shift+P" = { action = "spawn ~/bin/bar-toast super 'SHIFT + P - Screenshot'; mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", repeat = false }
+# Screenshots (also copied to the clipboard): Mod+P → screenshots/tmp, Mod+Shift+P → screenshots
+"Mod+P"       = { action = "spawn ~/bin/bar-toast super 'P - Screenshot (tmp)'; mkdir -p ~/Pictures/screenshots/tmp && f=~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\" && grim -g \"$(slurp -d)\" \"$f\" && wl-copy -t image/png < \"$f\"", repeat = false }
+"Mod+Shift+P" = { action = "spawn ~/bin/bar-toast super 'SHIFT + P - Screenshot'; mkdir -p ~/Pictures/screenshots && f=~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\" && grim -g \"$(slurp -d)\" \"$f\" && wl-copy -t image/png < \"$f\"", repeat = false }
 
 "Mod+Left"  = "output-focus-left"
 "Mod+Down"  = "output-focus-down"
@@ -360,8 +360,8 @@ default_floating = false
 "submap[modal],o"   = { action = "spawn ~/bin/bar-toast modal 'o - Overview'; umbriel msg overview-toggle", repeat = false }
 "submap[modal],s"   = { action = "spawn ~/bin/bar-toast modal 's - Close window'; umbriel msg window-close", repeat = false }
 "submap[modal],Shift+s" = { action = "spawn ~/bin/bar-toast modal 'S - Close workspace'; ~/bin/close-workspace", repeat = false }
-"submap[modal],p"       = { action = "spawn ~/bin/bar-toast modal 'p - Screenshot (tmp)'; mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
-"submap[modal],Shift+p" = { action = "spawn ~/bin/bar-toast modal 'P - Screenshot'; mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
+"submap[modal],p"       = { action = "spawn ~/bin/bar-toast modal 'p - Screenshot (tmp)'; mkdir -p ~/Pictures/screenshots/tmp && f=~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\" && grim -g \"$(slurp -d)\" \"$f\" && wl-copy -t image/png < \"$f\"", submap = "reset", repeat = false }
+"submap[modal],Shift+p" = { action = "spawn ~/bin/bar-toast modal 'P - Screenshot'; mkdir -p ~/Pictures/screenshots && f=~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\" && grim -g \"$(slurp -d)\" \"$f\" && wl-copy -t image/png < \"$f\"", submap = "reset", repeat = false }
 
 "submap[modal],r"       = { action = "submap resize", repeat = false }
 "submap[modal],Shift+q" = { action = "submap power", repeat = false }

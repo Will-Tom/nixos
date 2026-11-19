@@ -89,6 +89,7 @@ in
 
     home.packages = with pkgs; [
       grim # screenshots (Mod+P / Mod+Shift+P)
+      wl-clipboard # wl-copy: screenshots also go to the clipboard
     ];
   };
 }
