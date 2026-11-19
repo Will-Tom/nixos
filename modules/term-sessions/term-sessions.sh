@@ -9,7 +9,8 @@
 # Installed as ~/bin/term-sessions, ~/bin/term (= new) and ~/bin/term-attach
 # (= attach); the name it's called by picks the default command.
 #
-#   term [--session S] [--fraction F] [--dir D]   open a new terminal
+#   term [--fraction F]     open a plain terminal (no session, not kept)
+#   term --session S [--fraction F] [--dir D]   new terminal in session S
 #   term-attach <id>        run inside kitty: attach, or recreate after reboot
 #   term-sessions detach    close the focused window, keep its shell running (d)
 #   term-sessions end       stop persisting the focused session (D)
@@ -120,13 +121,15 @@ shell_fg() {
   tr '\0' ' ' < "/proc/$tpgid/cmdline" 2>/dev/null | sed -e 's/ $//' -e 's|^[^ ]*/||'
 }
 
-window_of() { umbriel windows --json | jq -r --arg t "term:$1" '.[] | select(.xdg_tag == $t) | .id' | head -1; }
+window_tagged() { umbriel windows --json | jq -r --arg t "$1" '.[] | select(.xdg_tag == $t) | .id' | head -1; }
+window_of() { window_tagged "term:$1"; }
 
-# Wait for the window of a shell to map; prints its umbriel id.
+# Wait for the window of a shell (or, with $2 = tag, any tagged window) to
+# map; prints its umbriel id.
 wait_window() {
-  local id=$1 w
+  local id=$1 tag=${2:-term:$1} w
   for _ in $(seq 1 100); do
-    w=$(window_of "$id")
+    w=$(window_tagged "$tag")
     [ -n "$w" ] && { echo "$w"; return 0; }
     sleep 0.1
   done
@@ -157,8 +160,23 @@ new_id() { echo "t-$(head -c3 /dev/urandom | od -An -tx1 | tr -d ' \n')"; }
 
 # ---- commands ---------------------------------------------------------------
 
+# A plain terminal: kitty with the login shell, in no session and not saved
+# (Super+T, modal t)
+cmd_plain() {
+  local fraction=$1 tag w
+  if ! gui; then echo "Not on the desktop: use se t to open a session shell" >&2; return 1; fi
+  tag="plain:$(head -c3 /dev/urandom | od -An -tx1 | tr -d ' \n')"
+  setsid -f kitty --name "$tag" >/dev/null 2>&1
+  if [ -n "$fraction" ] && w=$(wait_window "" "$tag"); then
+    umbriel msg window-focus "$w" >/dev/null
+    umbriel msg window-set-primary-extent "$fraction" >/dev/null
+  fi
+}
+
+# New terminal; in session --session S, else a plain one (never a default
+# session)
 cmd_new() {
-  local session="" fraction="" dir="$HOME" id w focus
+  local session="" fraction="" dir="$HOME" id w
   while [ $# -gt 0 ]; do
     case $1 in
       --session) session=$2; shift 2 ;;
@@ -167,11 +185,7 @@ cmd_new() {
       *) shift ;;
     esac
   done
-  if [ -z "$session" ]; then
-    focus=$(cur_id)
-    [ -n "$focus" ] && session=$(session_of "$focus")
-    [ -n "$session" ] || session=main
-  fi
+  if [ -z "$session" ]; then cmd_plain "$fraction"; return; fi
   id=$(new_id)
   db_update --arg id "$id" --arg s "$session" --arg d "$dir" \
     '.shells[$id] = {session: $s, cwd: $d, open: true}'
@@ -365,11 +379,15 @@ launcher_open() { umbriel layers --json 2>/dev/null | jq -e 'any(.[]; .namespace
 
 # The keybind leaves modal (so typing in the launcher doesn't hit SESSIONS
 # keys); once the launcher closes, go back into SESSIONS mode.
-# SESSIONS t/T: new terminal in the focused session; with no session terminal
-# focused, ask for the session in the launcher first. $1: width fraction or empty
+# SESSIONS t/T: new terminal in the focused terminal's session; when the
+# focused window isn't a session terminal, ask for the session in the
+# launcher first. $1: width fraction or empty
 cmd_session_new() {
-  if [ -n "$(focused_id)" ]; then
-    cmd_new ${1:+--fraction "$1"}
+  local id s=""
+  id=$(focused_id)
+  [ -n "$id" ] && s=$(session_of "$id")
+  if [ -n "$s" ]; then
+    cmd_new --session "$s" ${1:+--fraction "$1"}
   else
     # leave SESSIONS and modal so typing the name doesn't hit their keys
     umbriel msg submap reset >/dev/null; umbriel msg submap reset >/dev/null
@@ -437,7 +455,8 @@ cmd_se() {
        if [ -z "$name" ] && [ -z "$s" ]; then
          name=$(ask_session "Session for the new terminal (number or new name): " 1) || return 1
        fi
-       [ -n "$name" ] && args=(--session "$name")
+       [ -n "$name" ] || name=$s
+       args=(--session "$name")
        [ "$op" = T ] && gui && args+=(--fraction 0.333)
        cmd_new "${args[@]}" ;;
     d) needs_session; cmd_detach ;;
