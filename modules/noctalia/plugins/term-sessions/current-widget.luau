@@ -6,6 +6,7 @@
 
 local SCRIPT = noctalia.expandPath("~/bin/term-sessions")
 local MAX_CMD = 60
+local COLOR = "#4CAF50"  -- green, same as the dashboard's "ok"
 local running = false
 local last = nil
 
@@ -27,8 +28,8 @@ local function render(d)
   end
   barWidget.setVisible(true)
   barWidget.render(ui.row({ gap = 6, align = "center" }, {
-    ui.glyph({ name = "terminal-2" }),
-    ui.label({ text = text }),
+    ui.glyph({ name = "terminal-2", color = COLOR }),
+    ui.label({ text = text, color = COLOR }),
   }))
 end
 
