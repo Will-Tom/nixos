@@ -212,8 +212,11 @@ default_floating = false
 "Mod+U"       = "workspace-previous"
 "Mod+Shift+D" = "column-move-to-workspace-next"
 "Mod+Shift+U" = "column-move-to-workspace-previous"
-"Mod+Page_Down" = "workspace-move-down"
-"Mod+Page_Up"   = "workspace-move-up"
+"Mod+Shift+Page_Down" = "workspace-move-down"
+"Mod+Shift+Page_Up"   = "workspace-move-up"
+# Text glow in kitty, 0-10 (toast shows the level)
+"Mod+Page_Up"   = "spawn ~/bin/kitty-glow up"
+"Mod+Page_Down" = "spawn ~/bin/kitty-glow down"
 
 "Mod+1" = "spawn ~/bin/bar-toast super '1 - Workspace 1'; umbriel msg workspace-switch 1"
 "Mod+2" = "spawn ~/bin/bar-toast super '2 - Workspace 2'; umbriel msg workspace-switch 2"

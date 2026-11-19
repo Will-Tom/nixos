@@ -1,6 +1,6 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
-  home-manager.users.${config.my.username} = {
+  home-manager.users.${config.my.username} = { config, lib, ... }: {
     programs.kitty = {
       enable = true;
       settings = {
@@ -18,11 +18,19 @@
       # and reloads kitty when the theme changes; see noctalia.nix)
       extraConfig = ''
         include themes/noctalia.conf
-        # Soft glow around text (shaders/glow.pipeline)
-        custom_shaders glow
+        # Soft glow around text; level set by ~/bin/kitty-glow (Super+PageUp/Down)
+        include ${config.xdg.stateHome}/kitty-glow/glow.conf
       '';
     };
-    xdg.configFile."kitty/shaders/glow.pipeline".source = ./terminals/glow.pipeline;
+    xdg.configFile."kitty/glow.pipeline.in".source = ./terminals/glow.pipeline;
+    home.file."bin/kitty-glow" = {
+      source = ./terminals/kitty-glow.sh;
+      executable = true;
+    };
+    # Write the default level on first activation so new kitties glow
+    home.activation.kittyGlow = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+      run ${pkgs.bash}/bin/bash $HOME/bin/kitty-glow init
+    '';
 
     programs.ghostty = {
       enable = true;
