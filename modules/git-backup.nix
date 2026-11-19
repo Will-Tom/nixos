@@ -43,8 +43,16 @@
         if ! ${pkgs.git}/bin/git diff --cached --quiet; then
           ${pkgs.git}/bin/git commit -m "Auto-backup: $(date '+%Y-%m-%d %H:%M:%S')"
         fi
-        ${pkgs.git}/bin/git pull --rebase origin main || true
-        ${pkgs.git}/bin/git push origin main || true
+        # Back up whichever branch is checked out (work often happens on a
+        # branch, e.g. umbriel). Only main is synced from GitHub first; other
+        # branches are just pushed under their own name.
+        branch=$(${pkgs.git}/bin/git branch --show-current)
+        if [ "$branch" = main ]; then
+          ${pkgs.git}/bin/git pull --rebase origin main || true
+        fi
+        if [ -n "$branch" ]; then
+          ${pkgs.git}/bin/git push origin "$branch" || true
+        fi
       '';
       wantedBy = [ "multi-user.target" ];
     };
