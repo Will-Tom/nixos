@@ -31,6 +31,12 @@
       executable = true;
     };
 
+    # Super+Shift+S / modal S: close every window on the focused workspace
+    home.file."bin/close-workspace" = {
+      source = ./umbriel/close-workspace.sh;
+      executable = true;
+    };
+
     # Super+scroll screen zoom (steps the zoom_* cursor-effect presets)
     home.file."bin/zoom" = {
       source = ./umbriel/zoom.sh;

@@ -178,6 +178,7 @@ default_floating = false
 "Mod+Shift+T" = { action = "spawn ~/bin/bar-toast super 'SHIFT + T - Terminal (third)'; ~/bin/term --fraction 0.333", repeat = false }
 "Mod+O"     = { action = "spawn ~/bin/bar-toast super 'O - Overview'; umbriel msg overview-toggle", repeat = false }
 "Mod+S"     = { action = "spawn ~/bin/bar-toast super 'S - Close window'; umbriel msg window-close", repeat = false }
+"Mod+Shift+S" = { action = "spawn ~/bin/bar-toast super 'SHIFT + S - Close workspace'; ~/bin/close-workspace", repeat = false }
 "Mod+Tab"   = { action = "spawn ~/bin/bar-toast super 'TAB - Toggle bar'; noctalia msg bar-toggle", repeat = false }
 
 # Screenshots: Mod+P → screenshots/tmp, Mod+Shift+P → screenshots
@@ -303,6 +304,7 @@ default_floating = false
 "submap[modal],b"   = { action = "spawn ~/bin/bar-toast modal 'b - Previous window'; umbriel msg window-focus-last", repeat = false }
 "submap[modal],o"   = { action = "spawn ~/bin/bar-toast modal 'o - Overview'; umbriel msg overview-toggle", repeat = false }
 "submap[modal],s"   = { action = "spawn ~/bin/bar-toast modal 's - Close window'; umbriel msg window-close", repeat = false }
+"submap[modal],Shift+s" = { action = "spawn ~/bin/bar-toast modal 'S - Close workspace'; ~/bin/close-workspace", repeat = false }
 "submap[modal],p"       = { action = "spawn ~/bin/bar-toast modal 'p - Screenshot (tmp)'; mkdir -p ~/Pictures/screenshots/tmp && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/tmp/\"screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
 "submap[modal],Shift+p" = { action = "spawn ~/bin/bar-toast modal 'P - Screenshot'; mkdir -p ~/Pictures/screenshots && grim -g \"$(slurp -d)\" ~/Pictures/screenshots/\"Screenshot from $(date '+%Y-%m-%d %H-%M-%S').png\"", submap = "reset", repeat = false }
 
