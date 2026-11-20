@@ -44,6 +44,9 @@ position = [2560, 792]
 # The SDR desktop is shown at sdr_white (default 203 nits; panel peaks ~400).
 # "auto" would switch to HDR only for fullscreen HDR content instead.
 hdr = "on"
+# `umbriel msg output-sdr-white` only lasts until a config reload or the
+# monitor reconnecting (e.g. waking from sleep), so set it here
+sdr_white = 400
 
 # ==============================================================================
 # Appearance and layout
