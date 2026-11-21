@@ -23,9 +23,34 @@ local DIM = "on_surface_variant"
 local showFull = false
 local lastSig = nil
 
+-- Trailing whitespace trimmed by scanning back from the end: a `%s+$` gsub
+-- retries from every whitespace run, far too slow for a big build log
+local function rtrim(s)
+  local i = #s
+  while i > 0 do
+    local b = string.byte(s, i)
+    if b ~= 32 and b ~= 9 and b ~= 10 and b ~= 13 then break end
+    i -= 1
+  end
+  return string.sub(s, 1, i)
+end
+
 local function read(path)
   local s = noctalia.readFile(path)
-  return s and (s:gsub("%s+$", "")) or ""
+  return s and rtrim(s) or ""
+end
+
+-- The end of a log file only: build logs grow to hundreds of KB, and
+-- splitting all of it every second runs past noctalia's per-callback CPU
+-- budget (the panel is then disabled until noctalia restarts)
+local LOG_BYTES = 16384
+local function readLog(path)
+  local s = noctalia.readFile(path) or ""
+  if #s > LOG_BYTES then
+    s = string.sub(s, -LOG_BYTES)
+    s = string.sub(s, (string.find(s, "\n", 1, true) or 0) + 1)  -- whole lines
+  end
+  return rtrim(s)
 end
 
 local function lines(s)
@@ -89,7 +114,7 @@ local function body(state)
     return {
       ui.row({ gap = 8, align = "center" }, { ui.glyph({ name = "loader-2", color = BUSY }),
         ui.label({ text = "Updating inputs on a scratch copy and building (not switching)…" }) }),
-      logBox(tail(read(DIR .. "/log"), 200), DIM),
+      logBox(tail(readLog(DIR .. "/log"), 200), DIM),
     }
   end
 
@@ -97,7 +122,7 @@ local function body(state)
     return {
       ui.row({ gap = 8, align = "center" }, { ui.glyph({ name = "loader-2", color = BUSY }),
         ui.label({ text = "Switching… enter your password in the prompt if asked." }) }),
-      logBox(tail(read(APPLY_LOG), 200), DIM),
+      logBox(tail(readLog(APPLY_LOG), 200), DIM),
     }
   end
 
@@ -141,8 +166,8 @@ local function body(state)
 
   if state == "check-failed" or state == "apply-failed" then
     local what = state == "check-failed" and "Build failed — nothing changed." or "Switch failed or was cancelled — flake.lock restored."
-    local log = read(DIR .. "/log")
-    if state == "apply-failed" then log = log .. "\n" .. read(APPLY_LOG) end
+    local log = readLog(DIR .. "/log")
+    if state == "apply-failed" then log = log .. "\n" .. readLog(APPLY_LOG) end
     return {
       ui.label({ text = what, color = "error" }),
       logBox(tail(log, 200), "error"),
@@ -172,8 +197,8 @@ function update()
   if state ~= "ready" then showFull = false end
   -- Re-render only when something visible changed (keeps scroll position)
   local sig = state .. tostring(showFull)
-  if state == "checking" then sig ..= #read(DIR .. "/log") end
-  if state == "applying" then sig ..= #read(APPLY_LOG) end
+  if state == "checking" then sig ..= #(noctalia.readFile(DIR .. "/log") or "") end
+  if state == "applying" then sig ..= #(noctalia.readFile(APPLY_LOG) or "") end
   if sig == lastSig then return end
   lastSig = sig
 
