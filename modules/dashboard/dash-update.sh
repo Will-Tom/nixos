@@ -60,7 +60,7 @@ case "${1:-}" in
     held=$(grep -vE '^\s*(#|$)' "$STATE/hold" 2>/dev/null | xargs)
     if [ -n "$held" ]; then
       echo "Holding back: $held (edit $STATE/hold to release)"
-      inputs=$(jq -r --arg h " $held " '.nodes.root.inputs | keys[] | select(($h | contains(" " + . + " ")) | not)' \
+      inputs=$(jq -r --arg h " $held " '.nodes.root.inputs | keys[] | . as $k | select($h | contains(" " + $k + " ") | not)' \
         "$DIR/flake/flake.lock" | xargs)
     else
       inputs=""
