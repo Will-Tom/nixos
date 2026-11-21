@@ -10,6 +10,9 @@
 #   dash-update discard   drop the preview; /etc/nixos is untouched
 #   dash-update reconcile mark a check/apply that died midway as failed
 #
+# Inputs named in ~/.local/state/dashboard/hold (one per line, # comments)
+# are left at their locked version by check, e.g. while upstream is broken.
+#
 # check and apply run in their own transient user unit (dash-update.service)
 # so a noctalia restart during a switch doesn't kill them, and two can't
 # run at once. Everything the panel shows is a file in $DIR:
@@ -52,7 +55,22 @@ case "${1:-}" in
     echo "Updating flake inputs on a scratch copy…"
     mkdir -p "$DIR/flake" && cp -r "$FLAKE"/. "$DIR/flake/"
     git -C "$DIR/flake" add -A >/dev/null 2>&1 || true
-    if ! nix flake update --flake "$DIR/flake"; then state check-failed; exit 1; fi
+    # Inputs listed in $STATE/hold (one per line) stay at their locked
+    # version, e.g. while upstream is broken
+    held=$(grep -vE '^\s*(#|$)' "$STATE/hold" 2>/dev/null | xargs)
+    if [ -n "$held" ]; then
+      echo "Holding back: $held (edit $STATE/hold to release)"
+      inputs=$(jq -r --arg h " $held " '.nodes.root.inputs | keys[] | select(($h | contains(" " + . + " ")) | not)' \
+        "$DIR/flake/flake.lock" | xargs)
+    else
+      inputs=""
+    fi
+    if [ -n "$held" ] && [ -z "$inputs" ]; then
+      echo "Every input is held back; nothing to update."
+    # shellcheck disable=SC2086
+    elif ! nix flake update $inputs --flake "$DIR/flake"; then
+      state check-failed; exit 1
+    fi
     echo
     echo "Building new system closure (not switching)…"
     if ! nix build "$DIR/flake#nixosConfigurations.nixos.config.system.build.toplevel" \
